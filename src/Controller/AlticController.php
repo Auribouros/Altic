@@ -12,7 +12,7 @@ class AlticController extends AbstractController
      */
     public function index()
     {
-        return $this->render('altic/index.html.twig');
+        return $this->render('altic/index.html.twig', ['userName'=>'']);
     }
 
     /**
@@ -23,7 +23,7 @@ class AlticController extends AbstractController
     	$pupilsList = ' ';
     	$teacherFullName = 'Jean-Pierre Ravaud';
     	return $this->render('altic/teacherWelcome.html.twig',
-    						 ['pupils'=>$pupilsList, 'teacherName'=>$teacherFullName]);
+    						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName]);
     }
 
     /**
@@ -33,7 +33,7 @@ class AlticController extends AbstractController
     {
     	$teacherFullName = 'Jean-Pierre Ravaud';
     	return $this->render('altic/teacherPupilData.html.twig',
-    						 ['teacherName'=>$teacherFullName, 'pupilName'=>$name]);
+    						 ['userName'=>$teacherFullName, 'pupilName'=>$name]);
     }
 
     /**
@@ -43,7 +43,7 @@ class AlticController extends AbstractController
     {
     	$teacherFullName = 'Jean-Pierre Ravaud';
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilName'=>$name, 'tableNumber'=>$number, 'teacherName'=>$teacherFullName]);
+    						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName]);
     }
 
     #########################################################
@@ -55,7 +55,7 @@ class AlticController extends AbstractController
     {
     	$pupilFullName = 'Kévin Martin';
     	return $this->render('altic/pupilWelcome.html.twig',
-    						 ['pupilName'=>$pupilFullName]);
+    						 ['userName'=>$pupilFullName]);
     }
 
     /**
@@ -65,6 +65,6 @@ class AlticController extends AbstractController
     {
     	$pupilFullName = 'Kévin Martin';
     	return $this->render('altic/pupilTable.html.twig',
-    						 ['pupilName'=>$pupilFullName, 'tableNumber'=>$number]);
+    						 ['userName'=>$pupilFullName, 'tableNumber'=>$number]);
     }
 }
