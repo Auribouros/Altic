@@ -5,6 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/customFonts.css') }}">
         {% endblock %}
     </head>
     <header>
@@ -17,13 +18,13 @@
     			
     			<div class="row align-items-center">
 
-    				<div class="col-sm-2"><h1 class="display-1">Altic</h1></div>
+    				<div class="col-sm-2"><h1 style="font-family: 'adam';" class="display-1">Altic</h1></div>
 
-    				<div class="col-sm-7"><p class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
+    				<div class="col-sm-7"><p style="font-family: 'roboto';" class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
 
     				<div class="col-sm-1"> <img src="https://i.pinimg.com/originals/d4/e2/2d/d4e22dd0c172a148b1c318276a6a9dfa.jpg" class="img-thumbnail"></div>
 
-    				<div class="col-sm-2">
+    				<div style="font-family: 'roboto';" class="col-sm-2">
     					<p>{{userName}}</p>
     					<a href="#">Déconnexion</a>
     					<a href="#"><img style="height: 30px; width: 30px;" src="http://www.clipartbest.com/cliparts/Kij/oA5/KijoA5a5T.png"></a>
