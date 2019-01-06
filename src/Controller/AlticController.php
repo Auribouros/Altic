@@ -67,4 +67,23 @@ class AlticController extends AbstractController
     	return $this->render('altic/pupilTable.html.twig',
     						 ['userName'=>$pupilFullName, 'tableNumber'=>$number]);
     }
+
+    #########################################################
+
+    /**
+     * @Route("/pwdLost", name="altic_pwdLost")
+     */
+    public function pwdLost()
+    {
+        return $this->render('altic/pwdLost.html.twig', ['userName'=>'']);
+    }
+
+    /**
+     * @Route("/modifyAccount", name="altic_modifyAccount")
+     */
+    public function modifyAccount()
+    {
+        return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur']);
+    }
+
 }

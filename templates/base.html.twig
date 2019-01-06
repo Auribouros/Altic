@@ -25,9 +25,13 @@
     				<div class="col-sm-1"> <img src="https://i.pinimg.com/originals/d4/e2/2d/d4e22dd0c172a148b1c318276a6a9dfa.jpg" class="img-thumbnail"></div>
 
     				<div style="font-family: 'roboto';" class="col-sm-2">
-    					<p>{{userName}}</p>
-    					<a href="#">Déconnexion</a>
-    					<a href="#"><img style="height: 30px; width: 30px;" src="http://www.clipartbest.com/cliparts/Kij/oA5/KijoA5a5T.png"></a>
+                        {% if userName != '' %}
+    					   <p>{{userName}}</p>
+    					   <a href="/">Déconnexion</a>
+                           <a href="/modifyAccount"><img style="height: 30px; width: 30px;" src="http://www.clipartbest.com/cliparts/Kij/oA5/KijoA5a5T.png"></a>
+                        {% else %}
+                            <a href="/">Créer un compte</a>
+                        {% endif %}
     				</div>
     				
     			</div>
