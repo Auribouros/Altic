@@ -12,7 +12,7 @@ class AlticController extends AbstractController
      */
     public function index()
     {
-        return $this->render('altic/index.html.twig', ['userName'=>'']);
+        return $this->render('altic/index.html.twig', ['userName'=>'', 'profilePic'=>'default']);
     }
 
     /**
@@ -23,7 +23,7 @@ class AlticController extends AbstractController
     	$pupilsList = ' ';
     	$teacherFullName = 'Jean-Pierre Ravaud';
     	return $this->render('altic/teacherWelcome.html.twig',
-    						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName]);
+    						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     /**
@@ -33,7 +33,7 @@ class AlticController extends AbstractController
     {
     	$teacherFullName = 'Jean-Pierre Ravaud';
     	return $this->render('altic/teacherPupilData.html.twig',
-    						 ['userName'=>$teacherFullName, 'pupilName'=>$name]);
+    						 ['userName'=>$teacherFullName, 'pupilName'=>$name, 'profilePic'=>'default']);
     }
 
     /**
@@ -43,7 +43,7 @@ class AlticController extends AbstractController
     {
     	$teacherFullName = 'Jean-Pierre Ravaud';
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName]);
+    						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     #########################################################
@@ -53,9 +53,10 @@ class AlticController extends AbstractController
      */
     public function pupilWelcome()
     {
+        $profilePic = 'images/pupil/characters/1.png';
     	$pupilFullName = 'Kévin Martin';
     	return $this->render('altic/pupilWelcome.html.twig',
-    						 ['userName'=>$pupilFullName]);
+    						 ['userName'=>$pupilFullName, 'profilePic'=>$profilePic]);
     }
 
     /**
@@ -63,9 +64,10 @@ class AlticController extends AbstractController
      */
     public function pupilTable($number)
     {
+        $profilePic = 'images/pupil/characters/1.png';
     	$pupilFullName = 'Kévin Martin';
     	return $this->render('altic/pupilTable.html.twig',
-    						 ['userName'=>$pupilFullName, 'tableNumber'=>$number]);
+    						 ['userName'=>$pupilFullName, 'tableNumber'=>$number, 'profilePic'=>$profilePic]);
     }
 
     #########################################################
@@ -75,7 +77,7 @@ class AlticController extends AbstractController
      */
     public function pwdLost()
     {
-        return $this->render('altic/pwdLost.html.twig', ['userName'=>'']);
+        return $this->render('altic/pwdLost.html.twig', ['userName'=>'', 'profilePic'=>'default']);
     }
 
     /**
@@ -83,7 +85,7 @@ class AlticController extends AbstractController
      */
     public function modifyAccount()
     {
-        return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur']);
+        return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur', 'profilePic'=>'default']);
     }
 
 }

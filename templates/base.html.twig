@@ -18,17 +18,23 @@
     			
     			<div class="row align-items-center" style="position: fixed; box-shadow: 5px 10px 18px #888888; z-index: 10; background-color: white; left: 0px;">
 
-    				<div class="col-sm-2"><h1 style="font-family: 'adam';" class="display-1">Altic</h1></div>
+    				<div class="col-sm-2"><a style="color: black; text-decoration: none;" href="/"><h1 style="font-family: 'adam';" class="display-1">Altic</h1></a></div>
 
     				<div class="col-sm-7"><p style="font-family: 'roboto';" class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
 
-    				<div class="col-sm-1"> <img src="https://i.pinimg.com/originals/d4/e2/2d/d4e22dd0c172a148b1c318276a6a9dfa.jpg" class="img-thumbnail"></div>
+    				<div class="col-sm-1">
+
+                    {% if profilePic != 'default' %}
+                        <img src="{{ asset('images/pupil/characters/1.png') }}" class="img-thumbnail"></div>
+                    {% else %}
+                        <img src="{{ asset('images/utility/icons/defaultProfilePic.png') }}" class="img-thumbnail"></div>
+                    {% endif %}
 
     				<div style="font-family: 'roboto';" class="col-sm-2">
                         {% if userName != '' %}
     					   <p>{{userName}}</p>
     					   <a href="/">Déconnexion</a>
-                           <a href="/modifyAccount"><img style="height: 30px; width: 30px;" src="http://www.clipartbest.com/cliparts/Kij/oA5/KijoA5a5T.png"></a>
+                           <a href="/modifyAccount"><img style="height: 20px; width: auto;" src="{{ asset('images/utility/icons/cog.png') }}"></a>
                         {% else %}
                             <a href="/">Créer un compte</a>
                         {% endif %}
