@@ -7,13 +7,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AlticController extends AbstractController
 {
-    /**
-     * @Route("/", name="altic_welcome")
-     */
-    public function index()
-    {
-        return $this->render('altic/index.html.twig', ['userName'=>'', 'profilePic'=>'default']);
-    }
 
     /**
      * @Route("/teacher", name="altic_teacherWelcome")
