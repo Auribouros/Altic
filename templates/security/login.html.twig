@@ -5,7 +5,6 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Aidez celestin dans ces fabuleuse aventure</h1>
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -36,8 +35,9 @@
         Se Connectez
     </button>
 </form>
-<a href="/">Créer un compte</a><BR>
-<a href="/">Mot de passe oublié</a><BR>
+<a href="{{path('app_register')}}">Créer un compte</a><BR>
+<a href="{{path('altic_pwdLost')}}">Mot de passe oublié</a><BR>
+<h1>Aidez celestin dans ces fabuleuse aventure</h1><BR>
 <video width="400" controls>
  <source src="{{asset('video/sauce.mp4')}}" type="video/mp4">
  what the fuck ?

@@ -64,7 +64,6 @@ class AlticController extends AbstractController
     }
 
     #########################################################
-
     /**
      * @Route("/pwdLost", name="altic_pwdLost")
      */
