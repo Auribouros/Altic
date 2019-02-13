@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationController extends AbstractController
 {
@@ -19,7 +21,14 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, UtilisateurAuthenticator $authenticator): Response
     {
-        $form = $this->createForm(RegistrationFormType::class);
+        $utilisateur= new Utilisateur();
+        $form = $this->createForm($utilisateur)
+                ->add('estEnseignant')
+                ->add('prenom',TextType::class)
+                ->add('nom',TextType::class)
+                ->add('adresse eMail',EmailType::class)
+                ->add('mot de passe',PasswordType::class)
+                ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
