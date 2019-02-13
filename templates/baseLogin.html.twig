@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Bienvenue sur Altic !{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/customFonts.css') }}">
@@ -16,11 +16,11 @@
             <div class="container">
 
                 
-                <div class="row align-items-center" style="position: fixed; box-shadow: 5px 10px 18px #888888; z-index: 10; background-color: white; left: 0px;">
+                <div class="row align-items-center">
 
-                    <div class="col-sm-2"><a style="color: black; text-decoration: none;" href="/"><h1 style="font-family: 'adam';" class="display-1">Altic</h1></a></div>
+                    <div class="col-sm-2"><a class="display-1">Altic</h1></a></div>
 
-                    <div class="col-sm-7"><p style="font-family: 'roboto';" class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
+                    <div class="col-sm-7"><p class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
                     
                 </div>
 
@@ -35,7 +35,7 @@
         {% block body %}
 
         <!--line break-->
-        <div style="height: 200px;">
+        <div>
         <br/>
         </div>
 
