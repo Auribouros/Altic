@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Bienvenue, {{nomComplet}} {% endblock %}
+
+{% block body %}
+
+{{ parent() }}
+
+Données de l'élève {{nomEleve}} sur la table de {{numeroTable}}
+
+{% endblock %}
