@@ -46,10 +46,24 @@ class AlticController extends AbstractController
      */
     public function enfantAccueil()
     {
+        function ajouterEnseignant(Request $requete, ObjectManager $manager){
+            //Création lien
+            $utilisateur = new Utilisateur();
+            $formulaireLienEnseignant = $this -> createFormBuilder($utilisateur)
+                                              -> add('email')
+                                              -> getForm();
+            //Enregistrer après soumission
+            $formulaireLienEnseignant -> handleRequest($requete);
+            if ($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid())
+            {
+                $manager ->persist($utilisateur);
+                $manager ->flush();
+            }
+        }
         $imgProfil = 'images/enfant/characters/1.png';
     	$nomCompletEleve = 'Kévin Martin';
     	return $this->render('altic/enfantAccueil.html.twig',
-    						 ['nomComplet'=>$nomCompletEleve, 'imgProfil'=>$imgProfil]);
+    						 ['nomComplet'=>$nomCompletEleve, 'imgProfil'=>$imgProfil,'vueFormulaireLienEnseignant'=>$formulaireLienEnseignant -> createview()]);
     }
 
     /**
