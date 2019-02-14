@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Bienvenue, {{ nomComplet }} {% endblock %}
+
+{% block body %}
+
+{{ parent() }}
+
+<div class="container">
+	
+
+	<!--map-->
+	<div class="row align-items-end">
+		<div class="col"><img class="img-fluid" src="{{ asset('images/enfant/map/tmpMap.png') }}"></div>
+	</div>
+
+	<br/>
+
+    <!--stats-->
+	<div style="font-family: 'roboto'; font-weight: bold;" class="row align-items-top">
+		
+		<div class="col-sm-4">
+			<p class="h5">Trophées</p>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/1.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/2.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/3.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/4.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/5.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/6.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/7.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/8.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/9.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/10.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/11.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/12.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/13.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/14.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/15.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/16.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="images/enfant/characters/17.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/18.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/19.png"><br/><br/>
+			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/enfant/characters/20.png"><br/><br/>
+		</div>
+
+		<div class="col-sm-4"><p class="h5">Stastistiques</p></div>
+
+		<div class="col-sm-4"><p class="h5">Mes enseignants</p>
+		{{form(vueFormulaireLienEnseignant)}}
+		</div>
+
+	</div>
+
+
+</div>
+
+{% endblock %}
