@@ -6,16 +6,33 @@
     {{ parent() }}
 <div class="jumbotron">
     <h1>Register</h1>
-
+    <div class="container">
     {{ form_start(registrationForm) }}
+        <div class="row align-items-center">
         {{form_row(registrationForm.estEnseignant)}}
+        </div>
+        <div class="row align-items-center">
         {{form_row(registrationForm.prenom)}}
+        </div>
+        <div class="row align-items-center">
         {{form_row(registrationForm.nom)}}
+        </div>
+        <div class="row align-items-center">
         {{ form_row(registrationForm.email) }}
+        </div>
+        <div class="row align-items-center">
         {{ form_row(registrationForm.password) }}
+        </div>
+        <div class="row align-items-center">
         {{ form_row(registrationForm._token) }}
+        </div>
+        <div class="row align-items-center">
         {{form_row(registrationForm.avatar)}}
+        </div>
+        <div class="row align-items-center">
         <button class="btn">Register</button>
+        </div>
     {{ form_end(registrationForm) }}
+    </div>
 </div>
 {% endblock %}

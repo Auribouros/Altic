@@ -83,7 +83,7 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
         // For example : return new RedirectResponse($this->router->generate('some_route'));
-        return new RedirectResponse($this->router->generate('altic_pupil'));
+        return new RedirectResponse($this->router->generate('altic_enfant'));
     }
 
     protected function getLoginUrl()
