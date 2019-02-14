@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AlticController extends AbstractController
 {
@@ -13,8 +14,10 @@ class AlticController extends AbstractController
      */
     public function teacherWelcome()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
     	$pupilsList = ' ';
-    	$teacherFullName = 'Jean-Pierre Ravaud';
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherWelcome.html.twig',
     						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
@@ -46,10 +49,18 @@ class AlticController extends AbstractController
      */
     public function pupilWelcome()
     {
-        $profilePic = 'images/pupil/characters/1.png';
-    	$pupilFullName = 'Kévin Martin';
-    	return $this->render('altic/pupilWelcome.html.twig',
-    						 ['userName'=>$pupilFullName, 'profilePic'=>$profilePic]);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        if ($user->getEstEnseignant()) {
+           return $this->redirect(
+               $this->generateUrl('altic_teacherWelcome')
+           );
+        } else {
+            $profilePic = 'images/pupil/characters/1.png';
+            $pupilFullName = $user->getNom()." ".$user->getPrenom();
+            return $this->render('altic/pupilWelcome.html.twig',
+                                 ['userName'=>$pupilFullName, 'profilePic'=>$profilePic]);
+        }
     }
 
     /**
@@ -79,5 +90,4 @@ class AlticController extends AbstractController
     {
         return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur', 'profilePic'=>'default']);
     }
-
 }
