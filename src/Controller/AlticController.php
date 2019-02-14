@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AlticController extends AbstractController
 {
@@ -13,10 +14,12 @@ class AlticController extends AbstractController
      */
     public function enseignantAccueil()
     {
-    	$listeEleves = ' ';
-    	$nomCompletEnseignant = 'Jean-Pierre Ravaud';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$pupilsList = ' ';
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/enseignantAccueil.html.twig',
-    						 ['eleves'=>$listeEleves, 'nomComplet'=>$nomCompletEnseignant, 'imgProfil'=>'default']);
+    						 ['pupils'=>$pupilsList, 'nomComplet'=>$teacherFullName, 'imgProfil'=>'default']);
     }
 
     /**
@@ -46,24 +49,18 @@ class AlticController extends AbstractController
      */
     public function enfantAccueil()
     {
-        function ajouterEnseignant(Request $requete, ObjectManager $manager){
-            //Création lien
-            $utilisateur = new Utilisateur();
-            $formulaireLienEnseignant = $this -> createFormBuilder($utilisateur)
-                                              -> add('email')
-                                              -> getForm();
-            //Enregistrer après soumission
-            $formulaireLienEnseignant -> handleRequest($requete);
-            if ($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid())
-            {
-                $manager ->persist($utilisateur);
-                $manager ->flush();
-            }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        if ($user->getEstEnseignant()) {
+           return $this->redirect(
+               $this->generateUrl('altic_enseignantAccueil')
+           );
+        } else {
+            $profilePic = 'images/pupil/characters/1.png';
+            $pupilFullName = $user->getNom()." ".$user->getPrenom();
+            return $this->render('altic/enfantAccueil.html.twig',
+                                 ['nomComplet'=>$pupilFullName, 'imgProfil'=>$profilePic]);
         }
-        $imgProfil = 'images/enfant/characters/1.png';
-    	$nomCompletEleve = 'Kévin Martin';
-    	return $this->render('altic/enfantAccueil.html.twig',
-    						 ['nomComplet'=>$nomCompletEleve, 'imgProfil'=>$imgProfil,'vueFormulaireLienEnseignant'=>$formulaireLienEnseignant -> createview()]);
     }
 
     /**
@@ -93,5 +90,4 @@ class AlticController extends AbstractController
     {
         return $this->render('altic/modifierCompte.html.twig', ['nomComplet'=>'Nom Utilisateur', 'imgProfil'=>'default']);
     }
-
 }
