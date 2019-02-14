@@ -24,15 +24,15 @@
 
     				<div class="col-sm-1">
 
-                    {% if profilePic != 'default' %}
+                    {% if imgProfil != 'default' %}
                         <img src="{{ asset('images/enfant/characters/1.png') }}" class="img-thumbnail"></div>
                     {% else %}
                         <img src="{{ asset('images/utility/icons/defaultProfilePic.png') }}" class="img-thumbnail"></div>
                     {% endif %}
 
     				<div class="col-sm-2">
-                        {% if userName != '' %}
-    					   <p>{{userName}}</p>
+                        {% if nomComplet != '' %}
+    					   <p>{{nomComplet}}</p>
     					   <a href="/">Déconnexion</a>
                            <a href="/modifyAccount"><img src="{{ asset('images/utility/icons/cog.png') }}"></a>
                         {% else %}
