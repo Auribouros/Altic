@@ -10,10 +10,7 @@
     <div class="col-4"></div>
     <div class="col-4">
     <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-               value="{{ csrf_token('authenticate') }}"
+        
 
         <h1 class="h3 mb-3 font-weight-normal">Connectez-vous ici</h1>
         <label for="inputEmail" class="sr-only">Email</label>
