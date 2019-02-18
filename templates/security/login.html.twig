@@ -5,52 +5,41 @@
 
 {% block body %}
     {{ parent() }}
-<div class="jumbotron">
-<div class="row align-items-center">
-    <div class="col-4"></div>
-    <div class="col-4">
-    <form method="post">
-        
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Connectez-vous ici</h1>
-        <label for="inputEmail" class="sr-only">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-        <label for="inputPassword" class="sr-only">Mot de passe</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input type="hidden" name="_csrf_token"
-        >
+    <h1 class="h3 mb-3 font-weight-normal">Connectez vous ici</h1>
+    <label for="inputEmail" class="sr-only">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+    <label for="inputPassword" class="sr-only">Mot de passe</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
 
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
-            </div>
-        #}
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Se Connecter
-        </button>
-    </form>
-    </div>
-    <div class="col-4"></div>
-</div>
-<div class="row align-items-center">
-<div class="col-5"></div>
-    <a href="{{path('app_register')}}">Créer un compte</a>
-<div class="col-5"></div>
-</div>
-<div class="row align-items-center">
-<div class="col-5"></div>
-    <a href="{{path('altic_mdpPerdu')}}">Mot de passe oublié</a>
-<div class="col-5"></div>
-</div>
-</div>
-<h1>Aidez celestin dans ses fabuleuses aventures</h1><BR>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Se Connectez
+    </button>
+</form>
+<a href="{{path('app_register')}}">Créer un compte</a><BR>
+<a href="{{path('altic_pwdLost')}}">Mot de passe oublié</a><BR>
+<h1>Aidez celestin dans ses fabuleuse aventure</h1><BR>
 <video width="400" controls>
  <source src="{{asset('video/sauce.mp4')}}" type="video/mp4">
+ what the fuck ?
 </video>
 {% endblock %}

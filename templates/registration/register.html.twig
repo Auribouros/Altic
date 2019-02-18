@@ -1,10 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseLogin.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
     {{ parent() }}
-<div class="jumbotron">
     <h1>Register</h1>
     <div class="container">
     {{ form_start(registrationForm) }}
@@ -33,6 +32,4 @@
         <button class="btn">Register</button>
         </div>
     {{ form_end(registrationForm) }}
-    </div>
-</div>
 {% endblock %}
