@@ -9,12 +9,14 @@
         {% endblock %}
     </head>
     <header>
-        {% block header %}
+    	{% block header %}
 
-        <div>
+    	<div>
 
-            <div class="container">
+    		<div class="container">
 
+<<<<<<< HEAD
+<<<<<<< HEAD
                 
                 <div class="row align-items-center">
 
@@ -23,13 +25,45 @@
                     <div class="col-sm-7"><p class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
                     
                 </div>
+=======
+    			
+    			<div class="row align-items-center" style="position: fixed; box-shadow: 5px 10px 18px #888888; z-index: 10; background-color: white; left: 0px;">
 
-            
-            </div>
+    				<div class="col-sm-2"><a style="color: black; text-decoration: none;" href="/"><h1 style="font-family: 'adam';" class="display-1">Altic</h1></a></div>
 
-        </div>
+    				<div class="col-sm-7"><p style="font-family: 'roboto';" class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
+>>>>>>> parent of feb49bd... Mise en place du thème Sketchy sur certains headers
 
-        {% endblock %}
+    				<div class="col-sm-1">
+                            <a href="{{path('app_register')}}">Créer un compte</a>
+    				</div>
+    				
+    			</div>
+
+    		
+    		</div>
+
+=======
+    			
+    			<div class="row align-items-center" style="position: fixed; box-shadow: 5px 10px 18px #888888; z-index: 10; background-color: white; left: 0px;">
+
+    				<div class="col-sm-2"><a style="color: black; text-decoration: none;" href="/"><h1 style="font-family: 'adam';" class="display-1">Altic</h1></a></div>
+
+    				<div class="col-sm-7"><p style="font-family: 'roboto';" class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
+
+    				<div class="col-sm-1">
+                            <a href="{{path('app_register')}}">Créer un compte</a>
+    				</div>
+    				
+    			</div>
+
+    		
+    		</div>
+
+>>>>>>> parent of feb49bd... Mise en place du thème Sketchy sur certains headers
+    	</div>
+
+    	{% endblock %}
     </header>
     <body>
         {% block body %}
