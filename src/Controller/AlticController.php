@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use App\Entity\Utilisateur;
+use App\Form\modifyFormType;
+use Symfony\Component\HttpFoundation\Request;
 
 class AlticController extends AbstractController
 {
@@ -16,7 +19,6 @@ class AlticController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-    	$pupilsList = ' ';
     	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherWelcome.html.twig',
     						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
@@ -27,7 +29,9 @@ class AlticController extends AbstractController
      */
     public function teacherPupilData($name)
     {
-    	$teacherFullName = 'Jean-Pierre Ravaud';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherPupilData.html.twig',
     						 ['userName'=>$teacherFullName, 'pupilName'=>$name, 'profilePic'=>'default']);
     }
@@ -37,7 +41,10 @@ class AlticController extends AbstractController
      */
     public function teacherPupilDataTable($name, $number)
     {
-    	$teacherFullName = 'Jean-Pierre Ravaud';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$pupilsList = ' ';
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherPupilDataTable.html.twig',
     						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
@@ -69,7 +76,9 @@ class AlticController extends AbstractController
     public function pupilTable($number)
     {
         $profilePic = 'images/pupil/characters/1.png';
-    	$pupilFullName = 'Kévin Martin';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
     						 ['userName'=>$pupilFullName, 'tableNumber'=>$number, 'profilePic'=>$profilePic]);
     }
@@ -86,8 +95,31 @@ class AlticController extends AbstractController
     /**
      * @Route("/modifyAccount", name="altic_modifyAccount")
      */
-    public function modifyAccount()
+    public function modifyAccount(Request $request)
     {
-        return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur', 'profilePic'=>'default']);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        /*
+        TOFO
+        */
+        return $this->render('altic/modifyAccount.html.twig', ['userName'=>$pupilFullName, 
+        'profilePic'=>'default']);
+    }
+    
+    /**
+     * @Route("/deleteAccount", name="altic_deleteAccount")
+     */
+    public function deleteAccount(){
+        
+      $em = $this->getDoctrine()->getManager();
+      $usrRepo = $em->getRepository(Utilisateur::class);
+      $user = $this->getUser();
+      $deluser = $usrRepo->find($user->getId());
+      $em->remove($deluser);
+      $em->flush();
+        return $this->redirect(
+            $this->generateUrl('index')
+        );
     }
 }
