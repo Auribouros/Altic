@@ -72,23 +72,11 @@ class Utilisateur implements UserInterface
      */
     private $entrainement;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", inversedBy="utilisateurs")
-     */
-    private $utilisateurLie;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", mappedBy="utilisateurLie")
-     */
-    private $utilisateurs;
-
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
         $this->personnagejouable = new ArrayCollection();
         $this->entrainement = new ArrayCollection();
-        $this->utilisateurLie = new ArrayCollection();
-        $this->utilisateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -297,60 +285,6 @@ class Utilisateur implements UserInterface
             if ($entrainement->getUtilisateur() === $this) {
                 $entrainement->setUtilisateur(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getUtilisateurLie(): Collection
-    {
-        return $this->utilisateurLie;
-    }
-
-    public function addUtilisateurLie(self $utilisateurLie): self
-    {
-        if (!$this->utilisateurLie->contains($utilisateurLie)) {
-            $this->utilisateurLie[] = $utilisateurLie;
-        }
-
-        return $this;
-    }
-
-    public function removeUtilisateurLie(self $utilisateurLie): self
-    {
-        if ($this->utilisateurLie->contains($utilisateurLie)) {
-            $this->utilisateurLie->removeElement($utilisateurLie);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getUtilisateurs(): Collection
-    {
-        return $this->utilisateurs;
-    }
-
-    public function addUtilisateur(self $utilisateur): self
-    {
-        if (!$this->utilisateurs->contains($utilisateur)) {
-            $this->utilisateurs[] = $utilisateur;
-            $utilisateur->addUtilisateurLie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUtilisateur(self $utilisateur): self
-    {
-        if ($this->utilisateurs->contains($utilisateur)) {
-            $this->utilisateurs->removeElement($utilisateur);
-            $utilisateur->removeUtilisateurLie($this);
         }
 
         return $this;
