@@ -24,26 +24,22 @@
 
     				<div class="col-sm-1">
 
-                    {% if imgProfil != 'default' %}
-                        <img src="{{ asset('images/enfant/characters/1.png') }}" class="img-thumbnail"></div>
+                    {% if profilePic != 'default' %}
+                        <img src="{{ asset('images/pupil/characters/1.png') }}" class="img-thumbnail"></div>
                     {% else %}
                         <img src="{{ asset('images/utility/icons/defaultProfilePic.png') }}" class="img-thumbnail"></div>
                     {% endif %}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    				<div class="col-sm-2">
-                        {% if nomComplet != '' %}
-    					   <p>{{nomComplet}}</p>
-=======
-=======
->>>>>>> parent of feb49bd... Mise en place du thème Sketchy sur certains headers
     				<div style="font-family: 'roboto';" class="col-sm-2">
                         {% if userName != '' %}
     					   <p>{{userName}}</p>
->>>>>>> parent of feb49bd... Mise en place du thème Sketchy sur certains headers
     					   <a href="/">Déconnexion</a>
                            <a href="/modifyAccount"><img src="{{ asset('images/utility/icons/cog.png') }}"></a>
+    				<div style="font-family: 'roboto';" class="col-sm-2">
+                        {% if userName != '' %}
+    					   <p>{{userName}}</p>
+    					   <a href="/logout">Déconnexion</a>
+                           <a href="/modifyAccount"><img style="height: 20px; width: auto;" src="{{ asset('images/utility/icons/cog.png') }}"></a>
                         {% else %}
                             <a href="/">Créer un compte</a>
                         {% endif %}

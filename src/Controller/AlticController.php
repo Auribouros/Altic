@@ -10,84 +10,84 @@ class AlticController extends AbstractController
 {
 
     /**
-     * @Route("/enseignant", name="altic_enseignantAccueil")
+     * @Route("/teacher", name="altic_teacherWelcome")
      */
-    public function enseignantAccueil()
+    public function teacherWelcome()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
     	$pupilsList = ' ';
     	$teacherFullName = $user->getNom()." ".$user->getPrenom();
-    	return $this->render('altic/enseignantAccueil.html.twig',
-    						 ['pupils'=>$pupilsList, 'nomComplet'=>$teacherFullName, 'imgProfil'=>'default']);
+    	return $this->render('altic/teacherWelcome.html.twig',
+    						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     /**
-     * @Route("/enseignant/{nom}", name="altic_enseignantEnfantDonnees")
+     * @Route("/teacher/{name}", name="altic_teacherPupilData")
      */
-    public function enseignantEnfantDonnees($nom)
+    public function teacherPupilData($name)
     {
-    	$nomCompletEnseignant = 'Jean-Pierre Ravaud';
-    	return $this->render('altic/enseignantEnfantDonnees.html.twig',
-    						 ['nomComplet'=>$nomCompletEnseignant, 'nomEleve'=>$nom, 'imgProfil'=>'default']);
+    	$teacherFullName = 'Jean-Pierre Ravaud';
+    	return $this->render('altic/teacherPupilData.html.twig',
+    						 ['userName'=>$teacherFullName, 'pupilName'=>$name, 'profilePic'=>'default']);
     }
 
     /**
-     * @Route("/enseignant/{nom}/{nombre}", name="altic_enseignantEnfantDonneesTable")
+     * @Route("/teacher/{name}/{number}", name="altic_teacherPupilDataTable")
      */
-    public function enseignantEnfantDonneesTable($nom, $nombre)
+    public function teacherPupilDataTable($name, $number)
     {
-    	$nomCompletEnseignant = 'Jean-Pierre Ravaud';
-    	return $this->render('altic/enseignantEnfantDonneesTable.html.twig',
-    						 ['nomEleve'=>$nom, 'numeroTable'=>$nombre, 'nomComplet'=>$nomCompletEnseignant, 'imgProfil'=>'default']);
+    	$teacherFullName = 'Jean-Pierre Ravaud';
+    	return $this->render('altic/teacherPupilDataTable.html.twig',
+    						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     #########################################################
 
     /**
-     * @Route("/enfant", name="altic_enfant")
+     * @Route("/pupil", name="altic_pupil")
      */
-    public function enfantAccueil()
+    public function pupilWelcome()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         if ($user->getEstEnseignant()) {
            return $this->redirect(
-               $this->generateUrl('altic_enseignantAccueil')
+               $this->generateUrl('altic_teacherWelcome')
            );
         } else {
             $profilePic = 'images/pupil/characters/1.png';
             $pupilFullName = $user->getNom()." ".$user->getPrenom();
-            return $this->render('altic/enfantAccueil.html.twig',
-                                 ['nomComplet'=>$pupilFullName, 'imgProfil'=>$profilePic]);
+            return $this->render('altic/pupilWelcome.html.twig',
+                                 ['userName'=>$pupilFullName, 'profilePic'=>$profilePic]);
         }
     }
 
     /**
-     * @Route("/enfant/{nombre}", name="altic_enfantTable")
+     * @Route("/pupil/{number}", name="altic_pupilTable")
      */
-    public function enfantTable($nombre)
+    public function pupilTable($number)
     {
-        $profilePic = 'images/enfant/characters/1.png';
-    	$enfantFullName = 'Kévin Martin';
-    	return $this->render('altic/enfantTable.html.twig',
-    						 ['nomComplet'=>$nomCompletEnfant, 'numeroTable'=>$nombre, 'imgProfil'=>$imgProfil]);
+        $profilePic = 'images/pupil/characters/1.png';
+    	$pupilFullName = 'Kévin Martin';
+    	return $this->render('altic/pupilTable.html.twig',
+    						 ['userName'=>$pupilFullName, 'tableNumber'=>$number, 'profilePic'=>$profilePic]);
     }
 
     #########################################################
     /**
-     * @Route("/mdpPerdu", name="altic_mdpPerdu")
+     * @Route("/pwdLost", name="altic_pwdLost")
      */
-    public function mdpPerdu()
+    public function pwdLost()
     {
-        return $this->render('altic/mdpPerdu.html.twig', ['nomComplet'=>'', 'imgProfil'=>'default']);
+        return $this->render('altic/pwdLost.html.twig', ['userName'=>'', 'profilePic'=>'default']);
     }
 
     /**
-     * @Route("/modifierCompte", name="altic_modifierCompte")
+     * @Route("/modifyAccount", name="altic_modifyAccount")
      */
-    public function modifierCompte()
+    public function modifyAccount()
     {
-        return $this->render('altic/modifierCompte.html.twig', ['nomComplet'=>'Nom Utilisateur', 'imgProfil'=>'default']);
+        return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur', 'profilePic'=>'default']);
     }
 }
