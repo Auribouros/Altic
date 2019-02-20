@@ -44,6 +44,68 @@ class AlticController extends AbstractController
 
     #########################################################
 
+    private function generateAdvice($totalMastery, $minimalMastery)
+    {
+        $isMastered = true;
+        $isTotallyMastered = true;
+        $advice1 = '';
+        $advice2 = '';
+        $levels = array(
+            0 => 2,
+            1 => 5,
+            2 => 10,
+            3 => 1,
+            4 => 4,
+            5 => 3,
+            6 => 0,
+            7 => 6,
+            8 => 8,
+            9 => 9,
+            10 => 7
+        );
+        $maxColumn = 0;
+
+                //find level on which to provide advice
+            //check if a time table is not mastered
+                //init
+        $analysedColumn = 0;
+                //find
+        while ($analysedColumn != 11) {
+            
+            if ($minimalMastery[$analysedColumn] == false) {
+                $advice1 = $levels[$analysedColumn];
+                $isMastered = false;
+                $isTotallyMastered = false;
+                break;
+            }
+
+            $analysedColumn++;
+
+        }
+
+        $maxColumn = $analysedColumn;
+            //check if a timetable is not totally mastered
+        if ($maxColumn != 0) {
+                //init
+            $analysedColumn = 0;
+                //find
+            while ($analysedColumn != $maxColumn) {
+
+                if ($totalMastery[$analysedColumn] == false) {
+
+                    ($advice2 != '')? $advice2 += ', ' : $isTotallyMastered = false;
+                    $advice2 += $levels[$analysedColumn];
+
+                }
+
+                $analysedColumn++;
+
+            }
+        }//END IF
+
+        return ['advice1' => $advice1, 'advice2' => $advice2];
+    }
+
     /**
      * @Route("/pupil", name="altic_pupil")
      */
@@ -58,8 +120,55 @@ class AlticController extends AbstractController
         } else {
             $profilePic = 'images/pupil/characters/1.png';
             $pupilFullName = $user->getNom()." ".$user->getPrenom();
+
+            //initialise mastery levels to non mastered
+            $minimalMastery = array();
+            $totalMastery = array();
+            $minimalMasteryLevel = 9;
+            $totalMasteryLevel = 12;
+            $tableOrderIndexFromLevel = 0;
+
+            for ($i=0; $i < 11; $i++) { 
+                $minimalMastery[$i] = false;
+                $totalMastery[$i] = false;
+            }
+
+            //get all mastered levels and asign them properly to mastery levels
+            $masteredLevels = $user->getNiveaux();
+
+            foreach ($masteredLevels as $level) {
+
+                $tmpLevelNb = $level->getNumero();
+                $tableOrderIndexFromLevel = 0;
+
+                while ($tmpLevelNb > 0) {
+
+                    if ($tmpLevelNb == $minimalMasteryLevel) {
+                        $minimalMastery[$tableOrderIndexFromLevel] = true;
+                        break;
+                    }
+                    else if ($tmpLevelNb == $totalMasteryLevel) {
+                        $minimalMastery[$tableOrderIndexFromLevel] = true;
+                        $totalMasteryLevel[$tableOrderIndexFromLevel] = true;
+                        break;
+                    }
+
+                    $tmpLevelNb -= $totalMasteryLevel;
+                    $tableOrderIndexFromLevel++;
+                }
+            }
+
+            $advice = $this->generateAdvice($minimalMastery, $totalMastery);
+            $advice1 = 'Je te conseille d\'aider ' . $advice['advice1'];
+            $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\aider' . $advice['advice2'] : '';
+
             return $this->render('altic/pupilWelcome.html.twig',
-                                 ['userName'=>$pupilFullName, 'profilePic'=>$profilePic]);
+                                 [
+                                    'userName'=>$pupilFullName,
+                                    'profilePic'=>$profilePic,
+                                    'advice1'=>$advice1,
+                                    'advice2'=>$advice2
+                                ]);
         }
     }
 

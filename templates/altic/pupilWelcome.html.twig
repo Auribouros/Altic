@@ -11,10 +11,10 @@
 
 	<!--map and Constantin-->
 	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam'] %}
-	<div class="row align-items-end">
+	<div class="row align-items-center"  style="padding: 10px; background-image: url({{ asset('images/pupil/map/sea.png') }});">
 		<!--map-->
 		<div class="col-9">
-			<div class="row align-items-center" style="padding: 10px; background-image: url({{ asset('images/pupil/map/sea.png') }});">
+			<div class="row align-items-center">
 			<div class="row">
 				{% for i in 1..5 %}
 				<div class="col text-center">
@@ -33,7 +33,7 @@
 		</div>
 		<!--Constantin-->
 		<div class="col-3">
-			<h4 style="font-weight: bold;">Bonjour, je suis Constantin ! BlablaBlablaBlablaBlablaBlabla</h4 style="font-weight: bold;">
+			<h4 style="color: white; font-weight: bold;">Bonjour, je suis Constantin ! {{ advice1 }}. {{ advice2 }}</h4 style="font-weight: bold;">
 			<img class="img-fluid" src="{{ asset('images/pupil/characters/21.png') }}">
 		</div>
 	</div>
