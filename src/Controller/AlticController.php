@@ -58,9 +58,28 @@ class AlticController extends AbstractController
         } else {
             $profilePic = 'images/pupil/characters/1.png';
             $pupilFullName = $user->getNom()." ".$user->getPrenom();
+            $levelArray = $user-> getNiveaux();
+            $percentArray = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            $nbMax=0;
+            $percentArray[0]=(int)(sizeof($levelArray)/132);
+            foreach ($levelArray as $level){
+                if($level->getNumero()>$nbMax){
+                    if($level->getNumero()%12==0&&$level->getNumero()/12!=0){
+                        $percentArray[$level->getNumero()/12] = 100;
+                    }
+                    if($level->getNumero()-12*(int)($level->getNumero()/12) <0){
+                        $percentArray[(int)($level->getNumero()/12)] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                    }
+
+                } 
+
+
+            }
             return $this->render('altic/pupilWelcome.html.twig',
-                                 ['userName'=>$pupilFullName, 'profilePic'=>$profilePic]);
+                                 ['userName'=>$pupilFullName, 'profilePic'=>$profilePic,'percentArray'=>$percentArray]);
         }
+        
+
     }
 
     /**
