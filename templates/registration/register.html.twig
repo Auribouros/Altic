@@ -17,7 +17,7 @@
         {{ form_row(registrationForm._token) }}
         {{form_row(registrationForm.avatar)}}
         <button class="btn btn-lg btn-primary">Créer</button>
-    {{ form_end(registrationForm) }}
+    {{ form_end(registrationForm, {'render_rest':false}) }}
 </div>
 </div>
 {% endblock %}
