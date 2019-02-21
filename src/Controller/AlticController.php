@@ -162,13 +162,6 @@ class AlticController extends AbstractController
             $advice1 = 'Je te conseille d\'aider ' . $advice['advice1'];
             $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\aider' . $advice['advice2'] : '';
 
-            /*return $this->render('altic/pupilWelcome.html.twig',
-                                 [
-                                    'userName'=>$pupilFullName,
-                                    'profilePic'=>$profilePic,
-                                    'advice1'=>$advice1,
-                                    'advice2'=>$advice2
-                                ]);*/
             $levelArray = $user-> getNiveaux();
             $percentArray = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             $nbMax=0;
@@ -192,7 +185,8 @@ class AlticController extends AbstractController
                                  'profilePic'=>$profilePic,
                                  'advice1'=>$advice1,
                                  'advice2'=>$advice2,
-                                 'percentArray'=>$percentArray
+                                 'percentArray'=>$percentArray,
+                                 'debug'=>$masteredLevels
                                 ]);
         }
         
