@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use App\Entity\Utilisateur;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\ModifyAccountType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AlticController extends AbstractController
 {
@@ -21,7 +23,7 @@ class AlticController extends AbstractController
         $user = $this->getUser();
     	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherWelcome.html.twig',
-    						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+    						 ['pupils'=>'', 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     /**
@@ -95,16 +97,35 @@ class AlticController extends AbstractController
     /**
      * @Route("/modifyAccount", name="altic_modifyAccount")
      */
-    public function modifyAccount(Request $request)
+    public function modifyAccount(Request $request,UserPasswordEncoderInterface $encoder)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
-        /*
-        TOFO
-        */
+        $form = $this->createForm(ModifyAccountType::class);
+        
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $modifyData= $form->getData();
+            if($encoder->isPasswordValid($user,$modifyData['oldPassword'])){
+                $user->setPassword( 
+                    $encoder->encodePassword(
+                        $user,
+                        $modifyData['newPassword']
+                    )
+                 );
+                 $entityManager= $this->getDoctrine()->getManager();
+                 $entityManager->persist($user);
+                 $entityManager->flush();
+            }else{
+                $this->addFlash(
+                    'notice',
+                    'mot de passe incorect!'
+                );
+            }
+        }
         return $this->render('altic/modifyAccount.html.twig', ['userName'=>$pupilFullName, 
-        'profilePic'=>'default']);
+        'profilePic'=>'default','modifyForm'=>$form->createView()]);
     }
     
     /**
@@ -113,13 +134,15 @@ class AlticController extends AbstractController
     public function deleteAccount(){
         
       $em = $this->getDoctrine()->getManager();
+      $id = $this->getUser()->getId();
+
       $usrRepo = $em->getRepository(Utilisateur::class);
-      $user = $this->getUser();
-      $deluser = $usrRepo->find($user->getId());
+      $deluser = $usrRepo->find($id);
       $em->remove($deluser);
       $em->flush();
-        return $this->redirect(
-            $this->generateUrl('index')
-        );
+        $session = $this->get('session');
+        $session = new Session();
+        $session->invalidate();
+        return $this->redirectToRoute("index");
     }
 }

@@ -4,7 +4,7 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Register</h1>
+    <h1>Créer un compte</h1>
 
     {{ form_start(registrationForm) }}
         {{form_row(registrationForm.estEnseignant)}}
@@ -14,6 +14,6 @@
         {{ form_row(registrationForm.password) }}
         {{ form_row(registrationForm._token) }}
         {{form_row(registrationForm.avatar)}}
-        <button class="btn">Register</button>
+        <button class="btn" type="submit">Création</button>
     {{ form_end(registrationForm) }}
 {% endblock %}
