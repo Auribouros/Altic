@@ -23,8 +23,14 @@
 
 		<div class="col"></div>
 		<div class="col">
-			{% for image in images %}
-			<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ image) }}">
+			{% for i in 0..11 %}
+			{% if images[i] != 'startMAP.png' and images[i] != 'endMAP.png' and bCanPlay[i-1] == true %}
+				<a href="#">
+					<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
+				</a>
+			{% else %}
+				<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
+			{% endif %}
 			{% endfor %}
 		</div>
 		<div class="col"></div>

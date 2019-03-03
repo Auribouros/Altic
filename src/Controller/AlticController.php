@@ -176,18 +176,15 @@ class AlticController extends AbstractController
             $nbMax=0;
             $percentArray[0]=(int)(sizeof($levelArray)/132);
             foreach ($levelArray as $level){
-                if($level->getNumero()>$nbMax){
-                    if($level->getNumero()%12==0&&$level->getNumero()/12!=0){
-                        $percentArray[$level->getNumero()/12] = 100;
-                    }
-                    if($level->getNumero()-12*(int)($level->getNumero()/12) <0){
-                        $percentArray[(int)($level->getNumero()/12)] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
-                    }
-
-                } 
-
+                if($level->getNumero()%12==0&&$level->getNumero()/12!=0){
+                    $percentArray[$level->getNumero()/12] = 100;
+                }
+                if($level->getNumero()-12*(int)($level->getNumero()/12) <0){
+                    $percentArray[(int)($level->getNumero()/12)] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                }
 
             }
+
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
                                  'userName'=>$pupilFullName,
@@ -207,7 +204,12 @@ class AlticController extends AbstractController
      */
     public function pupilTable($number)
     {
-        $map0 = array('startMAP.png', 'castleMAP.png', 'endMAP.png');
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+
+        //arrays representing the games order
+        $map0 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
         $map1 = array('startMAP.png', 'endMAP.png');
         $map2 = array('startMAP.png', 'endMAP.png');
         $map3 = array('startMAP.png', 'endMAP.png');
@@ -218,20 +220,53 @@ class AlticController extends AbstractController
         $map8 = array('startMAP.png', 'endMAP.png');
         $map9 = array('startMAP.png', 'endMAP.png');
         $map10 = array('startMAP.png', 'endMAP.png');     
-        $maps = array($map0, $map1, $map2, $map3, $map4, $map5, $map6, $map7, $map8, $map9, $map10);
+        $maps = array($map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0);
         $images = $maps[$number];
 
+        //array telling if the level can be played, each element representing a level
+        $bCanPlay = array_fill(0, 12, false);
+        $alreadyMasteredLevels = array();
+        //the range of levels in this context
+        $range = array('min'=>$number*12, 'max'=>$number*12+12);
+        $masteredLevels = $user->getNiveaux();
+
+        //get all mastered levels in range
+        if (sizeof($masteredLevels) > 0) {
+            foreach ($masteredLevels as $level) {
+                    
+                if ($level->getNumero() >= $range['min'] && $level->getNumero() <= $range['max']) {
+                    array_push($alreadyMasteredLevels, $level);
+                }
+
+            }
+        }
+        //set bCanPlay accordingly
+        if (sizeof($alreadyMasteredLevels) > 0) {
+            $bCanPlay[sizeof($alreadyMasteredLevels)] = true;
+        }
+        else {
+            $bCanPlay[0] = true;
+        }
+
         $profilePic = 'images/pupil/characters/1.png';
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $user = $this->getUser();
     	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
     						 [
                                 'userName'=>$pupilFullName,
                                 'tableNumber'=>$number,
                                 'profilePic'=>$profilePic,
-                                'images'=>$images
+                                'images'=>$images,
+                                'bCanPlay'=>$bCanPlay
                             ]);
+    }
+
+    /**
+     * @Route("/pupil/{tableNumber}/{levelNumber}", name="altic_pupilTraining")
+     */
+    public function pupilTraining($tableNumber, $levelNumber)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
     }
 
     #########################################################
