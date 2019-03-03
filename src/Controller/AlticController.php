@@ -207,7 +207,7 @@ class AlticController extends AbstractController
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-        
+
         //arrays representing the games order
         $map0 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
         $map1 = array('startMAP.png', 'endMAP.png');
@@ -258,6 +258,15 @@ class AlticController extends AbstractController
                                 'images'=>$images,
                                 'bCanPlay'=>$bCanPlay
                             ]);
+    }
+
+    /**
+     * @Route("/pupil/{tableNumber}/{levelNumber}", name="altic_pupilTraining")
+     */
+    public function pupilTraining($tableNumber, $levelNumber)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
     }
 
     #########################################################
