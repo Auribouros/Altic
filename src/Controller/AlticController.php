@@ -376,11 +376,20 @@ class AlticController extends AbstractController
             }
         }
         //set bCanPlay accordingly
-        if (sizeof($alreadyMasteredLevels) > 0) {
-            $bCanPlay[sizeof($alreadyMasteredLevels)] = true;
+        if (sizeof($alreadyMasteredLevels) > 0 && sizeof($alreadyMasteredLevels) < 12) {
+            for ($i=0; $i <= sizeof($alreadyMasteredLevels); $i++) { 
+                $bCanPlay[$i] = true;
+            }
+        }
+        else if(sizeof($alreadyMasteredLevels) == 0) {
+            $bCanPlay[0] = true;
         }
         else {
-            $bCanPlay[0] = true;
+
+            for ($i=0; $i < 12; $i++) { 
+                $bCanPlay[$i] = true;
+            }
+
         }
 
         $profilePic = 'images/pupil/characters/1.png';
