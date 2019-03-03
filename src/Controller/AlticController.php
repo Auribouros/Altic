@@ -329,13 +329,11 @@ class AlticController extends AbstractController
                 $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
                 $teacher = $repositoryUtilisateur->findOneTeacherByEmail($mailTeacher);
                 $id = $this->getUser()->getId();
-                $verifuser = $repositoryUtilisateur->find($id);
-                if($verifuser){
-                    
-                }
+                $user->addProfesseurLie($teacher);
             }
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
+                                    'addTeacher'=>$addTeacher->createView(),
                                  'userName'=>$pupilFullName,
                                  'profilePic'=>$profilePic,
                                  'advice1'=>$advice1,

@@ -72,11 +72,23 @@ class Utilisateur implements UserInterface
      */
     private $entrainement;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", inversedBy="elevesLie")
+     */
+    private $professeurLie;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", mappedBy="professeurLie")
+     */
+    private $elevesLie;
+
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
         $this->personnagejouable = new ArrayCollection();
         $this->entrainement = new ArrayCollection();
+        $this->professeurLie = new ArrayCollection();
+        $this->elevesLie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -285,6 +297,60 @@ class Utilisateur implements UserInterface
             if ($entrainement->getUtilisateur() === $this) {
                 $entrainement->setUtilisateur(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getProfesseurLie(): Collection
+    {
+        return $this->professeurLie;
+    }
+
+    public function addProfesseurLie(self $professeurLie): self
+    {
+        if (!$this->professeurLie->contains($professeurLie)) {
+            $this->professeurLie[] = $professeurLie;
+        }
+
+        return $this;
+    }
+
+    public function removeProfesseurLie(self $professeurLie): self
+    {
+        if ($this->professeurLie->contains($professeurLie)) {
+            $this->professeurLie->removeElement($professeurLie);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getElevesLie(): Collection
+    {
+        return $this->elevesLie;
+    }
+
+    public function addElevesLie(self $elevesLie): self
+    {
+        if (!$this->elevesLie->contains($elevesLie)) {
+            $this->elevesLie[] = $elevesLie;
+            $elevesLie->addProfesseurLie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeElevesLie(self $elevesLie): self
+    {
+        if ($this->elevesLie->contains($elevesLie)) {
+            $this->elevesLie->removeElement($elevesLie);
+            $elevesLie->removeProfesseurLie($this);
         }
 
         return $this;
