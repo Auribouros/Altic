@@ -11,6 +11,31 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+class Answer
+{
+    private $answer;
+    function __construct($ans)
+    {
+        $this->answer=$ans;
+    }
+    public function getAnswer(){
+        return $this->answer;
+    }
+}
+    
+class Question{
+    private $question ="";
+    public $answers;
+    function __construct($text)
+    {
+        $this->question=$text;
+    }
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+}
+
 class AlticController extends AbstractController
 {
 
@@ -52,6 +77,116 @@ class AlticController extends AbstractController
     }
 
     #########################################################
+
+    private function generateQuestions($table, $level)
+    {
+        /*
+        INITIALISATION
+        */
+        //generate questions
+        $value=0;
+        //calculate begining and end
+        switch ($level->getOrdreDesQuestions()) {
+            case 'croissant':
+                $begining=0;
+                $ending=11;
+                $inc=1;
+                break;
+            case 'decroissant':
+                $begining=10;
+                $ending=-1;
+                $inc=-1;
+                break;
+            default:
+                $ending=0;
+                $begining=0;
+                $inc=-2;
+                break;
+        }
+         //generate questions
+        if ($inc==-2) {
+            //random question
+            do {
+                $value=rand(0,10);
+                if (! isset($questions[$value])) {
+                    $questions[$value]=new Question("$table x $value");
+                    $begining += 1;
+                }
+            } while ($begining<11);
+        }else {
+            //ordered question
+            for ($i=$begining; $i!=$ending ; $i+=$inc) {
+                $questions[$i]=new Question("$table x $i");
+            }
+        }
+
+        return $questions;
+    }
+
+    private function generateAnswers($table, $questions, $level)
+    {
+        foreach ($questions as $key=> $value) {
+        /*
+        INITIALISATION
+        */
+        unset($answers);
+        $ARightAnswer=false;
+        $i=0;
+        $nbOfSameAnswers=0; 
+        $nbOfCurrentRandomAnswer=0;
+        //calculate the number of random answers
+        $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
+
+        /*
+            generate answers
+        */
+        while ($i!=$level->getNombreDeReponses()) {
+            $answerType=rand(0,3);
+            switch ($answerType) {
+                case 0:
+                if( ! $ARightAnswer){
+                    //generate the right answer
+                    $answers[$table*$key]=new Answer("".$table*$key);
+                    $ARightAnswer=true;
+                    $i+=1;
+                }
+                break;
+                case 1:
+                    //generate an answer from the same table
+                    if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
+                        $aMultiplier=rand(0,10);
+                        if( ! isset($answers[$table*$aMultiplier])){
+                       $answers[$table*$aMultiplier]=new Answer("".$table*$aMultiplier);
+                        $nbOfSameAnswers+=1;
+                        $i+=1;
+                        }
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    //generate everything else
+                    if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
+                        $valeur=rand(0,$level->ecartEntreLesReponse);
+                        $estAddition =rand(0,1);
+                        if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
+                            if ($estAddition==1) {
+                                $answers[$table*$key+$valeur]=new Answer("".$table*$key+$valeur);
+                            } else {
+                                $answers[$table*$key-$valeur]= new Answer("".$table*$key-$valeur);
+                            }
+                            $nbOfCurrentRandomAnswer+=1;
+                            $i+=1;
+                        }
+                    }
+                    break;
+                }
+            }
+            $value->answers=$answers;
+        }
+
+        return $questions;
+    }
 
     private function generateAdvice($totalMastery, $minimalMastery)
     {
@@ -267,6 +402,12 @@ class AlticController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
+        $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
+        $level = $repositoryNiveau->findBy(["numero" => $levelNumber]);
+
+        $questionsAnswers = generateAnswers($tableNumber, generateQuestions($tableNumber, $level), $level);
+
+        return $this->render('altic/game.html.twig', ['questionsAndAnswers'=>$questionsAnswers]);
     }
 
     #########################################################
