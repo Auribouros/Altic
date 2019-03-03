@@ -18,219 +18,196 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-    	$rep1 = new ReponsePropose();
-    	$rep2 = new ReponsePropose();
-    	$rep3 = new ReponsePropose();
+        $tablesOrder = array(2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7);
+        $baseLevels = array_fill(0, 12, new Niveau());
+        $games = array_fill(0, 4, new Jeu());
+        $tables = array_fill(0, 11, new TableDeMultiplication());
+        $levels = array_fill(0, 132, new Niveau());
+        $regions = array_fill(0, 11, new Region());
 
-    	$quest1 = new Question();
-    	$quest2 = new Question();
-    	$quest3 = new Question();
+        //baseLevels init
+            $baseLevels[0]->setNumero(-1);
+            $baseLevels[0]->setEcartEntreLesReponses(10);
+            $baseLevels[0]->setNombreDeReponses(3);
+            $baseLevels[0]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[0]->setReponsesSimilaires(false);
+            $baseLevels[0]->setTempsDisponible(null);
+            $baseLevels[0]->setOrdreDesQuestions('croissant');
+            $baseLevels[0]->setQuestionsATrous(false);
+            //
+            $baseLevels[1]->setNumero(-1);
+            $baseLevels[1]->setEcartEntreLesReponses(10);
+            $baseLevels[1]->setNombreDeReponses(3);
+            $baseLevels[1]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[1]->setReponsesSimilaires(false);
+            $baseLevels[1]->setTempsDisponible(null);
+            $baseLevels[1]->setOrdreDesQuestions('decroissant');
+            $baseLevels[1]->setQuestionsATrous(false);
+            //
+            $baseLevels[2]->setNumero(-1);
+            $baseLevels[2]->setEcartEntreLesReponses(7);
+            $baseLevels[2]->setNombreDeReponses(3);
+            $baseLevels[2]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[2]->setReponsesSimilaires(true);
+            $baseLevels[2]->setTempsDisponible(null);
+            $baseLevels[2]->setOrdreDesQuestions('aleatoire');
+            $baseLevels[2]->setQuestionsATrous(false);
+            //
+            $baseLevels[3]->setNumero(-1);
+            $baseLevels[3]->setEcartEntreLesReponses(7);
+            $baseLevels[3]->setNombreDeReponses(4);
+            $baseLevels[3]->setNbReponsesProposeesDeLaMemeTable(1);
+            $baseLevels[3]->setReponsesSimilaires(false);
+            $baseLevels[3]->setTempsDisponible(30);
+            $baseLevels[3]->setOrdreDesQuestions('croissant');
+            $baseLevels[3]->setQuestionsATrous(false);
+            //
+            $baseLevels[4]->setNumero(-1);
+            $baseLevels[4]->setEcartEntreLesReponses(5);
+            $baseLevels[4]->setNombreDeReponses(4);
+            $baseLevels[4]->setNbReponsesProposeesDeLaMemeTable(1);
+            $baseLevels[4]->setReponsesSimilaires(false);
+            $baseLevels[4]->setTempsDisponible(20);
+            $baseLevels[4]->setOrdreDesQuestions('decroissant');
+            $baseLevels[4]->setQuestionsATrous(false);
+            //
+            $baseLevels[5]->setNumero(-1);
+            $baseLevels[5]->setEcartEntreLesReponses(5);
+            $baseLevels[5]->setNombreDeReponses(4);
+            $baseLevels[5]->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevels[5]->setReponsesSimilaires(true);
+            $baseLevels[5]->setTempsDisponible(10);
+            $baseLevels[5]->setOrdreDesQuestions('aleatoire');
+            $baseLevels[5]->setQuestionsATrous(false);
+            //
+            $baseLevels[6]->setNumero(-1);
+            $baseLevels[6]->setEcartEntreLesReponses(5);
+            $baseLevels[6]->setNombreDeReponses(4);
+            $baseLevels[6]->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevels[6]->setReponsesSimilaires(true);
+            $baseLevels[6]->setTempsDisponible(10);
+            $baseLevels[6]->setOrdreDesQuestions('croissant');
+            $baseLevels[6]->setQuestionsATrous(false);
+            //
+            $baseLevels[7]->setNumero(-1);
+            $baseLevels[7]->setEcartEntreLesReponses(10);
+            $baseLevels[7]->setNombreDeReponses(null);
+            $baseLevels[7]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[7]->setReponsesSimilaires(false);
+            $baseLevels[7]->setTempsDisponible(20);
+            $baseLevels[7]->setOrdreDesQuestions('croissant');
+            $baseLevels[7]->setQuestionsATrous(true);
+            //
+            $baseLevels[8]->setNumero(-1);
+            $baseLevels[8]->setEcartEntreLesReponses(10);
+            $baseLevels[8]->setNombreDeReponses(null);
+            $baseLevels[8]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[8]->setReponsesSimilaires(false);
+            $baseLevels[8]->setTempsDisponible(10);
+            $baseLevels[8]->setOrdreDesQuestions('croissant');
+            $baseLevels[8]->setQuestionsATrous(true);
+            //
+            $baseLevels[9]->setNumero(-1);
+            $baseLevels[9]->setEcartEntreLesReponses(10);
+            $baseLevels[9]->setNombreDeReponses(null);
+            $baseLevels[9]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[9]->setReponsesSimilaires(false);
+            $baseLevels[9]->setTempsDisponible(10);
+            $baseLevels[9]->setOrdreDesQuestions('croissant');
+            $baseLevels[9]->setQuestionsATrous(true);
+            //
+            $baseLevels[10]->setNumero(-1);
+            $baseLevels[10]->setEcartEntreLesReponses(10);
+            $baseLevels[10]->setNombreDeReponses(null);
+            $baseLevels[10]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[10]->setReponsesSimilaires(false);
+            $baseLevels[10]->setTempsDisponible(10);
+            $baseLevels[10]->setOrdreDesQuestions('croissant');
+            $baseLevels[10]->setQuestionsATrous(true);
+            //
+            $baseLevels[11]->setNumero(-1);
+            $baseLevels[11]->setEcartEntreLesReponses(10);
+            $baseLevels[11]->setNombreDeReponses(null);
+            $baseLevels[11]->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevels[11]->setReponsesSimilaires(false);
+            $baseLevels[11]->setTempsDisponible(10);
+            $baseLevels[11]->setOrdreDesQuestions('croissant');
+            $baseLevels[11]->setQuestionsATrous(true);
+            //
+        //persist baseLevels
+        foreach ($baseLevels as $level) {
+            $manager->persist($level);
+        }
 
-    	$ent1 = new Entrainement();
-    	$ent2 = new Entrainement();
-    	$ent3 = new Entrainement();
+        //games init
+            $games[0]->setCheminAcces('altic/cave.html.twig');
+            $games[1]->setCheminAcces('altic/moutain.html.twig');
+            $games[2]->setCheminAcces('altic/doors.html.twig');
+            $games[3]->setCheminAcces('altic/fishing.html.twig');
+        //persist games
+        foreach ($games as $game) {
+            $manager->persist($game);
+        }
 
-    	$pj1 = new PersonnageJouable();
-    	$pj2 = new PersonnageJouable();
-    	$pj3 = new PersonnageJouable();
+        //regions init
+            $regions[0]->setNom('');
+            $regions[0]->setImgMagicien('');
+            //
+            $regions[1]->setNom('');
+            $regions[1]->setImgMagicien('');
+            //
+            $regions[2]->setNom('');
+            $regions[2]->setImgMagicien('');
+            //
+            $regions[3]->setNom('');
+            $regions[3]->setImgMagicien('');
+            //
+            $regions[4]->setNom('');
+            $regions[4]->setImgMagicien('');
+            //
+            $regions[5]->setNom('');
+            $regions[5]->setImgMagicien('');
+            //
+            $regions[6]->setNom('');
+            $regions[6]->setImgMagicien('');
+            //
+            $regions[7]->setNom('');
+            $regions[7]->setImgMagicien('');
+            //
+            $regions[8]->setNom('');
+            $regions[8]->setImgMagicien('');
+            //
+            $regions[9]->setNom('');
+            $regions[9]->setImgMagicien('');
+            //
+            $regions[10]->setNom('');
+            $regions[10]->setImgMagicien('');
+            //
 
-    	$jeu1 = new Jeu();
-    	$jeu2 = new Jeu();
-    	$jeu3 = new Jeu();
-    	$jeu4 = new Jeu();
+        //levels init
+            for ($i=0; $i < 11; $i++) { 
+                for ($j=1; $j < 13; $j++) { 
+                    $currentLevel = $levels[$i*12+($j-1)];
+                    $currentLevel->setNumero($i*12+$j);
+                    $currentLevel->setEcartEntreLesReponses($baseLevels[$j-1]->getEcartEntreLesReponses());
+                    $currentLevel->setNombreDeReponses($baseLevels[$j-1]->getNombreDeReponses());
+                    $currentLevel->setNbReponsesProposeesDeLaMemeTable($baseLevels[$j-1]->getNbReponsesProposeesDeLaMemeTable());
+                    $currentLevel->setReponsesSimilaires($baseLevels[$j-1]->getReponsesSimilaires());
+                    $currentLevel->setTempsDisponible($baseLevels[$j-1]->getTempsDisponible());
+                    $currentLevel->setOrdreDesQuestions($baseLevels[$j-1]->getOrdreDesQuestions());
+                    $currentLevel->setQuestionsATrous($baseLevels[$j-1]->getQuestionsATrous());
+                }
+            }
 
-    	$eleve1 = new Utilisateur();
-    	$eleve2 = new Utilisateur();
-    	$eleve3 = new Utilisateur();
-
-    	$table0 = new TableDeMultiplication();
-    	$table1 = new TableDeMultiplication();
-    	$table2 = new TableDeMultiplication();
-    	$table3 = new TableDeMultiplication();
-    	$table4 = new TableDeMultiplication();
-    	$table5 = new TableDeMultiplication();
-    	$table6 = new TableDeMultiplication();
-    	$table7 = new TableDeMultiplication();
-    	$table8 = new TableDeMultiplication();
-    	$table9 = new TableDeMultiplication();
-    	$table10 = new TableDeMultiplication();    	
-
-		$niveau1 = new Niveau();
-		$niveau2 = new Niveau();
-		$niveau3 = new Niveau();
-
-		$region1 = new Region();
-		$region2 = new Region();
-		$region3 = new Region();
-
-
-		$rep1->setReponse(3);
-		$manager->persist($rep1);
-
-		$rep2->setReponse(4);
-		$manager->persist($rep2);
-
-		$rep3->setReponse(5);
-		$manager->persist($rep3);
-
-
-		$quest1->setLibelle('3 X 4 =');
-		$quest1->setReponseEnfant(9);
-		$manager->persist($quest1);
-
-		$quest2->setLibelle('3 X 3 =');
-		$quest2->setReponseEnfant(9);
-		$manager->persist($quest2);
-
-		$quest3->setLibelle('3 X 2 =');
-		$quest3->setReponseEnfant(4);
-		$manager->persist($quest3);
-
-
-		$ent1->setDuree(150);
-		$ent1->setDate(date_create('2014-04-05'));
-		$manager->persist($ent1);
-
-		$ent2->setDuree(145);
-		$ent2->setDate(date_create('2014-04-04'));
-		$manager->persist($ent2);
-
-		$ent3->setDuree(150);
-		$ent3->setDate(date_create('2014-04-03'));
-		$manager->persist($ent3);
-
-
-		$pj1->setPersonnageDebloque(True);
-		$pj1->setImage("imgPerso1.jpg");
-		$manager->persist($pj1);
-
-		$pj2->setPersonnageDebloque(False);
-		$pj2->setImage("imgPerso2.jpg");
-		$manager->persist($pj2);
-
-		$pj3->setPersonnageDebloque(True);
-		$pj3->setImage("imgPerso3.jpg");
-		$manager->persist($pj3);
-
-
-    	$region1->setNom("nomRegion1");
-    	$region1->setImgMagicien("imgMag1.jpg");
-    	$region1->setTableDeMultiplication($table0);
-    	$manager->persist($region1);
-
-    	$region2->setNom("nomRegion2");
-    	$region2->setImgMagicien("imgMag2.jpg");
-    	$region2->setTableDeMultiplication($table1);
-    	$manager->persist($region2);
-
-    	$region3->setNom("nomRegion3");
-    	$region3->setImgMagicien("imgMag3.jpg");
-    	$region3->setTableDeMultiplication($table2);
-    	$manager->persist($region3);
-		
-
-      	$jeu1->setCheminAcces("le_chemin_du_jeu_1");
-    	$jeu1->addNiveau($niveau1);
-    	$manager->persist($jeu1);
-
-    	$jeu2->setCheminAcces("le_chemin_du_jeu_2");
-    	$jeu2->addNiveau($niveau2);
-    	$manager->persist($jeu2);
-
-    	$jeu3->setCheminAcces("le_chemin_du_jeu_3");
-    	$jeu3->addNiveau($niveau3);
-    	$manager->persist($jeu3);
-
-    	$jeu4->setCheminAcces("le_chemin_du_jeu_4");
-    	$manager->persist($jeu4);
-
-
-        $eleve1->setEmail("raguer@mail.com");
-        $eleve1->setAvatar("img1.jpg");
-        $eleve1->setNom("Aguer");
-        $eleve1->setPrenom("Rémi");
-        $eleve1->setPassword('$argon2i$v=19$m=1024,t=2,p=2$R3VJdVpzSEdlWjlSSHouQg$CdIo5XUgcGf5Q4D25Z4wKFykr9CevPuZn3fdxre0T6A');
-        $eleve1->setEstEnseignant(False);
-        $manager->persist($eleve1);
-
-        $eleve2 = $eleve1;
-        $eleve3 = $eleve1;
-        $manager->persist($eleve2);
-        $manager->persist($eleve3);
-
-
-        $table0->setNumero(0);
-        $table0->setRegion($region1);
-        $manager->persist($table0);
-
-        $table1->setNumero(1);
-        $table1->setRegion($region2);
-        $manager->persist($table1);
-
-        $table2->setNumero(2);
-        $table2->setRegion($region3);
-        $manager->persist($table2);
-
-        $table3->setNumero(3);
-        $manager->persist($table3);
-
-        $table4->setNumero(4);
-        $manager->persist($table4);
-
-        $table5->setNumero(5);
-        $manager->persist($table5);
-
-        $table6->setNumero(6);
-        $manager->persist($table6);
-
-        $table7->setNumero(7);
-        $manager->persist($table7);
-
-        $table8->setNumero(8);
-        $manager->persist($table8);
-
-        $table9->setNumero(9);
-        $manager->persist($table9);
-
-        $table10->setNumero(10);
-        $manager->persist($table10);
-
-		
-        $niveau1->setNumero(1);
-        $niveau1->setEcartEntreLesReponses(10);
-        $niveau1->setNombreDeReponses(3);
-        $niveau1->setNbReponsesProposeesDeLaMemeTable(0);
-        $niveau1->setReponsesSimilaires(False);
-        $niveau1->setTempsDisponible(100);
-        $niveau1->setOrdreDesQuestions("croissant");
-        $niveau1->setQuestionsATrous(False);
-        $niveau1->setJeu($jeu1);
-        $manager->persist($niveau1);
-
-        $niveau2->setNumero(2);
-        $niveau2->setEcartEntreLesReponses(10);
-        $niveau2->setNombreDeReponses(3);
-        $niveau2->setNbReponsesProposeesDeLaMemeTable(0);
-        $niveau2->setReponsesSimilaires(False);
-        $niveau2->setTempsDisponible(100);
-        $niveau2->setOrdreDesQuestions("decroissant");
-        $niveau2->setQuestionsATrous(False);
-        $niveau1->setJeu($jeu2);
-        $manager->persist($niveau2);
-
-        $niveau3->setNumero(9);
-        $niveau3->setEcartEntreLesReponses(7);
-        $niveau3->setNombreDeReponses(3);
-        $niveau3->setNbReponsesProposeesDeLaMemeTable(0);
-        $niveau3->setReponsesSimilaires(True);
-        $niveau3->setTempsDisponible(100);
-        $niveau3->setOrdreDesQuestions("aleatoire");
-        $niveau3->setQuestionsATrous(False);
-        $niveau1->setJeu($jeu3);
-        $manager->persist($niveau3);
-
-        $eleve1->addNiveau($niveau3);
-		$manager->persist($eleve1);
+        //tables init
+            for ($i = 0; $i < 11; $i++) { 
+                $tables[$i]->setNumero($tablesOrder[$i]);
+                $tables[$i]->setRegion($regions[$tablesOrder[$i]]);
+                for ($j=0; $j < 12; $j++) { 
+                    $tables[$i]->addNiveau($levels[$i*12+$j]);
+                }
+                $manager->persist($tables[$i]);
+            }
 
         $manager->flush();
     }

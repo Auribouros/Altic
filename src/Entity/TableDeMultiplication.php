@@ -29,7 +29,7 @@ class TableDeMultiplication
     private $region;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Niveau", inversedBy="tableDeMultiplications")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Niveau", inversedBy="tableDeMultiplications", cascade={"persist", "remove"})
      */
     private $niveau;
 
