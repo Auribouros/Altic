@@ -14,7 +14,9 @@ class ModifyAccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('oldPassword',PasswordType::class)
+            ->add('oldPassword',PasswordType::class, [
+                'label' => 'mot de passe actuel'
+            ])
             ->add('newPassword',RepeatedType::class, [
                 'constraints'=>[ new NotBlank()],
                 'type'=> PasswordType::class,
