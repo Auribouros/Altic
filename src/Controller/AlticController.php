@@ -199,7 +199,8 @@ class AlticController extends AbstractController
     public function pupilTable($number)
     {
         $profilePic = 'images/pupil/characters/1.png';
-    	$pupilFullName = 'Kévin Martin';
+        $user = $this->getUser();
+    	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
     						 ['userName'=>$pupilFullName, 'tableNumber'=>$number, 'profilePic'=>$profilePic]);
     }
