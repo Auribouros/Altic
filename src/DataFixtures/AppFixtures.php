@@ -91,7 +91,7 @@ class AppFixtures extends Fixture
             //
             $baseLevels[7]->setNumero(-1);
             $baseLevels[7]->setEcartEntreLesReponses(10);
-            $baseLevels[7]->setNombreDeReponses(null);
+            $baseLevels[7]->setNombreDeReponses(0);
             $baseLevels[7]->setNbReponsesProposeesDeLaMemeTable(0);
             $baseLevels[7]->setReponsesSimilaires(false);
             $baseLevels[7]->setTempsDisponible(20);
@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
             //
             $baseLevels[8]->setNumero(-1);
             $baseLevels[8]->setEcartEntreLesReponses(10);
-            $baseLevels[8]->setNombreDeReponses(null);
+            $baseLevels[8]->setNombreDeReponses(0);
             $baseLevels[8]->setNbReponsesProposeesDeLaMemeTable(0);
             $baseLevels[8]->setReponsesSimilaires(false);
             $baseLevels[8]->setTempsDisponible(10);
@@ -109,7 +109,7 @@ class AppFixtures extends Fixture
             //
             $baseLevels[9]->setNumero(-1);
             $baseLevels[9]->setEcartEntreLesReponses(10);
-            $baseLevels[9]->setNombreDeReponses(null);
+            $baseLevels[9]->setNombreDeReponses(0);
             $baseLevels[9]->setNbReponsesProposeesDeLaMemeTable(0);
             $baseLevels[9]->setReponsesSimilaires(false);
             $baseLevels[9]->setTempsDisponible(10);
@@ -118,7 +118,7 @@ class AppFixtures extends Fixture
             //
             $baseLevels[10]->setNumero(-1);
             $baseLevels[10]->setEcartEntreLesReponses(10);
-            $baseLevels[10]->setNombreDeReponses(null);
+            $baseLevels[10]->setNombreDeReponses(0);
             $baseLevels[10]->setNbReponsesProposeesDeLaMemeTable(0);
             $baseLevels[10]->setReponsesSimilaires(false);
             $baseLevels[10]->setTempsDisponible(10);
@@ -127,27 +127,19 @@ class AppFixtures extends Fixture
             //
             $baseLevels[11]->setNumero(-1);
             $baseLevels[11]->setEcartEntreLesReponses(10);
-            $baseLevels[11]->setNombreDeReponses(null);
+            $baseLevels[11]->setNombreDeReponses(0);
             $baseLevels[11]->setNbReponsesProposeesDeLaMemeTable(0);
             $baseLevels[11]->setReponsesSimilaires(false);
             $baseLevels[11]->setTempsDisponible(10);
             $baseLevels[11]->setOrdreDesQuestions('croissant');
             $baseLevels[11]->setQuestionsATrous(true);
             //
-        //persist baseLevels
-        foreach ($baseLevels as $level) {
-            $manager->persist($level);
-        }
 
         //games init
             $games[0]->setCheminAcces('altic/cave.html.twig');
             $games[1]->setCheminAcces('altic/moutain.html.twig');
             $games[2]->setCheminAcces('altic/doors.html.twig');
             $games[3]->setCheminAcces('altic/fishing.html.twig');
-        //persist games
-        foreach ($games as $game) {
-            $manager->persist($game);
-        }
 
         //regions init
             $regions[0]->setNom('');
@@ -196,6 +188,7 @@ class AppFixtures extends Fixture
                     $currentLevel->setTempsDisponible($baseLevels[$j-1]->getTempsDisponible());
                     $currentLevel->setOrdreDesQuestions($baseLevels[$j-1]->getOrdreDesQuestions());
                     $currentLevel->setQuestionsATrous($baseLevels[$j-1]->getQuestionsATrous());
+                    $currentLevel->setJeu($games[0]);
                 }
             }
 

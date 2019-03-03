@@ -64,7 +64,7 @@ class Niveau
     private $tableDeMultiplications;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Jeu", inversedBy="niveaux")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Jeu", inversedBy="niveaux", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $jeu;
