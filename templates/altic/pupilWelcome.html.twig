@@ -10,21 +10,21 @@
 	
 
 	<!--map and Constantin-->
-	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam'] %}
+	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam', 'Will'] %}
 	{% set numOrder = [2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7] %}
 	<div class="row align-items-center"  style="padding: 10px; background-image: url({{ asset('images/pupil/map/sea.png') }});">
 		<!--map-->
 		<div class="col-9">
 			<div class="row align-items-center">
 			<div class="row">
-				{% for i in 1..5 %}
+				{% for i in 1..6 %}
 				<div class="col text-center">
 					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
 				</div>
 				{% endfor %}
 			</div>
 			<div class="row">
-				{% for i in 6..10 %}
+				{% for i in 7..11 %}
 				<div class="col text-center">
 					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
 				</div>

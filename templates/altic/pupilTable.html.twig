@@ -19,11 +19,15 @@
 
 	<br/>
 
-	<div class="row">
+	<div class="row" style="background-image: url({{ asset('images/pupil/map/scrollTexture.png') }})">
 
+		<div class="col"></div>
 		<div class="col">
-			<img class="img-fluid" src="{{ asset('images/pupil/map/scrollTexture.png') }}">
+			{% for image in images %}
+			<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ image) }}">
+			{% endfor %}
 		</div>
+		<div class="col"></div>
 
 	</div>
 

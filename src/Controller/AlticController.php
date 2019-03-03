@@ -200,9 +200,15 @@ class AlticController extends AbstractController
     {
         $profilePic = 'images/pupil/characters/1.png';
         $user = $this->getUser();
+        $images = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'endMAP.png');
     	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
-    						 ['userName'=>$pupilFullName, 'tableNumber'=>$number, 'profilePic'=>$profilePic]);
+    						 [
+                                'userName'=>$pupilFullName,
+                                'tableNumber'=>$number,
+                                'profilePic'=>$profilePic,
+                                'images'=>$images
+                            ]);
     }
 
     #########################################################
