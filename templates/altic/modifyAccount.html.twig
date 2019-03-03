@@ -7,20 +7,31 @@
 {{ parent() }}
 
 <div class="container">
+
+<div class="row">
+	<div class="col-sm-4 align-self-end"><a href="/pupil">Retour à la carte <br/> <img style="max-height: 100px; width: auto;" src="{{ asset('images/pupil/map/tmpMap.png') }}"> </a></div>
+</div>
+
 {% for message in app.flashes('notice') %}
     <div class="flash-notice">
         {{ message }}
     </div>
 {% endfor %}
 
-	{{form_start(modifyForm)}}
-		{{form_row(modifyForm.oldPassword)}}
-		{{form_row(modifyForm.newPassword)}}
-        <button class="btn btn-lg btn-primary" type="submit">Changer mon mot de passe</button>
-	{{form_end(modifyForm)}}
-	<br>
 	<div class="row">
-		<div class="col"><a href="{{ path('altic_deleteAccount') }}"style="text-align: center; color: white;" class="h4"><button class="btn btn-lg btn-danger">Supprimer mon compte</button></a></div>
+		<div class="col"></div>
+		<div class="col">
+			{{form_start(modifyForm)}}
+				{{form_row(modifyForm.oldPassword)}}
+				{{form_row(modifyForm.newPassword)}}
+		        <button class="btn btn-lg btn-primary" type="submit">Changer mon mot de passe</button>
+			{{form_end(modifyForm)}}
+			<br>
+			<div class="row">
+				<div class="col"><a href="{{ path('altic_deleteAccount') }}"style="text-align: center; color: white;" class="h4"><button class="btn btn-lg btn-danger">Supprimer mon compte</button></a></div>
+			</div>
+		</div>
+		<div class="col"></div>
 	</div>
 
 
