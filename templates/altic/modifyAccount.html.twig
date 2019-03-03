@@ -16,11 +16,11 @@
 	{{form_start(modifyForm)}}
 		{{form_row(modifyForm.oldPassword)}}
 		{{form_row(modifyForm.newPassword)}}
-        <button class="btn btn-lg btn-primary" type="submit">Changer mon mot de passe</button>
+        <button class="btn" type="submit">changez mon mot de passe</button>
 	{{form_end(modifyForm)}}
-	<br>
+
 	<div class="row">
-		<div class="col"><a href="{{ path('altic_deleteAccount') }}"style="text-align: center; color: white;" class="h4"><button class="btn btn-lg btn-danger">Supprimer mon compte</button></a></div>
+		<div class="col"><a href="{{ path('altic_deleteAccount') }}"style="text-align: center;" class="h4">Supprimer mon compte</a></div>
 	</div>
 
 
