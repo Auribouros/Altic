@@ -196,7 +196,7 @@ class AppFixtures extends Fixture
             for ($i = 0; $i < 11; $i++) { 
                 $tables[$i]->setNumero($tablesOrder[$i]);
                 $tables[$i]->setRegion($regions[$tablesOrder[$i]]);
-                for ($j=0; $j < 12; $j++) { 
+                for ($j=0; $j < 12; $j++) {
                     $tables[$i]->addNiveau($levels[$i*12+$j]);
                 }
                 $manager->persist($tables[$i]);
