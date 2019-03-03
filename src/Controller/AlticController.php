@@ -320,6 +320,7 @@ class AlticController extends AbstractController
 
             }
 
+
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
                                  'userName'=>$pupilFullName,
@@ -425,7 +426,7 @@ class AlticController extends AbstractController
      */
     public function pwdLost()
     {
-        return $this->render('altic/pwdLost.html.twig', ['userName'=>'', 'profilePic'=>'default']);
+        return $this->render('altic/pwdLost.html.twig');
     }
 
     /**
