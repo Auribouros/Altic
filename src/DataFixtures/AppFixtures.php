@@ -145,28 +145,17 @@ class AppFixtures extends Fixture
     	$manager->persist($jeu4);
 
 
-        $eleve1->setEmail("pascalbenoit@gmail.com");
+        $eleve1->setEmail("raguer@mail.com");
         $eleve1->setAvatar("img1.jpg");
-        $eleve1->setNom("Pascal");
-        $eleve1->setPrenom("Benoit");
-        $eleve1->setPassword("saucisson");
+        $eleve1->setNom("Aguer");
+        $eleve1->setPrenom("Rémi");
+        $eleve1->setPassword('$argon2i$v=19$m=1024,t=2,p=2$R3VJdVpzSEdlWjlSSHouQg$CdIo5XUgcGf5Q4D25Z4wKFykr9CevPuZn3fdxre0T6A');
         $eleve1->setEstEnseignant(False);
         $manager->persist($eleve1);
 
-        $eleve2->setEmail("didierhenri@gmail.com");
-        $eleve2->setAvatar("img2.jpg");
-        $eleve2->setNom("Didier");
-        $eleve2->setPrenom("Henri");
-        $eleve2->setPassword("unbonverredeblanc");
-        $eleve2->setEstEnseignant(False);
+        $eleve2 = $eleve1;
+        $eleve3 = $eleve1;
         $manager->persist($eleve2);
-
-        $eleve3->setEmail("jeansebastopole@gmail.com");
-        $eleve3->setAvatar("img3.jpg");
-        $eleve3->setNom("Jean");
-        $eleve3->setPrenom("Sebastopole");
-        $eleve3->setPassword("unebouteilledejurancon");
-        $eleve3->setEstEnseignant(False);
         $manager->persist($eleve3);
 
 
@@ -229,7 +218,7 @@ class AppFixtures extends Fixture
         $niveau1->setJeu($jeu2);
         $manager->persist($niveau2);
 
-        $niveau3->setNumero(3);
+        $niveau3->setNumero(9);
         $niveau3->setEcartEntreLesReponses(7);
         $niveau3->setNombreDeReponses(3);
         $niveau3->setNbReponsesProposeesDeLaMemeTable(0);
@@ -239,8 +228,10 @@ class AppFixtures extends Fixture
         $niveau3->setQuestionsATrous(False);
         $niveau1->setJeu($jeu3);
         $manager->persist($niveau3);
-		
 
-        $manager->flush();        
+        $eleve1->addNiveau($niveau3);
+		$manager->persist($eleve1);
+
+        $manager->flush();
     }
 }

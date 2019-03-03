@@ -7,26 +7,20 @@
 {{ parent() }}
 
 <div class="container">
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
 
-
+	{{form_start(modifyForm)}}
+		{{form_row(modifyForm.oldPassword)}}
+		{{form_row(modifyForm.newPassword)}}
+        <button class="btn btn-lg btn-primary" type="submit">Changer mon mot de passe</button>
+	{{form_end(modifyForm)}}
+	<br>
 	<div class="row">
-		<div class="col"><p style="text-align: center; font-family: 'roboto';" class="h3">Modification de compte</p></div>
-	</div>	
-
-	<div class="row">
-		<div class="col"><p style="text-align: center; font-family: 'roboto';" class="h4">Changer de mot de passe</p></div>
-	</div>
-
-	<div class="row">
-<<<<<<< HEAD
-<<<<<<< HEAD
-		<div class="col"><a href="{{altic_SuppCompte}}"style="text-align: center; font-family: 'roboto';" class="h4">Supprimer mon compte</p></div>
-=======
-		<div class="col"><p style="text-align: center; font-family: 'roboto';" class="h4">Supprimer mon compte</p></div>
->>>>>>> parent of feb49bd... Mise en place du thème Sketchy sur certains headers
-=======
-		<div class="col"><p style="text-align: center; font-family: 'roboto';" class="h4">Supprimer mon compte</p></div>
->>>>>>> parent of feb49bd... Mise en place du thème Sketchy sur certains headers
+		<div class="col"><a href="{{ path('altic_deleteAccount') }}"style="text-align: center; color: white;" class="h4"><button class="btn btn-lg btn-danger">Supprimer mon compte</button></a></div>
 	</div>
 
 

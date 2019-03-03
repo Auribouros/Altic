@@ -5,6 +5,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use App\Entity\Utilisateur;
+use App\Form\modifyFormType;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\ModifyAccountType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AlticController extends AbstractController
 {
@@ -16,10 +21,9 @@ class AlticController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-    	$pupilsList = ' ';
     	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherWelcome.html.twig',
-    						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+    						 ['pupils'=>'', 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     /**
@@ -27,7 +31,9 @@ class AlticController extends AbstractController
      */
     public function teacherPupilData($name)
     {
-    	$teacherFullName = 'Jean-Pierre Ravaud';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherPupilData.html.twig',
     						 ['userName'=>$teacherFullName, 'pupilName'=>$name, 'profilePic'=>'default']);
     }
@@ -37,7 +43,10 @@ class AlticController extends AbstractController
      */
     public function teacherPupilDataTable($name, $number)
     {
-    	$teacherFullName = 'Jean-Pierre Ravaud';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$pupilsList = ' ';
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherPupilDataTable.html.twig',
     						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
@@ -162,14 +171,35 @@ class AlticController extends AbstractController
             $advice1 = 'Je te conseille d\'aider ' . $advice['advice1'];
             $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\aider' . $advice['advice2'] : '';
 
+            $levelArray = $user-> getNiveaux();
+            $percentArray = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            $nbMax=0;
+            $percentArray[0]=(int)(sizeof($levelArray)/132);
+            foreach ($levelArray as $level){
+                if($level->getNumero()>$nbMax){
+                    if($level->getNumero()%12==0&&$level->getNumero()/12!=0){
+                        $percentArray[$level->getNumero()/12] = 100;
+                    }
+                    if($level->getNumero()-12*(int)($level->getNumero()/12) <0){
+                        $percentArray[(int)($level->getNumero()/12)] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                    }
+
+                } 
+
+
+            }
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
-                                    'userName'=>$pupilFullName,
-                                    'profilePic'=>$profilePic,
-                                    'advice1'=>$advice1,
-                                    'advice2'=>$advice2
+                                 'userName'=>$pupilFullName,
+                                 'profilePic'=>$profilePic,
+                                 'advice1'=>$advice1,
+                                 'advice2'=>$advice2,
+                                 'percentArray'=>$percentArray,
+                                 'debug'=>$masteredLevels
                                 ]);
         }
+        
+
     }
 
     /**
@@ -177,10 +207,31 @@ class AlticController extends AbstractController
      */
     public function pupilTable($number)
     {
+        $map0 = array('startMAP.png', 'castleMAP.png', 'endMAP.png');
+        $map1 = array('startMAP.png', 'endMAP.png');
+        $map2 = array('startMAP.png', 'endMAP.png');
+        $map3 = array('startMAP.png', 'endMAP.png');
+        $map4 = array('startMAP.png', 'endMAP.png');
+        $map5 = array('startMAP.png', 'endMAP.png');
+        $map6 = array('startMAP.png', 'endMAP.png');
+        $map7 = array('startMAP.png', 'endMAP.png');
+        $map8 = array('startMAP.png', 'endMAP.png');
+        $map9 = array('startMAP.png', 'endMAP.png');
+        $map10 = array('startMAP.png', 'endMAP.png');     
+        $maps = array($map0, $map1, $map2, $map3, $map4, $map5, $map6, $map7, $map8, $map9, $map10);
+        $images = $maps[$number];
+
         $profilePic = 'images/pupil/characters/1.png';
-    	$pupilFullName = 'Kévin Martin';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
-    						 ['userName'=>$pupilFullName, 'tableNumber'=>$number, 'profilePic'=>$profilePic]);
+    						 [
+                                'userName'=>$pupilFullName,
+                                'tableNumber'=>$number,
+                                'profilePic'=>$profilePic,
+                                'images'=>$images
+                            ]);
     }
 
     #########################################################
@@ -195,8 +246,52 @@ class AlticController extends AbstractController
     /**
      * @Route("/modifyAccount", name="altic_modifyAccount")
      */
-    public function modifyAccount()
+    public function modifyAccount(Request $request,UserPasswordEncoderInterface $encoder)
     {
-        return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur', 'profilePic'=>'default']);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        $form = $this->createForm(ModifyAccountType::class);
+        
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $modifyData= $form->getData();
+            if($encoder->isPasswordValid($user,$modifyData['oldPassword'])){
+                $user->setPassword( 
+                    $encoder->encodePassword(
+                        $user,
+                        $modifyData['newPassword']
+                    )
+                 );
+                 $entityManager= $this->getDoctrine()->getManager();
+                 $entityManager->persist($user);
+                 $entityManager->flush();
+            }else{
+                $this->addFlash(
+                    'notice',
+                    'mot de passe incorect!'
+                );
+            }
+        }
+        return $this->render('altic/modifyAccount.html.twig', ['userName'=>$pupilFullName, 
+        'profilePic'=>'default','modifyForm'=>$form->createView()]);
+    }
+    
+    /**
+     * @Route("/deleteAccount", name="altic_deleteAccount")
+     */
+    public function deleteAccount(){
+        
+      $em = $this->getDoctrine()->getManager();
+      $id = $this->getUser()->getId();
+
+      $usrRepo = $em->getRepository(Utilisateur::class);
+      $deluser = $usrRepo->find($id);
+      $em->remove($deluser);
+      $em->flush();
+        $session = $this->get('session');
+        $session = new Session();
+        $session->invalidate();
+        return $this->redirectToRoute("index");
     }
 }

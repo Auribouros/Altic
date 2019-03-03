@@ -10,22 +10,23 @@
 	
 
 	<!--map and Constantin-->
-	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam'] %}
+	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam', 'Will'] %}
+	{% set numOrder = [2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7] %}
 	<div class="row align-items-center"  style="padding: 10px; background-image: url({{ asset('images/pupil/map/sea.png') }});">
 		<!--map-->
 		<div class="col-9">
 			<div class="row align-items-center">
 			<div class="row">
-				{% for i in 1..5 %}
+				{% for i in 1..6 %}
 				<div class="col text-center">
-					<a href="#" style="color: white; font-size: 1.5em;"><img style="background-color: rgba(0, 0, 0, 0.5); border-radius: 100%; padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }}</a>
+					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
 				</div>
 				{% endfor %}
 			</div>
 			<div class="row">
-				{% for i in 6..10 %}
+				{% for i in 7..11 %}
 				<div class="col text-center">
-					<a href="#" style="color: white; font-size: 1.5em;"><img style="background-color: rgba(0, 0, 0, 0.5); border-radius: 100%; padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }}</a>
+					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
 				</div>
 				{% endfor %}
 			</div>
@@ -67,7 +68,52 @@
 			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/20.png"><br/><br/>
 		</div>
 
-		<div class="col-sm-4"><p class="h5">Stastistiques</p></div>
+		<div class="col-sm-4"><p class="h5">Stastistiques</p>
+		<div class="progress">
+		Progression Totale
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[0] }}%" aria-valuenow="{{ percentArray[0] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 1
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 2
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 3
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 4
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 5
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 6
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 7
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[7] }}%" aria-valuenow="{{ percentArray[7] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 8
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[8] }}%" aria-valuenow="{{ percentArray[8] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 9
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[9] }}%" aria-valuenow="{{ percentArray[9] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		<div class="progress">
+		Table de 10
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[10] }}%" aria-valuenow="{{ percentArray[10] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+		</div>
 
 		<div class="col-sm-4"><p class="h5">Mes enseignants</p></div>
 
