@@ -118,8 +118,11 @@
 		<div class="col-sm-4"><p class="h5">Mes enseignants</p></div>
 
 	</div>
-
-
+	<!--ajoutEnseignant-->
+	{{form_start(addTeacher)}}
+		{{form_row(addTeacher.email)}}
+		<button class="btn btn-lg btn-primary" type="submit">Ajouter un enseignant</button>
+	{{form_end(addTeacher)}}
 </div>
 
 {% endblock %}

@@ -10,6 +10,7 @@ use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Form\AddTeacherType;
 
 class Answer
 {
@@ -320,8 +321,19 @@ class AlticController extends AbstractController
 
             }
 
+            $addTeacher= $this->createForm(AddTeacherType::class);
+
+            $addTeacher->handleRequest($request);
+            if($addTeacher->isSubmitted() && $addTeacher->isValid()){
+                $mailTeacher = $addTeacher->getData();
+                $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
+                $teacher = $repositoryUtilisateur->findOneTeacherByEmail($mailTeacher);
+                $id = $this->getUser()->getId();
+                $user->addProfesseurLie($teacher);
+            }
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
+                                    'addTeacher'=>$addTeacher->createView(),
                                  'userName'=>$pupilFullName,
                                  'profilePic'=>$profilePic,
                                  'advice1'=>$advice1,
@@ -425,7 +437,7 @@ class AlticController extends AbstractController
      */
     public function pwdLost()
     {
-        return $this->render('altic/pwdLost.html.twig', ['userName'=>'', 'profilePic'=>'default']);
+        return $this->render('altic/pwdLost.html.twig');
     }
 
     /**
