@@ -20,7 +20,7 @@ class ModifyAccountType extends AbstractType
                 'type'=> PasswordType::class,
                 'invalid_message'=>'les mots de passe sont differents',
                 'first_options'  => ['label' => 'nouveau mot de passe'],
-                'second_options' => ['label' => 'xomfirmer le nouveau mot de passe'],
+                'second_options' => ['label' => 'comfirmer le nouveau mot de passe'],
             ])
         ;
     }
