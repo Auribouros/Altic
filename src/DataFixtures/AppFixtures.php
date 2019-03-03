@@ -140,10 +140,9 @@ class AppFixtures extends Fixture
             $games[1]->setCheminAcces('altic/moutain.html.twig');
             $games[2]->setCheminAcces('altic/doors.html.twig');
             $games[3]->setCheminAcces('altic/fishing.html.twig');
-        foreach ($games as $game) {
-            $manager->persist($game);
+        for ($i=0; $i < 4; $i++) { 
+            $manager->persist($games[$i]);
         }
-
         //regions init
             $regions[0]->setNom('');
             $regions[0]->setImgMagicien('');
@@ -208,7 +207,7 @@ class AppFixtures extends Fixture
                 }
                 $manager->persist($tables[$i]);
             }
-
+        
         $manager->flush();
     }
 }

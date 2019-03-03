@@ -27,7 +27,7 @@ class Region
     private $imgMagicien;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PNJ", mappedBy="region", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\PNJ", mappedBy="region")
      */
     private $pnj;
 

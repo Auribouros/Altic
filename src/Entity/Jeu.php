@@ -24,7 +24,7 @@ class Jeu
     private $cheminAcces;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Niveau", mappedBy="jeu", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Niveau", mappedBy="jeu")
      */
     private $niveaux;
 
