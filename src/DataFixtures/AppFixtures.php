@@ -25,6 +25,19 @@ class AppFixtures extends Fixture
         $levels = array_fill(0, 132, new Niveau());
         $regions = array_fill(0, 11, new Region());
 
+        /*$test1 = new Jeu();
+        $test1->setCheminAcces('test1');
+        $test2 = new Jeu();
+        $test2->setCheminAcces('test2');
+        $test3 = new Jeu();
+        $test3->setCheminAcces('test3');
+        $test4 = new Jeu();
+        $test4->setCheminAcces('test4');
+        $manager->persist($test1);
+        $manager->persist($test2);
+        $manager->persist($test3);
+        $manager->persist($test);*/
+
         //baseLevels init
             $baseLevels[0]->setNumero(-1);
             $baseLevels[0]->setEcartEntreLesReponses(10);
@@ -140,9 +153,9 @@ class AppFixtures extends Fixture
             $games[1]->setCheminAcces('altic/moutain.html.twig');
             $games[2]->setCheminAcces('altic/doors.html.twig');
             $games[3]->setCheminAcces('altic/fishing.html.twig');
-        for ($i=0; $i < 4; $i++) { 
+        /*for ($i=0; $i < 4; $i++) { 
             $manager->persist($games[$i]);
-        }
+        }*/
         //regions init
             $regions[0]->setNom('');
             $regions[0]->setImgMagicien('');
@@ -194,7 +207,7 @@ class AppFixtures extends Fixture
                     $currentLevel->setOrdreDesQuestions($baseLevels[$j-1]->getOrdreDesQuestions());
                     $currentLevel->setQuestionsATrous($baseLevels[$j-1]->getQuestionsATrous());
                     $currentLevel->setJeu($games[0]);
-                    $manager->persist($currentLevel);
+                    //$manager->persist($currentLevel);
                 }
             }
 
