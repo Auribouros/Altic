@@ -5,6 +5,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use App\Entity\Utilisateur;
+use App\Form\modifyFormType;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\ModifyAccountType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AlticController extends AbstractController
 {
@@ -16,10 +21,9 @@ class AlticController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-    	$pupilsList = ' ';
     	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherWelcome.html.twig',
-    						 ['pupils'=>$pupilsList, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+    						 ['pupils'=>'', 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     /**
@@ -27,7 +31,9 @@ class AlticController extends AbstractController
      */
     public function teacherPupilData($name)
     {
-    	$teacherFullName = 'Jean-Pierre Ravaud';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherPupilData.html.twig',
     						 ['userName'=>$teacherFullName, 'pupilName'=>$name, 'profilePic'=>'default']);
     }
@@ -37,7 +43,10 @@ class AlticController extends AbstractController
      */
     public function teacherPupilDataTable($name, $number)
     {
-    	$teacherFullName = 'Jean-Pierre Ravaud';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+    	$pupilsList = ' ';
+    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/teacherPupilDataTable.html.twig',
     						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
@@ -213,6 +222,7 @@ class AlticController extends AbstractController
         $images = $maps[$number];
 
         $profilePic = 'images/pupil/characters/1.png';
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
     	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
@@ -236,8 +246,52 @@ class AlticController extends AbstractController
     /**
      * @Route("/modifyAccount", name="altic_modifyAccount")
      */
-    public function modifyAccount()
+    public function modifyAccount(Request $request,UserPasswordEncoderInterface $encoder)
     {
-        return $this->render('altic/modifyAccount.html.twig', ['userName'=>'Nom Utilisateur', 'profilePic'=>'default']);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        $form = $this->createForm(ModifyAccountType::class);
+        
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $modifyData= $form->getData();
+            if($encoder->isPasswordValid($user,$modifyData['oldPassword'])){
+                $user->setPassword( 
+                    $encoder->encodePassword(
+                        $user,
+                        $modifyData['newPassword']
+                    )
+                 );
+                 $entityManager= $this->getDoctrine()->getManager();
+                 $entityManager->persist($user);
+                 $entityManager->flush();
+            }else{
+                $this->addFlash(
+                    'notice',
+                    'mot de passe incorect!'
+                );
+            }
+        }
+        return $this->render('altic/modifyAccount.html.twig', ['userName'=>$pupilFullName, 
+        'profilePic'=>'default','modifyForm'=>$form->createView()]);
+    }
+    
+    /**
+     * @Route("/deleteAccount", name="altic_deleteAccount")
+     */
+    public function deleteAccount(){
+        
+      $em = $this->getDoctrine()->getManager();
+      $id = $this->getUser()->getId();
+
+      $usrRepo = $em->getRepository(Utilisateur::class);
+      $deluser = $usrRepo->find($id);
+      $em->remove($deluser);
+      $em->flush();
+        $session = $this->get('session');
+        $session = new Session();
+        $session->invalidate();
+        return $this->redirectToRoute("index");
     }
 }
