@@ -198,9 +198,22 @@ class AlticController extends AbstractController
      */
     public function pupilTable($number)
     {
+        $map0 = array('startMAP.png', 'castleMAP.png', 'endMAP.png');
+        $map1 = array('startMAP.png', 'endMAP.png');
+        $map2 = array('startMAP.png', 'endMAP.png');
+        $map3 = array('startMAP.png', 'endMAP.png');
+        $map4 = array('startMAP.png', 'endMAP.png');
+        $map5 = array('startMAP.png', 'endMAP.png');
+        $map6 = array('startMAP.png', 'endMAP.png');
+        $map7 = array('startMAP.png', 'endMAP.png');
+        $map8 = array('startMAP.png', 'endMAP.png');
+        $map9 = array('startMAP.png', 'endMAP.png');
+        $map10 = array('startMAP.png', 'endMAP.png');     
+        $maps = array($map0, $map1, $map2, $map3, $map4, $map5, $map6, $map7, $map8, $map9, $map10);
+        $images = $maps[$number];
+
         $profilePic = 'images/pupil/characters/1.png';
         $user = $this->getUser();
-        $images = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'endMAP.png');
     	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
     						 [
