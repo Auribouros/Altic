@@ -12,30 +12,6 @@ use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\AddTeacherType;
 
-class Answer
-{
-    private $answer;
-    function __construct($ans)
-    {
-        $this->answer=$ans;
-    }
-    public function getAnswer(){
-        return $this->answer;
-    }
-}
-    
-class Question{
-    private $question ="";
-    public $answers;
-    function __construct($text)
-    {
-        $this->question=$text;
-    }
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-}
 
 class AlticController extends AbstractController
 {
@@ -254,7 +230,7 @@ class AlticController extends AbstractController
     /**
      * @Route("/pupil", name="altic_pupil")
      */
-    public function pupilWelcome()
+    public function pupilWelcome(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
@@ -325,10 +301,9 @@ class AlticController extends AbstractController
 
             $addTeacher->handleRequest($request);
             if($addTeacher->isSubmitted() && $addTeacher->isValid()){
-                $mailTeacher = $addTeacher->getData();
+                $mailTeacher = $addTeacher->get('email')->getData();
                 $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
                 $teacher = $repositoryUtilisateur->findOneTeacherByEmail($mailTeacher);
-                $id = $this->getUser()->getId();
                 $user->addProfesseurLie($teacher);
             }
             return $this->render('altic/pupilWelcome.html.twig',

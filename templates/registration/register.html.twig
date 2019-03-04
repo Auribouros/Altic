@@ -4,11 +4,8 @@
 
 {% block body %}
     {{ parent() }}
-{#<<<<<<< HEAD#}
 <div class="container">
 <div class="col-5">
-{#=======
->>>>>>> finitionFormulaire
     <h1>Créer un compte</h1>
 
     {{ form_start(registrationForm) }}
@@ -18,14 +15,8 @@
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.password) }}
         {{ form_row(registrationForm._token) }}
-<<<<<<< HEAD#}
         <button class="btn btn-lg btn-primary">Créer</button>
     {{ form_end(registrationForm, {'render_rest':false}) }}
 </div>
 </div>
-{#=======
-        {{form_row(registrationForm.avatar)}}
-        <button class="btn" type="submit">Création</button>
-    {{ form_end(registrationForm) }}
->>>>>>> finitionFormulaire#}
 {% endblock %}

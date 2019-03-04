@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 /**
  * @method Utilisateur|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,18 +37,19 @@ class UtilisateurRepository extends ServiceEntityRepository
     }
     */
 
-    
+    /**
+    * @return Utilisateur[] Returns an array of Utilisateur objects
+    */ 
     public function findOneTeacherByEmail($email)
     {
         $entityManage = $this->getEntityManager();
         $request = $entityManage->createQuery(
             'SELECT teacher 
             FROM App\Entity\Utilisateur teacher 
-            WHERE teacher.estEnseignant
-            AND teacher.email = :email'
+            WHERE teacher.estEnseignant =true
+            AND teacher.email LIKE :mail'
             );
-            $request->setParameter('email',$email);
-        return $request->execute();
+        return $request->execute(array(':mail'=>$email));
     }
     
 }
