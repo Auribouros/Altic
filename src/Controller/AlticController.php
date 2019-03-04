@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class Answer
+/*class Answer
 {
     private $answer;
     function __construct($ans)
@@ -34,7 +34,7 @@ class Question{
     {
         return $this->question;
     }
-}
+}*/
 
 class AlticController extends AbstractController
 {
