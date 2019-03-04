@@ -11,31 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class Answer
-{
-    private $answer;
-    function __construct($ans)
-    {
-        $this->answer=$ans;
-    }
-    public function getAnswer(){
-        return $this->answer;
-    }
-}
-    
-class Question{
-    private $question ="";
-    public $answers;
-    function __construct($text)
-    {
-        $this->question=$text;
-    }
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-}
-
 class AlticController extends AbstractController
 {
 
