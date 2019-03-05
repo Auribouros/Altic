@@ -298,7 +298,6 @@ class AlticController extends AbstractController
             }
 
             $addTeacher= $this->createForm(AddTeacherType::class);
-            $teacher =NULL;
             $lynxTeacher = NULL;
             $addTeacher->handleRequest($request);
             $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
@@ -306,14 +305,17 @@ class AlticController extends AbstractController
                 $mailTeacher = $addTeacher->get('email')->getData();
                 $teacher = $repositoryUtilisateur->findOneTeacherByEmail($mailTeacher);
                 $entityManager = $this->getDoctrine()->getManager();
-                $user->addProfesseurLie($teacher[0]);
+                if(!empty($teacher)){
+                    $user->addProfesseurLie($teacher[0]);
+                }
                 $entityManager->persist($user);
                 $entityManager->flush();
             }
             $lynxTeacher= $user->getProfesseurLie();
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
-                                    'teacherLynx'=>$lynxTeacher,
+                                'teacher2'=>$teacher,
+                                'teacherLynx'=>$lynxTeacher,
                                  'addTeacher'=>$addTeacher->createView(),
                                  'userName'=>$pupilFullName,
                                  'profilePic'=>$profilePic,
