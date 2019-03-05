@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
         $levels = array_fill(0, 132, new Niveau());
         $regions = array_fill(0, 11, new Region());
 
-        /*$test1 = new Jeu();
+        $test1 = new Jeu();
         $test1->setCheminAcces('test1');
         $test2 = new Jeu();
         $test2->setCheminAcces('test2');
@@ -36,126 +36,162 @@ class AppFixtures extends Fixture
         $manager->persist($test1);
         $manager->persist($test2);
         $manager->persist($test3);
-        $manager->persist($test);*/
+        $manager->persist($test4);
 
         //baseLevels init
-            $baseLevels[0]->setNumero(-1);
-            $baseLevels[0]->setEcartEntreLesReponses(10);
-            $baseLevels[0]->setNombreDeReponses(3);
-            $baseLevels[0]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[0]->setReponsesSimilaires(false);
-            $baseLevels[0]->setTempsDisponible(null);
-            $baseLevels[0]->setOrdreDesQuestions('croissant');
-            $baseLevels[0]->setQuestionsATrous(false);
+            $baseLevel1 = new Niveau();
+            $baseLevel1->setNumero(1);
+            $baseLevel1->setEcartEntreLesReponses(10);
+            $baseLevel1->setNombreDeReponses(3);
+            $baseLevel1->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel1->setReponsesSimilaires(false);
+            $baseLevel1->setTempsDisponible(null);
+            $baseLevel1->setOrdreDesQuestions('croissant');
+            $baseLevel1->setQuestionsATrous(false);
+            $baseLevel1->setJeu($test1);
+            $manager->persist($baseLevel1);
             //
-            $baseLevels[1]->setNumero(-1);
-            $baseLevels[1]->setEcartEntreLesReponses(10);
-            $baseLevels[1]->setNombreDeReponses(3);
-            $baseLevels[1]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[1]->setReponsesSimilaires(false);
-            $baseLevels[1]->setTempsDisponible(null);
-            $baseLevels[1]->setOrdreDesQuestions('decroissant');
-            $baseLevels[1]->setQuestionsATrous(false);
+            $baseLevel2 = new Niveau();
+            $baseLevel2->setNumero(2);
+            $baseLevel2->setEcartEntreLesReponses(10);
+            $baseLevel2->setNombreDeReponses(3);
+            $baseLevel2->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel2->setReponsesSimilaires(false);
+            $baseLevel2->setTempsDisponible(null);
+            $baseLevel2->setOrdreDesQuestions('decroissant');
+            $baseLevel2->setQuestionsATrous(false);
+            $baseLevel2->setJeu($test1);
+            $manager->persist($baseLevel2);
             //
-            $baseLevels[2]->setNumero(-1);
-            $baseLevels[2]->setEcartEntreLesReponses(7);
-            $baseLevels[2]->setNombreDeReponses(3);
-            $baseLevels[2]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[2]->setReponsesSimilaires(true);
-            $baseLevels[2]->setTempsDisponible(null);
-            $baseLevels[2]->setOrdreDesQuestions('aleatoire');
-            $baseLevels[2]->setQuestionsATrous(false);
+            $baseLevel3 = new Niveau();
+            $baseLevel3->setNumero(3);
+            $baseLevel3->setEcartEntreLesReponses(7);
+            $baseLevel3->setNombreDeReponses(3);
+            $baseLevel3->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel3->setReponsesSimilaires(true);
+            $baseLevel3->setTempsDisponible(null);
+            $baseLevel3->setOrdreDesQuestions('aleatoire');
+            $baseLevel3->setQuestionsATrous(false);
+            $baseLevel3->setJeu($test1);
+            $manager->persist($baseLevel3);
             //
-            $baseLevels[3]->setNumero(-1);
-            $baseLevels[3]->setEcartEntreLesReponses(7);
-            $baseLevels[3]->setNombreDeReponses(4);
-            $baseLevels[3]->setNbReponsesProposeesDeLaMemeTable(1);
-            $baseLevels[3]->setReponsesSimilaires(false);
-            $baseLevels[3]->setTempsDisponible(30);
-            $baseLevels[3]->setOrdreDesQuestions('croissant');
-            $baseLevels[3]->setQuestionsATrous(false);
+            $baseLevel4 = new Niveau();
+            $baseLevel4->setNumero(4);
+            $baseLevel4->setEcartEntreLesReponses(7);
+            $baseLevel4->setNombreDeReponses(4);
+            $baseLevel4->setNbReponsesProposeesDeLaMemeTable(1);
+            $baseLevel4->setReponsesSimilaires(false);
+            $baseLevel4->setTempsDisponible(30);
+            $baseLevel4->setOrdreDesQuestions('croissant');
+            $baseLevel4->setQuestionsATrous(false);
+            $baseLevel4->setJeu($test1);
+            $manager->persist($baseLevel4);
             //
-            $baseLevels[4]->setNumero(-1);
-            $baseLevels[4]->setEcartEntreLesReponses(5);
-            $baseLevels[4]->setNombreDeReponses(4);
-            $baseLevels[4]->setNbReponsesProposeesDeLaMemeTable(1);
-            $baseLevels[4]->setReponsesSimilaires(false);
-            $baseLevels[4]->setTempsDisponible(20);
-            $baseLevels[4]->setOrdreDesQuestions('decroissant');
-            $baseLevels[4]->setQuestionsATrous(false);
+            $baseLevel5 = new Niveau();
+            $baseLevel5->setNumero(5);
+            $baseLevel5->setEcartEntreLesReponses(5);
+            $baseLevel5->setNombreDeReponses(4);
+            $baseLevel5->setNbReponsesProposeesDeLaMemeTable(1);
+            $baseLevel5->setReponsesSimilaires(false);
+            $baseLevel5->setTempsDisponible(20);
+            $baseLevel5->setOrdreDesQuestions('decroissant');
+            $baseLevel5->setQuestionsATrous(false);
+            $baseLevel5->setJeu($test1);
+            $manager->persist($baseLevel5);
             //
-            $baseLevels[5]->setNumero(-1);
-            $baseLevels[5]->setEcartEntreLesReponses(5);
-            $baseLevels[5]->setNombreDeReponses(4);
-            $baseLevels[5]->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevels[5]->setReponsesSimilaires(true);
-            $baseLevels[5]->setTempsDisponible(10);
-            $baseLevels[5]->setOrdreDesQuestions('aleatoire');
-            $baseLevels[5]->setQuestionsATrous(false);
+            $baseLevel6 = new Niveau();
+            $baseLevel6->setNumero(6);
+            $baseLevel6->setEcartEntreLesReponses(5);
+            $baseLevel6->setNombreDeReponses(4);
+            $baseLevel6->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel6->setReponsesSimilaires(true);
+            $baseLevel6->setTempsDisponible(10);
+            $baseLevel6->setOrdreDesQuestions('aleatoire');
+            $baseLevel6->setQuestionsATrous(false);
+            $baseLevel6->setJeu($test1);
+            $manager->persist($baseLevel6);
             //
-            $baseLevels[6]->setNumero(-1);
-            $baseLevels[6]->setEcartEntreLesReponses(5);
-            $baseLevels[6]->setNombreDeReponses(4);
-            $baseLevels[6]->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevels[6]->setReponsesSimilaires(true);
-            $baseLevels[6]->setTempsDisponible(10);
-            $baseLevels[6]->setOrdreDesQuestions('croissant');
-            $baseLevels[6]->setQuestionsATrous(false);
+            $baseLevel7 = new Niveau();
+            $baseLevel7->setNumero(7);
+            $baseLevel7->setEcartEntreLesReponses(5);
+            $baseLevel7->setNombreDeReponses(4);
+            $baseLevel7->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel7->setReponsesSimilaires(true);
+            $baseLevel7->setTempsDisponible(10);
+            $baseLevel7->setOrdreDesQuestions('croissant');
+            $baseLevel7->setQuestionsATrous(false);
+            $baseLevel7->setJeu($test1);
+            $manager->persist($baseLevel7);
             //
-            $baseLevels[7]->setNumero(-1);
-            $baseLevels[7]->setEcartEntreLesReponses(10);
-            $baseLevels[7]->setNombreDeReponses(0);
-            $baseLevels[7]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[7]->setReponsesSimilaires(false);
-            $baseLevels[7]->setTempsDisponible(20);
-            $baseLevels[7]->setOrdreDesQuestions('croissant');
-            $baseLevels[7]->setQuestionsATrous(true);
+            $baseLevel8 = new Niveau();
+            $baseLevel8->setNumero(8);
+            $baseLevel8->setEcartEntreLesReponses(10);
+            $baseLevel8->setNombreDeReponses(0);
+            $baseLevel8->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel8->setReponsesSimilaires(false);
+            $baseLevel8->setTempsDisponible(20);
+            $baseLevel8->setOrdreDesQuestions('croissant');
+            $baseLevel8->setQuestionsATrous(true);
+            $baseLevel8->setJeu($test1);
+            $manager->persist($baseLevel8);
             //
-            $baseLevels[8]->setNumero(-1);
-            $baseLevels[8]->setEcartEntreLesReponses(10);
-            $baseLevels[8]->setNombreDeReponses(0);
-            $baseLevels[8]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[8]->setReponsesSimilaires(false);
-            $baseLevels[8]->setTempsDisponible(10);
-            $baseLevels[8]->setOrdreDesQuestions('croissant');
-            $baseLevels[8]->setQuestionsATrous(true);
+            $baseLevel9 = new Niveau();
+            $baseLevel9->setNumero(9);
+            $baseLevel9->setEcartEntreLesReponses(10);
+            $baseLevel9->setNombreDeReponses(0);
+            $baseLevel9->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel9->setReponsesSimilaires(false);
+            $baseLevel9->setTempsDisponible(10);
+            $baseLevel9->setOrdreDesQuestions('croissant');
+            $baseLevel9->setQuestionsATrous(true);
+            $baseLevel9->setJeu($test1);
+            $manager->persist($baseLevel9);
             //
-            $baseLevels[9]->setNumero(-1);
-            $baseLevels[9]->setEcartEntreLesReponses(10);
-            $baseLevels[9]->setNombreDeReponses(0);
-            $baseLevels[9]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[9]->setReponsesSimilaires(false);
-            $baseLevels[9]->setTempsDisponible(10);
-            $baseLevels[9]->setOrdreDesQuestions('croissant');
-            $baseLevels[9]->setQuestionsATrous(true);
+            $baseLevel10 = new Niveau();
+            $baseLevel10->setNumero(10);
+            $baseLevel10->setEcartEntreLesReponses(10);
+            $baseLevel10->setNombreDeReponses(0);
+            $baseLevel10->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel10->setReponsesSimilaires(false);
+            $baseLevel10->setTempsDisponible(10);
+            $baseLevel10->setOrdreDesQuestions('croissant');
+            $baseLevel10->setQuestionsATrous(true);
+            $baseLevel10->setJeu($test1);
+            $manager->persist($baseLevel10);
             //
-            $baseLevels[10]->setNumero(-1);
-            $baseLevels[10]->setEcartEntreLesReponses(10);
-            $baseLevels[10]->setNombreDeReponses(0);
-            $baseLevels[10]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[10]->setReponsesSimilaires(false);
-            $baseLevels[10]->setTempsDisponible(10);
-            $baseLevels[10]->setOrdreDesQuestions('croissant');
-            $baseLevels[10]->setQuestionsATrous(true);
+            $baseLevel11 = new Niveau();
+            $baseLevel11->setNumero(11);
+            $baseLevel11->setEcartEntreLesReponses(10);
+            $baseLevel11->setNombreDeReponses(0);
+            $baseLevel11->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel11->setReponsesSimilaires(false);
+            $baseLevel11->setTempsDisponible(10);
+            $baseLevel11->setOrdreDesQuestions('croissant');
+            $baseLevel11->setQuestionsATrous(true);
+            $baseLevel11->setJeu($test1);
+            $manager->persist($baseLevel11);
             //
-            $baseLevels[11]->setNumero(-1);
-            $baseLevels[11]->setEcartEntreLesReponses(10);
-            $baseLevels[11]->setNombreDeReponses(0);
-            $baseLevels[11]->setNbReponsesProposeesDeLaMemeTable(0);
-            $baseLevels[11]->setReponsesSimilaires(false);
-            $baseLevels[11]->setTempsDisponible(10);
-            $baseLevels[11]->setOrdreDesQuestions('croissant');
-            $baseLevels[11]->setQuestionsATrous(true);
+            $baseLevel12 = new Niveau();
+            $baseLevel12->setNumero(12);
+            $baseLevel12->setEcartEntreLesReponses(10);
+            $baseLevel12->setNombreDeReponses(0);
+            $baseLevel12->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel12->setReponsesSimilaires(false);
+            $baseLevel12->setTempsDisponible(10);
+            $baseLevel12->setOrdreDesQuestions('croissant');
+            $baseLevel12->setQuestionsATrous(true);
+            $baseLevel12->setJeu($test1);
+            $manager->persist($baseLevel12);
             //
-
+        /*
         //games init
             $games[0]->setCheminAcces('altic/cave.html.twig');
             $games[1]->setCheminAcces('altic/moutain.html.twig');
             $games[2]->setCheminAcces('altic/doors.html.twig');
             $games[3]->setCheminAcces('altic/fishing.html.twig');
-        /*for ($i=0; $i < 4; $i++) { 
+        *//*for ($i=0; $i < 4; $i++) { 
             $manager->persist($games[$i]);
-        }*/
+        }*//*
         //regions init
             $regions[0]->setNom('');
             $regions[0]->setImgMagicien('');
@@ -194,7 +230,7 @@ class AppFixtures extends Fixture
             $manager->persist($region);
         }
 
-        //levels init
+            //levels init
             for ($i=0; $i < 11; $i++) { 
                 for ($j=1; $j < 13; $j++) { 
                     $currentLevel = $levels[$i*12+($j-1)];
@@ -219,7 +255,27 @@ class AppFixtures extends Fixture
                     $tables[$i]->addNiveau($levels[$i*12+$j]);
                 }
                 $manager->persist($tables[$i]);
-            }
+            }*/
+            $region = new Region();
+            $region->setNom('');
+            $region->setImgMagicien('');
+            $manager->persist($region);
+            $table = new TableDeMultiplication();
+            $table->setNumero(2);
+            $table->setRegion($region);
+            $table->addNiveau($baseLevel1);
+            $table->addNiveau($baseLevel2);
+            $table->addNiveau($baseLevel3);
+            $table->addNiveau($baseLevel4);
+            $table->addNiveau($baseLevel5);
+            $table->addNiveau($baseLevel6);
+            $table->addNiveau($baseLevel7);
+            $table->addNiveau($baseLevel8);
+            $table->addNiveau($baseLevel9);
+            $table->addNiveau($baseLevel10);
+            $table->addNiveau($baseLevel11);
+            $table->addNiveau($baseLevel12);
+            $manager->persist($table);
         
         $manager->flush();
     }
