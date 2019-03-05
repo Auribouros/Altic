@@ -7,7 +7,6 @@
 {{ parent() }}
 
 <div class="container">
-	
 
 	<!--map and Constantin-->
 	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam', 'Will'] %}
@@ -115,14 +114,16 @@
 		</div>
 		</div>
 
-		<div class="col-sm-4"><p class="h5">Mes enseignants</p></div>
-
-	</div>
+		<div class="col-sm-4"><p class="h5">Mes enseignants</p>
+		
 	<!--ajoutEnseignant-->
 	{{form_start(addTeacher)}}
 		{{form_row(addTeacher.email)}}
 		<button class="btn btn-lg btn-primary" type="submit">Ajouter un enseignant</button>
 	{{form_end(addTeacher)}}
 </div>
+		</div>
+
+	</div>
 
 {% endblock %}

@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 /**
  * @method Utilisateur|null find($id, $lockMode = null, $lockVersion = null)
@@ -37,9 +36,6 @@ class UtilisateurRepository extends ServiceEntityRepository
     }
     */
 
-    /**
-    * @return Utilisateur[] Returns an array of Utilisateur objects
-    */ 
     public function findOneTeacherByEmail($email)
     {
         $entityManage = $this->getEntityManager();
