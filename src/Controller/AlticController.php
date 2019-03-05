@@ -6,8 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Entity\Utilisateur;
+use App\Entity\Niveau;
 use App\Entity\Question;
-use App\Entity\ReponseProposee;
+use App\Entity\ReponsePropose;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
@@ -126,7 +127,7 @@ class AlticController extends AbstractController
                 case 0:
                 if( ! $ARightAnswer){
                     //generate the right answer
-                    $answers[$table*$key]=new ReponseProposee();
+                    $answers[$table*$key]=new ReponsePropose();
                     $answers[$table*$key]->setReponse($table*$key);
                     $ARightAnswer=true;
                     $i+=1;
@@ -137,7 +138,7 @@ class AlticController extends AbstractController
                     if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
                         $aMultiplier=rand(0,10);
                         if( ! isset($answers[$table*$aMultiplier])){
-                       $answers[$table*$aMultiplier]=new ReponseProposee();
+                       $answers[$table*$aMultiplier]=new ReponsePropose();
                        $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
                         $nbOfSameAnswers+=1;
                         $i+=1;
@@ -149,14 +150,14 @@ class AlticController extends AbstractController
                 case 3:
                     //generate everything else
                     if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
-                        $valeur=rand(0,$level->ecartEntreLesReponse);
+                        $valeur=rand(0,$level->getEcartEntreLesReponses());
                         $estAddition =rand(0,1);
                         if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
                             if ($estAddition==1) {
-                                $answers[$table*$key+$valeur]=new ReponseProposee();
+                                $answers[$table*$key+$valeur]=new ReponsePropose();
                                 $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
                             } else {
-                                $answers[$table*$key-$valeur]= new ReponseProposee();
+                                $answers[$table*$key-$valeur]= new ReponsePropose();
                                 $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
                             }
                             $nbOfCurrentRandomAnswer+=1;
@@ -326,28 +327,36 @@ class AlticController extends AbstractController
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
+        //represents all the global levels numbers for the current table
+        $levelsNumbers = array();
+        //represents the first global level number for each table
+        $minLevelFromTable = array(2=>1, 5=>13, 10=>25, 1=>37, 4=>49, 3=>61, 0=>73, 6=>85, 8=>97, 9=>109, 7=>121);
 
         //arrays representing the games order
-        $map0 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
-        $map1 = array('startMAP.png', 'endMAP.png');
-        $map2 = array('startMAP.png', 'endMAP.png');
-        $map3 = array('startMAP.png', 'endMAP.png');
-        $map4 = array('startMAP.png', 'endMAP.png');
-        $map5 = array('startMAP.png', 'endMAP.png');
-        $map6 = array('startMAP.png', 'endMAP.png');
-        $map7 = array('startMAP.png', 'endMAP.png');
-        $map8 = array('startMAP.png', 'endMAP.png');
-        $map9 = array('startMAP.png', 'endMAP.png');
-        $map10 = array('startMAP.png', 'endMAP.png');     
-        $maps = array($map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0);
+            $map0 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
+            $map1 = array('startMAP.png', 'endMAP.png');
+            $map2 = array('startMAP.png', 'endMAP.png');
+            $map3 = array('startMAP.png', 'endMAP.png');
+            $map4 = array('startMAP.png', 'endMAP.png');
+            $map5 = array('startMAP.png', 'endMAP.png');
+            $map6 = array('startMAP.png', 'endMAP.png');
+            $map7 = array('startMAP.png', 'endMAP.png');
+            $map8 = array('startMAP.png', 'endMAP.png');
+            $map9 = array('startMAP.png', 'endMAP.png');
+            $map10 = array('startMAP.png', 'endMAP.png');     
+            $maps = array($map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0);
         $images = $maps[$number];
 
         //array telling if the level can be played, each element representing a level
         $bCanPlay = array_fill(0, 12, false);
         $alreadyMasteredLevels = array();
         //the range of levels in this context
-        $range = array('min'=>$number*12, 'max'=>$number*12+12);
+        $range = array('min'=>$minLevelFromTable[$number], 'max'=>$minLevelFromTable[$number]+11);
         $masteredLevels = $user->getNiveaux();
+        //init levelsNumbers
+        for ($i=$range['min']; $i <= $range['max']; $i++) { 
+            array_push($levelsNumbers, $i);
+        }
 
         //get all mastered levels in range
         if (sizeof($masteredLevels) > 0) {
@@ -384,26 +393,36 @@ class AlticController extends AbstractController
                                 'tableNumber'=>$number,
                                 'profilePic'=>$profilePic,
                                 'images'=>$images,
-                                'bCanPlay'=>$bCanPlay
+                                'bCanPlay'=>$bCanPlay,
+                                'levelsNumbers'=>$levelsNumbers
                             ]);
     }
 
     /**
-     * @Route("/pupil/{tableNumber}/{levelNumber}/{gameName}", name="altic_pupilTraining")
+     * @Route("/pupil/{tableNumber}/{levelNumber}/{mapName}", name="altic_pupilTraining")
      */
-    public function pupilTraining($tableNumber, $levelNumber, $gameName)
+    public function pupilTraining($tableNumber, $levelNumber, $mapName)
     {
+        //array representing a game for a given map
+        $gameFromMap = array(
+            'castleMAP.png'=>'caveGame',
+            'riverMAP.png'=>'fishingGame',
+            'caveMAP.png'=>'caveGame',
+            'mountainMAP.png'=>'mountainGame'
+        );
+        $gameName = $gameFromMap[$mapName];
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
-        $level = $repositoryNiveau->findBy(["numero" => $levelNumber]);
+        $level = $repositoryNiveau->findBy(["numero" => $levelNumber])[0];
         $localLevel = ($levelNumber % 12 == 0)? 12 : $levelNumber % 12;
 
-        $questionsAnswers = generateAnswers($tableNumber, generateQuestions($tableNumber, $level), $level);
+        $questionsAnswers = $this->generateAnswers($tableNumber, $this->generateQuestions($tableNumber, $level), $level);
 
         return $this->render("altic/$gameName.html.twig", 
             [
-                'questionsAndAnswers'=>$questionsAnswers,
+                'questionsAndAnswers'=>json_encode($questionsAnswers),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel
             ]);
