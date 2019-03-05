@@ -310,7 +310,7 @@ class Utilisateur implements UserInterface
         return $this->professeurLie;
     }
 
-    public function addProfesseurLie(self $professeurLie): self
+    public function addProfesseurLie($professeurLie): self
     {
         if (!$this->professeurLie->contains($professeurLie)) {
             $this->professeurLie[] = $professeurLie;

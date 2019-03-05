@@ -36,18 +36,16 @@ class UtilisateurRepository extends ServiceEntityRepository
     }
     */
 
-    
     public function findOneTeacherByEmail($email)
     {
         $entityManage = $this->getEntityManager();
         $request = $entityManage->createQuery(
             'SELECT teacher 
             FROM App\Entity\Utilisateur teacher 
-            WHERE teacher.estEnseignant
-            AND teacher.email = :email'
+            WHERE teacher.estEnseignant =true
+            AND teacher.email LIKE :mail'
             );
-            $request->setParameter('email',$email);
-        return $request->execute();
+        return $request->execute(array(':mail'=>$email));
     }
     
 }
