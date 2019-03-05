@@ -389,18 +389,24 @@ class AlticController extends AbstractController
     }
 
     /**
-     * @Route("/pupil/{tableNumber}/{levelNumber}", name="altic_pupilTraining")
+     * @Route("/pupil/{tableNumber}/{levelNumber}/{gameName}", name="altic_pupilTraining")
      */
-    public function pupilTraining($tableNumber, $levelNumber)
+    public function pupilTraining($tableNumber, $levelNumber, $gameName)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
         $level = $repositoryNiveau->findBy(["numero" => $levelNumber]);
+        $localLevel = ($levelNumber % 12 == 0)? 12 : $levelNumber % 12;
 
         $questionsAnswers = generateAnswers($tableNumber, generateQuestions($tableNumber, $level), $level);
 
-        return $this->render('altic/game.html.twig', ['questionsAndAnswers'=>$questionsAnswers]);
+        return $this->render("altic/$gameName.html.twig", 
+            [
+                'questionsAndAnswers'=>$questionsAnswers,
+                'table'=>$tableNumber,
+                'localLevel'=>$localLevel
+            ]);
     }
 
     #########################################################

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Table {{ table }}, niveau {{ localLevel }}</title>
+
+	<meta charset="utf-8">
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/game/caveStyle.css') }}">
+{% endblock %}	
+
+</head>
+<body>
+
+{% block body %}
+	<div id="drawing">
+		
+	</div>
+
+	<div id="data" data-questionsAnswers="{{ questionsAndAnswers }}"></div>
+{% endblock %}
+
+{% block javascripts %}
+
+	<script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+	<script type="text/javascript" src="J{{ asset('js/games/tools.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/games/caveLogic.js') }}"></script>
+
+{% endblock %}
+
+</body>
+</html>
