@@ -35,7 +35,9 @@ class UtilisateurRepository extends ServiceEntityRepository
         ;
     }
     */
-
+/**
+ * @return Utilisateur[]|null
+ */
     public function findOneTeacherByEmail($email)
     {
         $entityManage = $this->getEntityManager();
