@@ -330,6 +330,17 @@ class AlticController extends AbstractController
             'userName'=>$pupilFullName, 
             'profilePic'=>'default']);
     }
+    /**
+     * @Route("/pupil/endgame", name="altic_endgame")
+     */
+    public function endgame(){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        return $this->render('altic/endgame.html.twig', [
+            'userName'=>$pupilFullName, 
+            'profilePic'=>'default']);
+    }
 
     /**
      * @Route("/pupil/{number}", name="altic_pupilTable")
