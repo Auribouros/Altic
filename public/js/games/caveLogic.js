@@ -64,7 +64,7 @@ $(function(){
 			 * @type       {string}
 			 */
 			let toolElement = '<a href="#" class="answerA" id="answer' + i + '"><img src="images/tools/' + toolImages[randomToolImageIndex] + '" class="keyImage"/>' + i + '</a>';
-			let answer = new Answer('answer'+i, i, 'images/tools/' + toolImages[randomToolImageIndex]);
+			let answer = new Answer('answer'+i, i, toolImages[randomToolImageIndex]);
 
 			answer.appendTo('#answerSpace');
 			answer.setElementCSS({
@@ -218,30 +218,31 @@ $(function(){
 		 */
 		let roomWidth = drawingBoardWidth / numberOfRoomImagesPerRow;
 
+		let imagesData = harvestDataFromElement('images', '#data');
 		/**
 		 * Names of all the pictures in the room
 		 *
 		 * @type       {string[]}
 		 */
-		let roomImages = ['1.png'];
+		let roomImages = [imagesData.room];
 		/**
 		 * All door picture names.
 		 *
 		 * @type       {string[]}
 		 */
-		let doorImages = ['1.png', '2.png', '3.png'];
+		let doorImages = [imagesData.door, '2.png', '3.png'];
 		/**
 		 * All tools images names.
 		 *
 		 * @type       {string[]}
 		 */
-		let toolImages = ['1.png', '1.png', '2.png', '3.png', '4.png'];
+		let toolImages = [imagesData.tool1, imagesData.tool2, imagesData.tool3, imagesData.tool4];
 		/**
 		 * Name of the image representing Celestin.
 		 *
 		 * @type       {string}
 		 */
-		let celestinImage = 'images/character/1.png';
+		let celestinImage = imagesData.celestin;
 		/**
 		 * The name of the image representing the magician
 		 *
@@ -300,7 +301,7 @@ $(function(){
 		 */
 		let randomRoomImageIndex = Math.floor(Math.random() * roomImages.length);
 
-		rooms[rooms.length] = new Room(i, 'images/cave/'+roomImages[randomRoomImageIndex], 'images/rocks/'+ doorImages[1]);
+		rooms[rooms.length] = new Room(i, roomImages[randomRoomImageIndex], doorImages[0]);
 
 		rooms[i].appendTo('#drawing');
 
@@ -322,7 +323,7 @@ $(function(){
 			'z-index': '1'
 		});
 
-	//create a celestial element
+	//create Célestin element element
 		
 		/**
 		 * Character Célestin.
@@ -336,7 +337,7 @@ $(function(){
 		celestin.setImgCSS({'height': 0.3*roomHeight, 'width': 0.3*roomWidth});
 		celestin.setElementCSS({'position': 'absolute', 'top': 0.4*roomHeight, 'left': 0.2*roomWidth});
 
-	//create a magician item
+	//create a wizard element
 
 		/**
 		 * A magician character.

@@ -193,4 +193,17 @@
 
 
 	}
+//functions
+	
+	/**
+	 * Returns data from a specified variable in a specified HTML element
+	 *
+	 * @param      {string}  variableName  The variable name containing data
+	 * @param      {string}  element       The HTML element to harvest data from
+	 * @return     {string}  Harvested data
+	 */
+	function harvestDataFromElement(variableName, element) {
+		
+		return $(element).data(variableName);
 
+	}
