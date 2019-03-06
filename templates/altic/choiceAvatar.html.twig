@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Choisis ton avatar {% endblock %}
+
+{% block body %}
+
+{{ parent() }}
+{% for avatar in playableAvatar %}
+    <img style="max-height: 100px; max-width: 100px;" src="{{avatar}}"><br/><br/>
+{% endfor %}
+{% endblock %}

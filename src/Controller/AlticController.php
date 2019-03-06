@@ -317,6 +317,19 @@ class AlticController extends AbstractController
         
 
     }
+    /**
+     * @Route ("/pupil/avatarChoice", name= "altic_choiceAvatar")
+     */
+    public function choiceAvatar(){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        $playableAvatar =$user->getPersonnagejouable();
+        return $this->render('altic/choiceAvatar.html.twig', [
+            'playableAvatar'=>$playableAvatar,
+            'userName'=>$pupilFullName, 
+            'profilePic'=>'default']);
+    }
 
     /**
      * @Route("/pupil/{number}", name="altic_pupilTable")
@@ -409,7 +422,9 @@ class AlticController extends AbstractController
      */
     public function pwdLost()
     {
-        return $this->render('altic/pwdLost.html.twig', ['userName'=>'', 'profilePic'=>'default']);
+        return $this->render('altic/pwdLost.html.twig', [
+            'userName'=>'', 
+            'profilePic'=>'default']);
     }
 
     /**
