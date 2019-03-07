@@ -18,6 +18,15 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        for ($i = 0; $i < 10; $i++) {
+            $training = new Entrainement();
+            $training->setId($i);
+            $training->setDate(date('Y-m-d'));
+            $training->setDuree(mt_rand(10, 100));
+            $training->setUtilisateur(getUser());
+            $manager->persist($training);
+        }
+
         $tablesOrder = array(2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7);
         $baseLevels = array_fill(0, 12, new Niveau());
         $games = array_fill(0, 4, new Jeu());
