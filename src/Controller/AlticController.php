@@ -318,6 +318,30 @@ class AlticController extends AbstractController
         
 
     }
+    /**
+     * @Route ("/pupil/{tableNumber}/{levelNumber}/{avatarChoice}", name= "altic_choiceAvatar")
+     */
+    public function choiceAvatar(){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        $playableAvatar =$user->getPersonnagejouable();
+        return $this->render('altic/choiceAvatar.html.twig', [
+            'playableAvatar'=>$playableAvatar,
+            'userName'=>$pupilFullName, 
+            'profilePic'=>'default']);
+    }
+    /**
+     * @Route("/pupil/endgame", name="altic_endgame")
+     */
+    public function endgame(){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        return $this->render('altic/endgame.html.twig', [
+            'userName'=>$pupilFullName, 
+            'profilePic'=>'default']);
+    }
 
     /**
      * @Route("/pupil/{number}", name="altic_pupilTable")
@@ -399,9 +423,9 @@ class AlticController extends AbstractController
     }
 
     /**
-     * @Route("/pupil/{tableNumber}/{levelNumber}/{mapName}", name="altic_pupilTraining")
+     * @Route("/pupil/{tableNumber}/{levelNumber}/{mapName}/{avatarImage}", name="altic_pupilTraining")
      */
-    public function pupilTraining($tableNumber, $levelNumber, $mapName)
+    public function pupilTraining($tableNumber, $levelNumber, $mapName, $avatarImage)
     {
         //array representing a game for a given map
         $gameFromMap = array(
@@ -434,7 +458,9 @@ class AlticController extends AbstractController
      */
     public function pwdLost()
     {
-        return $this->render('altic/pwdLost.html.twig', ['userName'=>'', 'profilePic'=>'default']);
+        return $this->render('altic/pwdLost.html.twig', [
+            'userName'=>'', 
+            'profilePic'=>'default']);
     }
 
     /**
