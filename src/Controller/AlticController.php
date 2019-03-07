@@ -168,7 +168,9 @@ class AlticController extends AbstractController
                         break;
                     }
             }
-            $value->answers=$answers;
+            foreach ($answers as $answer) {
+                $value->addReponsepropose($answer);
+            }
         }
 
         return $questions;

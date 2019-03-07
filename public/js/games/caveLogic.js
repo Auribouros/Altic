@@ -64,7 +64,7 @@ $(function(){
 			 * @type       {string}
 			 */
 			let toolElement = '<a href="#" class="answerA" id="answer' + i + '"><img src="images/tools/' + toolImages[randomToolImageIndex] + '" class="keyImage"/>' + i + '</a>';
-			let answer = new Answer('answer'+i, i, toolImages[randomToolImageIndex]);
+			let answer = new Answer('answer'+i, '', toolImages[randomToolImageIndex]);
 
 			answer.appendTo('#answerSpace');
 			answer.setElementCSS({
@@ -85,6 +85,14 @@ $(function(){
 				'background-color': 'rgba(255, 255, 255, 0.9)',
 				'border-radius': '100%',
 				'padding': '0.5%'
+			});
+			answer.setInputCSS({
+				'border-radius': '5px',
+				'border-color': 'black',
+				'font-family': 'Med1',
+				'font-size': documentHeight/20,
+				'width': documentWidth/20,
+				'padding': '5px'
 			});
 
 		}
