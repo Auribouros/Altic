@@ -108,65 +108,65 @@ class AlticController extends AbstractController
     private function generateAnswers($table, $questions, $level)
     {
         foreach ($questions as $key=> $value) {
-        /*
-        INITIALISATION
-        */
-        $answers = array();
-        $ARightAnswer=false;
-        $i=0;
-        $nbOfSameAnswers=0; 
-        $nbOfCurrentRandomAnswer=0;
-        //calculate the number of random answers
-        $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
+            /*
+            INITIALISATION
+            */
+            $answers = array();
+            $ARightAnswer=false;
+            $i=0;
+            $nbOfSameAnswers=0; 
+            $nbOfCurrentRandomAnswer=0;
+            //calculate the number of random answers
+            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
 
-        /*
-            generate answers
-        */
-        while ($i!=$level->getNombreDeReponses()) {
-            $answerType=rand(0,3);
-            switch ($answerType) {
-                case 0:
-                if( ! $ARightAnswer){
-                    //generate the right answer
-                    $answers[$table*$key]=new ReponsePropose();
-                    $answers[$table*$key]->setReponse($table*$key);
-                    $ARightAnswer=true;
-                    $i+=1;
-                }
-                break;
-                case 1:
-                    //generate an answer from the same table
-                    if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
-                        $aMultiplier=rand(0,10);
-                        if( ! isset($answers[$table*$aMultiplier])){
-                       $answers[$table*$aMultiplier]=new ReponsePropose();
-                       $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
-                        $nbOfSameAnswers+=1;
+            /*
+                generate answers
+            */
+            while ($i!=$level->getNombreDeReponses()) {
+                $answerType=rand(0,3);
+                switch ($answerType) {
+                    case 0:
+                    if( ! $ARightAnswer){
+                        //generate the right answer
+                        $answers[$table*$key]=new ReponsePropose();
+                        $answers[$table*$key]->setReponse($table*$key);
+                        $ARightAnswer=true;
                         $i+=1;
-                        }
                     }
                     break;
-                case 2:
-                    break;
-                case 3:
-                    //generate everything else
-                    if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
-                        $valeur=rand(0,$level->getEcartEntreLesReponses());
-                        $estAddition =rand(0,1);
-                        if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
-                            if ($estAddition==1) {
-                                $answers[$table*$key+$valeur]=new ReponsePropose();
-                                $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
-                            } else {
-                                $answers[$table*$key-$valeur]= new ReponsePropose();
-                                $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
-                            }
-                            $nbOfCurrentRandomAnswer+=1;
+                    case 1:
+                        //generate an answer from the same table
+                        if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
+                            $aMultiplier=rand(0,10);
+                            if( ! isset($answers[$table*$aMultiplier])){
+                           $answers[$table*$aMultiplier]=new ReponsePropose();
+                           $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
+                            $nbOfSameAnswers+=1;
                             $i+=1;
+                            }
                         }
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        //generate everything else
+                        if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
+                            $valeur=rand(0,$level->getEcartEntreLesReponses());
+                            $estAddition =rand(0,1);
+                            if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
+                                if ($estAddition==1) {
+                                    $answers[$table*$key+$valeur]=new ReponsePropose();
+                                    $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
+                                } else {
+                                    $answers[$table*$key-$valeur]= new ReponsePropose();
+                                    $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
+                                }
+                                $nbOfCurrentRandomAnswer+=1;
+                                $i+=1;
+                            }
+                        }
+                        break;
                     }
-                    break;
-                }
             }
             $value->answers=$answers;
         }
@@ -449,7 +449,7 @@ class AlticController extends AbstractController
 
         $questionsAnswers = $this->generateAnswers($tableNumber, $this->generateQuestions($tableNumber, $level), $level);
 
-        return $this->render("altic/$gameName.html.twig", 
+        return $this->render("altic/$gameName.html.twig",
             [
                 'questionsAndAnswers'=>json_encode($questionsAnswers),
                 'table'=>$tableNumber,
