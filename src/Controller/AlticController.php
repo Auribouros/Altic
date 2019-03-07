@@ -6,35 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Entity\Utilisateur;
+use App\Entity\Question;
+use App\Entity\ReponseProposee;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class Answer
-{
-    private $answer;
-    function __construct($ans)
-    {
-        $this->answer=$ans;
-    }
-    public function getAnswer(){
-        return $this->answer;
-    }
-}
-    
-class Question{
-    private $question ="";
-    public $answers;
-    function __construct($text)
-    {
-        $this->question=$text;
-    }
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-}
 
 class AlticController extends AbstractController
 {
@@ -109,14 +87,16 @@ class AlticController extends AbstractController
             do {
                 $value=rand(0,10);
                 if (! isset($questions[$value])) {
-                    $questions[$value]=new Question("$table x $value");
+                    $questions[$value] = new Question();
+                    $questions[$value]->setLibelle("$table x $value");
                     $begining += 1;
                 }
             } while ($begining<11);
         }else {
             //ordered question
             for ($i=$begining; $i!=$ending ; $i+=$inc) {
-                $questions[$i]=new Question("$table x $i");
+                $questions[$i] = new Question();
+                $questions[$i]->setLibelle("$table x $i");
             }
         }
 
@@ -146,7 +126,8 @@ class AlticController extends AbstractController
                 case 0:
                 if( ! $ARightAnswer){
                     //generate the right answer
-                    $answers[$table*$key]=new Answer("".$table*$key);
+                    $answers[$table*$key]=new ReponseProposee();
+                    $answers[$table*$key]->setReponse($table*$key);
                     $ARightAnswer=true;
                     $i+=1;
                 }
@@ -156,7 +137,8 @@ class AlticController extends AbstractController
                     if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
                         $aMultiplier=rand(0,10);
                         if( ! isset($answers[$table*$aMultiplier])){
-                       $answers[$table*$aMultiplier]=new Answer("".$table*$aMultiplier);
+                       $answers[$table*$aMultiplier]=new ReponseProposee();
+                       $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
                         $nbOfSameAnswers+=1;
                         $i+=1;
                         }
@@ -171,9 +153,11 @@ class AlticController extends AbstractController
                         $estAddition =rand(0,1);
                         if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
                             if ($estAddition==1) {
-                                $answers[$table*$key+$valeur]=new Answer("".$table*$key+$valeur);
+                                $answers[$table*$key+$valeur]=new ReponseProposee();
+                                $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
                             } else {
-                                $answers[$table*$key-$valeur]= new Answer("".$table*$key-$valeur);
+                                $answers[$table*$key-$valeur]= new ReponseProposee();
+                                $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
                             }
                             $nbOfCurrentRandomAnswer+=1;
                             $i+=1;
