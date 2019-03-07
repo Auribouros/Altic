@@ -114,6 +114,15 @@ $(function(){
 	}
 
 	/**
+	 * Updates the answers
+	 *
+	 * @param      {integer}  questionNumber  The question number in the questions order
+	 */
+	function updateAnswers(questionNumber) {
+		
+	}
+
+	/**
 	 * Pops up the popup question
 	 *
 	 * @function
