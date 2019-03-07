@@ -318,7 +318,7 @@ class AlticController extends AbstractController
 
     }
     /**
-     * @Route ("/pupil/avatarChoice", name= "altic_choiceAvatar")
+     * @Route ("/pupil/{tableNumber}/{levelNumber}/avatarChoice", name= "altic_choiceAvatar")
      */
     public function choiceAvatar(){
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -413,7 +413,7 @@ class AlticController extends AbstractController
     }
 
     /**
-     * @Route("/pupil/{tableNumber}/{levelNumber}", name="altic_pupilTraining")
+     * @Route("/pupil/{tableNumber}/{levelNumber}/{idAvatar}", name="altic_pupilTraining")
      */
     public function pupilTraining($tableNumber, $levelNumber)
     {
