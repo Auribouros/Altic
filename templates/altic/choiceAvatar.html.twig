@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Choisis ton avatar {% endblock %}
+{% block title %} Choisis ton personnage ! {% endblock %}
 
 {% block body %}
 
 {{ parent() }}
-{% for avatar in playableAvatar %}
-<a href="#">{# TU GERE LE LIENS AVC LE JEU, HIPPIE #}
-    <img style="max-height: 100px; max-width: 100px;" src="{{avatar}}"><br/><br/>
-    </a>
-{% endfor %}
+
+<div class="container">
+	<div class="row">
+	<h3>Choisis ton personnage !</h3>
+	</div>
+	<div class="row">
+		{% for img in playableCharacters %}
+
+		<a href="{{ path('altic_pupilTraining', {
+			tableNumber:tableNumber, 
+			levelNumber:levelNumber, 
+			mapName:mapName, 
+			avatarImage:img.image
+		}) }}"><img class="img-thumbnail" style="height: 100px;" src="{{ asset('images/pupil/characters/' ~ img.image) }}"></a>
+
+		{% endfor %}
+	</div>
+</div>
+
 {% endblock %}

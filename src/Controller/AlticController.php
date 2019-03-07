@@ -9,6 +9,7 @@ use App\Entity\Utilisateur;
 use App\Entity\Niveau;
 use App\Entity\Question;
 use App\Entity\ReponsePropose;
+use App\Entity\PersonnageJouable;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
@@ -110,7 +111,7 @@ class AlticController extends AbstractController
         /*
         INITIALISATION
         */
-        unset($answers);
+        $answers = array();
         $ARightAnswer=false;
         $i=0;
         $nbOfSameAnswers=0; 
@@ -247,7 +248,6 @@ class AlticController extends AbstractController
                $this->generateUrl('altic_teacherWelcome')
            );
         } else {
-            $profilePic = 'images/pupil/characters/1.png';
             $pupilFullName = $user->getNom()." ".$user->getPrenom();
 
             //initialise mastery levels to non mastered
@@ -308,7 +308,7 @@ class AlticController extends AbstractController
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
                                  'userName'=>$pupilFullName,
-                                 'profilePic'=>$profilePic,
+                                 'profilePic'=>$user->getAvatar(),
                                  'advice1'=>$advice1,
                                  'advice2'=>$advice2,
                                  'percentArray'=>$percentArray,
@@ -325,11 +325,16 @@ class AlticController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
-        $playableAvatar =$user->getPersonnagejouable();
+        $playableCharacters = $user->getPersonnagejouable();
+
         return $this->render('altic/choiceAvatar.html.twig', [
-            'playableAvatar'=>$playableAvatar,
-            'userName'=>$pupilFullName, 
-            'profilePic'=>'default']);
+            'tableNumber'=>$tableNumber,
+            'levelNumber'=>$levelNumber,
+            'mapName'=>$mapName,
+            'playableCharacters'=>$playableCharacters,
+            'userName'=>$pupilFullName,
+            'profilePic'=>$user->getAvatar()
+            ]);
     }
     /**
      * @Route("/pupil/endgame", name="altic_endgame")
@@ -415,7 +420,7 @@ class AlticController extends AbstractController
     						 [
                                 'userName'=>$pupilFullName,
                                 'tableNumber'=>$number,
-                                'profilePic'=>$profilePic,
+                                'profilePic'=>$user->getAvatar(),
                                 'images'=>$images,
                                 'bCanPlay'=>$bCanPlay,
                                 'levelsNumbers'=>$levelsNumbers
@@ -448,7 +453,8 @@ class AlticController extends AbstractController
             [
                 'questionsAndAnswers'=>json_encode($questionsAnswers),
                 'table'=>$tableNumber,
-                'localLevel'=>$localLevel
+                'localLevel'=>$localLevel,
+                'celestinImg'=>"images/pupil/characters/$avatarImage"
             ]);
     }
 

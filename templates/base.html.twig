@@ -22,10 +22,9 @@
 
     				<div class="col-sm-7"><p class="h3">Apprenez les tables de multiplication avec le pingouin Célestin</p></div>
 
-    				<div class="col-sm-1">
-
+                    <div class="col-sm-1">
                     {% if profilePic != 'default' %}
-                        <img src="{{ asset('images/pupil/characters/1.png') }}" class="img-thumbnail"></div>
+                        <img src="{{ asset('images/pupil/characters/' ~ profilePic) }}" class="img-thumbnail"></div>
                     {% else %}
                         <img src="{{ asset('images/utility/icons/defaultProfilePic.png') }}" class="img-thumbnail"></div>
                     {% endif %}
