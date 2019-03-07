@@ -319,9 +319,9 @@ class AlticController extends AbstractController
 
     }
     /**
-     * @Route ("/pupil/{tableNumber}/{levelNumber}/{avatarChoice}", name= "altic_choiceAvatar")
+     * @Route ("/pupil/{tableNumber}/{levelNumber}/{mapName}", name= "altic_choiceAvatar")
      */
-    public function choiceAvatar(){
+    public function choiceAvatar($tableNumber, $levelNumber, $mapName){
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
