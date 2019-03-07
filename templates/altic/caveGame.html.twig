@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Table {{ table }}, niveau {{ localLevel }}</title>
+
+	<meta charset="utf-8">
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/games/caveStyle.css') }}">
+{% endblock %}	
+
+{% set gameImages={
+	celestin: asset('images/pupil/characters/1.png'),
+	room: asset('images/pupil/games/cave/1.png'),
+	door: asset('images/pupil/games/rocks/1.png'),
+	tool1: asset('images/pupil/games/tools/1.png'),
+	tool2: asset('images/pupil/games/tools/2.png'),
+	tool3: asset('images/pupil/games/tools/3.png'),
+	tool4: asset('images/pupil/games/tools/4.png')
+} %}
+
+</head>
+<body>
+
+{% block body %}
+	{#{{ dump(questionsAndAnswers) }}#}
+	<div id="drawing">
+		
+	</div>
+
+	<div id="data" 
+		data-questionsAnswers="{{ questionsAndAnswers }}"
+		data-images="{{ gameImages|json_encode() }}"
+	></div>
+{% endblock %}
+
+{% block javascripts %}
+
+	<script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/games/tools.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/games/caveLogic.js') }}"></script>
+
+{% endblock %}
+
+</body>
+</html>

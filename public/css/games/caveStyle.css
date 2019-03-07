@@ -1,0 +1,21 @@
+#drawing
+{
+	/*background-color: red;*/
+}
+
+a
+{
+	text-decoration: none;
+	color: black;/*temp*/
+}
+
+/*#questionPopUp
+{
+	font-family: "Med1";
+}*/
+
+@font-face
+{
+	font-family: "Med1";
+	src: url('../../fonts/o.ttf');
+}
