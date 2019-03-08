@@ -314,7 +314,6 @@ class AlticController extends AbstractController
             $lynxTeacher= $user->getProfesseurLie();
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
-                                'teacher2'=>$teacher,
                                 'teacherLynx'=>$lynxTeacher,
                                  'addTeacher'=>$addTeacher->createView(),
                                  'userName'=>$pupilFullName,
