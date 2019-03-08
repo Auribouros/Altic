@@ -50,7 +50,7 @@ $(function(){
 		$('body').append(answerSpace);
 		$('#answerSpace').css({'position': 'absolute'});
 		
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < questionsAnswers[questionNumber].length - 1; i++) {
 			
 			/**
 			 * Random index used to display a random tool.
@@ -64,7 +64,11 @@ $(function(){
 			 * @type       {string}
 			 */
 			let toolElement = '<a href="#" class="answerA" id="answer' + i + '"><img src="images/tools/' + toolImages[randomToolImageIndex] + '" class="keyImage"/>' + i + '</a>';
-			let answer = new Answer('answer'+i, '', toolImages[randomToolImageIndex]);
+			let answer = new Answer('answer'+i, parseInt(questionsAnswers[questionNumber][i+1]), toolImages[randomToolImageIndex]);
+
+			if (questionsAnswers[questionNumber][i+1].includes('good')) {
+				correctAnswerId = 'answer'+i;
+			}
 
 			answer.appendTo('#answerSpace');
 			answer.setElementCSS({
@@ -118,8 +122,9 @@ $(function(){
 	 *
 	 * @param      {integer}  questionNumber  The question number in the questions order
 	 */
-	function updateAnswers(questionNumber) {
-		
+	function updateAnswers() {
+		$('#answerSpace').remove();
+		spawnAnswers();
 	}
 
 	/**
@@ -141,7 +146,7 @@ $(function(){
 		 *
 		 * @type       {string}
 		 */
-		let questionPopUp = '<div id="questionPopUp"><p>2 x 1 ?<br/></p>' + questionText + '</div>';//basic popup
+		let questionPopUp = '<div id="questionPopUp"><p>'+ questionsAnswers[questionNumber][0] +' ?<br/></p>' + questionText + '</div>';//basic popup
 		$('#drawing').prepend(questionPopUp);
 
 		/**
@@ -175,6 +180,20 @@ $(function(){
 
 	//vars
 		
+		/**
+		 * Question number
+		 *
+		 * @type       {number}
+		 */
+		let questionNumber = 0;
+
+		/**
+		 * Holds question and answers related data
+		 *
+		 * @type       {Object}
+		 */
+		let questionsAnswers = harvestDataFromElement('questionsanswers', '#data');
+
 		/**
 		 * The height of the document.
 		 *
@@ -292,7 +311,7 @@ $(function(){
 		 *
 		 * @type       {string}
 		 */
-		let correctAnswerId = 'answer2';
+		let correctAnswerId = '';
 
 		/**
 		 * HTML code representing the gameover screen
@@ -381,9 +400,12 @@ $(function(){
 	//when clicking on the correct answer
 	$('body').on('click', '.answer', function() {
 		
+		questionNumber++;
 		answerId = $(this).attr('id');
 
 		numberOfGivenAnswers++;
+
+		updateAnswers();
 
 		//if the user clicked on the correct answer
 		if (answerId === correctAnswerId) {

@@ -238,6 +238,23 @@ class AlticController extends AbstractController
         return ['advice1' => $advice1, 'advice2' => $advice2];
     }
 
+    private function simplifyQuestionsAnswers($questions,$table){
+        $questionsAnswerArray = array();
+        foreach ($questions as $key => $question) {
+            $questionAnswerArray=array($question->getLibelle());
+            foreach ($question->getReponsepropose() as $cle => $value) {
+                if($key*$table == $value->getReponse()){
+                    array_push($questionAnswerArray,$value->getReponse()."good");
+                }else{
+                    array_push($questionAnswerArray,$value->getReponse()."bad");
+                }
+            }
+            array_push($questionsAnswerArray,$questionAnswerArray);
+        }
+
+        return $questionsAnswerArray;
+    }
+
     /**
      * @Route("/pupil", name="altic_pupil")
      */
@@ -453,7 +470,7 @@ class AlticController extends AbstractController
 
         return $this->render("altic/$gameName.html.twig",
             [
-                'questionsAndAnswers'=>json_encode($questionsAnswers),
+                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel,
                 'celestinImg'=>"images/pupil/characters/$avatarImage"

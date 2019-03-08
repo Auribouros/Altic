@@ -29,7 +29,7 @@
 	</div>
 
 	<div id="data" 
-		data-questionsAnswers="{{ questionsAndAnswers }}"
+		data-questionsanswers="{{ questionsAndAnswers|json_encode() }}"
 		data-images="{{ gameImages|json_encode() }}"
 	></div>
 {% endblock %}
