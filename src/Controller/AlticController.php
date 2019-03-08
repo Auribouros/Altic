@@ -297,7 +297,7 @@ class AlticController extends AbstractController
             /*La première case (% complet) regarde la taille du tableau récupéré et la divise par 132 afin d'obtenir le nombre
             de niveaux completés sur le nombre total
             Les deux dernières cases du tableau correspondent au nombre d'entraînements et au temps total passé*/
-            $percentArray[0]=(int)(sizeof($levelArray)/132);
+            $percentArray[0]=(int)((sizeof($levelArray)*100)/132);
             //Pour tout niveau considéré comme $level
             foreach ($levelArray as $level){
                 //SI le niveau à son numéro modulo 12 étant égal à 0 ET que sa division par 12 n'est pas 0

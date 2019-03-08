@@ -86,6 +86,7 @@ class AppFixtures extends Fixture
             $baseLevel2->setQuestionsATrous(false);
             $baseLevel2->setJeu($test1);
             $manager->persist($baseLevel2);
+            $user1->addNiveau($baseLevel2);
             //
             $baseLevel3 = new Niveau();
             $baseLevel3->setNumero(3);
@@ -98,6 +99,7 @@ class AppFixtures extends Fixture
             $baseLevel3->setQuestionsATrous(false);
             $baseLevel3->setJeu($test1);
             $manager->persist($baseLevel3);
+            $user1->addNiveau($baseLevel3);
             //
             $baseLevel4 = new Niveau();
             $baseLevel4->setNumero(4);
@@ -110,6 +112,7 @@ class AppFixtures extends Fixture
             $baseLevel4->setQuestionsATrous(false);
             $baseLevel4->setJeu($test1);
             $manager->persist($baseLevel4);
+            $user1->addNiveau($baseLevel4);
             //
             $baseLevel5 = new Niveau();
             $baseLevel5->setNumero(5);
@@ -122,6 +125,7 @@ class AppFixtures extends Fixture
             $baseLevel5->setQuestionsATrous(false);
             $baseLevel5->setJeu($test1);
             $manager->persist($baseLevel5);
+            $user1->addNiveau($baseLevel5);
             //
             $baseLevel6 = new Niveau();
             $baseLevel6->setNumero(6);
@@ -134,6 +138,7 @@ class AppFixtures extends Fixture
             $baseLevel6->setQuestionsATrous(false);
             $baseLevel6->setJeu($test1);
             $manager->persist($baseLevel6);
+            $user1->addNiveau($baseLevel6);
             //
             $baseLevel7 = new Niveau();
             $baseLevel7->setNumero(7);
