@@ -123,8 +123,35 @@ $(function(){
 	 * @param      {integer}  questionNumber  The question number in the questions order
 	 */
 	function updateAnswers() {
-		$('#answerSpace').remove();
-		spawnAnswers();
+		
+		let answers = $('.answer');
+		alert(answers);
+
+		for (let i = 0; i < questionsAnswers[questionNumber].length - 1; i++) {
+			
+			/**
+			 * Random index used to display a random tool.
+			 *
+			 * @type       {number}
+			 */
+			//let randomToolImageIndex = Math.floor(Math.random() * toolImages.length);
+			/**
+			 * A tool image.
+			 *
+			 * @type       {string}
+			 */
+			//let toolImage = 'images/tools/' + toolImages[randomToolImageIndex];
+			//let answer = new Answer('answer'+i, parseInt(questionsAnswers[questionNumber][i+1]), toolImages[randomToolImageIndex]);
+
+			answers[i].attr('id', 'answer'+i);
+			answers[i].text(parseInt(questionsAnswers[questionNumber][i+1]));
+
+			if (questionsAnswers[questionNumber][i+1].includes('good')) {
+				correctAnswerId = 'answer'+i;
+			}
+
+		}
+
 	}
 
 	/**
@@ -400,17 +427,17 @@ $(function(){
 	//when clicking on the correct answer
 	$('body').on('click', '.answer', function() {
 		
-		questionNumber++;
 		answerId = $(this).attr('id');
 
 		numberOfGivenAnswers++;
 
-		updateAnswers();
 
 		//if the user clicked on the correct answer
 		if (answerId === correctAnswerId) {
 
+			questionNumber++;
 			numberOfCorrectAnswers++;
+			//updateAnswers();
 
 			$('#questionPopUp').remove();
 			$('#' + (currentRoomNumber + 1)).show(500);//next room appears
