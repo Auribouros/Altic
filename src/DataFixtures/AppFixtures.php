@@ -13,20 +13,34 @@ use App\Entity\PersonnageJouable;
 use App\Entity\Entrainement;
 use App\Entity\Question;
 use App\Entity\ReponsePropose;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder =$encoder;
+    }
     public function load(ObjectManager $manager)
     {
+        $user1 = new Utilisateur();
+        $user1->setEmail("lucy@christ.crux");
+        $user1->setNom("christ");
+        $user1->setPrenom("lucy");
+        $user1->setPassword(
+            $this->encoder->encodePassword($user1,"lucy")
+        );
+        $user1->setEstEnseignant(false);
+        $manager->persist($user1);
+
         for ($i = 0; $i < 10; $i++) {
             $training = new Entrainement();
-            $training->setId($i);
-            $training->setDate(date('Y-m-d'));
+            $training->setDate(new \DateTime('@'.\strtotime('now')));
             $training->setDuree(mt_rand(10, 100));
-            $training->setUtilisateur(getUser());
+            $training->setUtilisateur($user1->getId());
             $manager->persist($training);
         }
-
         $tablesOrder = array(2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7);
         $baseLevels = array_fill(0, 12, new Niveau());
         $games = array_fill(0, 4, new Jeu());
@@ -59,6 +73,7 @@ class AppFixtures extends Fixture
             $baseLevel1->setQuestionsATrous(false);
             $baseLevel1->setJeu($test1);
             $manager->persist($baseLevel1);
+            $user1->addNiveau($baseLevel1);
             //
             $baseLevel2 = new Niveau();
             $baseLevel2->setNumero(2);
