@@ -35,16 +35,19 @@ class UtilisateurRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    /*
-    public function findOneBySomeField($value): ?Utilisateur
+/**
+ * @return Utilisateur[]|null
+ */
+    public function findOneTeacherByEmail($email)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $entityManage = $this->getEntityManager();
+        $request = $entityManage->createQuery(
+            'SELECT teacher 
+            FROM App\Entity\Utilisateur teacher 
+            WHERE teacher.estEnseignant =true
+            AND teacher.email LIKE :mail'
+            );
+        return $request->execute(array(':mail'=>$email));
     }
-    */
+    
 }

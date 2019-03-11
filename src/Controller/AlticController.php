@@ -13,6 +13,7 @@ use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Form\AddTeacherType;
 
 
 class AlticController extends AbstractController
@@ -238,7 +239,7 @@ class AlticController extends AbstractController
     /**
      * @Route("/pupil", name="altic_pupil")
      */
-    public function pupilWelcome()
+    public function pupilWelcome(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
@@ -316,8 +317,25 @@ class AlticController extends AbstractController
 
             }
 
+            $addTeacher= $this->createForm(AddTeacherType::class);
+            $lynxTeacher = NULL;
+            $addTeacher->handleRequest($request);
+            $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
+            if($addTeacher->isSubmitted() && $addTeacher->isValid()){
+                $mailTeacher = $addTeacher->get('email')->getData();
+                $teacher = $repositoryUtilisateur->findOneTeacherByEmail($mailTeacher);
+                $entityManager = $this->getDoctrine()->getManager();
+                if(!empty($teacher)){
+                    $user->addProfesseurLie($teacher[0]);
+                }
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
+            $lynxTeacher= $user->getProfesseurLie();
             return $this->render('altic/pupilWelcome.html.twig',
                                  [
+                                'teacherLynx'=>$lynxTeacher,
+                                 'addTeacher'=>$addTeacher->createView(),
                                  'userName'=>$pupilFullName,
                                  'profilePic'=>$profilePic,
                                  'advice1'=>$advice1,
@@ -326,10 +344,20 @@ class AlticController extends AbstractController
                                  'debug'=>$masteredLevels
                                 ]);
         }
-        
-
     }
-
+    /**
+     * @Route("/removeTeacher/{id}", name="altic_removeTeacher")
+     */
+    public function removeTeacher($id){
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $teacher = $repositoryUtilisateur->find($id);
+        $user =$this->getUser();
+        $user->removeProfesseurLie($teacher);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute("altic_pupil");
+    }
     /**
      * @Route("/pupil/{number}", name="altic_pupilTable")
      */
@@ -445,7 +473,7 @@ class AlticController extends AbstractController
      */
     public function pwdLost()
     {
-        return $this->render('altic/pwdLost.html.twig', ['userName'=>'', 'profilePic'=>'default']);
+        return $this->render('altic/pwdLost.html.twig');
     }
 
     /**
