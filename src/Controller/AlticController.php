@@ -317,7 +317,7 @@ class AlticController extends AbstractController
                     if($isAlreadyAdd){
                         $this->addFlash(
                             'warning',
-                            'vous avez deja ajoute cet enseignant'
+                            'Tu as déjà ajouté cet enseignant'
                         );
 
                     }else{
