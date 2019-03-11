@@ -25,7 +25,7 @@
 		<div class="col">
 			{% for i in 0..11 %}
 			{% if images[i] != 'startMAP.png' and images[i] != 'endMAP.png' and bCanPlay[i-1] == true %}
-				<a href="{{ path('altic_pupilTraining', {
+				<a href="{{ path('altic_choiceAvatar', {
 					tableNumber:tableNumber,levelNumber:levelsNumbers[i-1],mapName:images[i]
 				}) }}">
 					<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ images[i]) }}">

@@ -50,7 +50,7 @@ $(function(){
 		$('body').append(answerSpace);
 		$('#answerSpace').css({'position': 'absolute'});
 		
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < questionsAnswers[questionNumber].length - 1; i++) {
 			
 			/**
 			 * Random index used to display a random tool.
@@ -64,7 +64,11 @@ $(function(){
 			 * @type       {string}
 			 */
 			let toolElement = '<a href="#" class="answerA" id="answer' + i + '"><img src="images/tools/' + toolImages[randomToolImageIndex] + '" class="keyImage"/>' + i + '</a>';
-			let answer = new Answer('answer'+i, i, toolImages[randomToolImageIndex]);
+			let answer = new Answer('answer'+i, parseInt(questionsAnswers[questionNumber][i+1]), toolImages[randomToolImageIndex]);
+
+			if (questionsAnswers[questionNumber][i+1].includes('good')) {
+				correctAnswerId = 'answer'+i;
+			}
 
 			answer.appendTo('#answerSpace');
 			answer.setElementCSS({
@@ -86,6 +90,14 @@ $(function(){
 				'border-radius': '100%',
 				'padding': '0.5%'
 			});
+			answer.setInputCSS({
+				'border-radius': '5px',
+				'border-color': 'black',
+				'font-family': 'Med1',
+				'font-size': documentHeight/20,
+				'width': documentWidth/20,
+				'padding': '5px'
+			});
 
 		}
 
@@ -102,6 +114,43 @@ $(function(){
 		 */
 		let celestinLeft = parseFloat($(celestin.getId()).css('left')) + 0.7*roomWidth;
 		$('#answerSpace').css({'top': celestinTop, 'left': celestinLeft});
+
+	}
+
+	/**
+	 * Updates the answers
+	 *
+	 * @param      {integer}  questionNumber  The question number in the questions order
+	 */
+	function updateAnswers() {
+		
+		let answers = $('.answer');
+		alert(answers);
+
+		for (let i = 0; i < questionsAnswers[questionNumber].length - 1; i++) {
+			
+			/**
+			 * Random index used to display a random tool.
+			 *
+			 * @type       {number}
+			 */
+			//let randomToolImageIndex = Math.floor(Math.random() * toolImages.length);
+			/**
+			 * A tool image.
+			 *
+			 * @type       {string}
+			 */
+			//let toolImage = 'images/tools/' + toolImages[randomToolImageIndex];
+			//let answer = new Answer('answer'+i, parseInt(questionsAnswers[questionNumber][i+1]), toolImages[randomToolImageIndex]);
+
+			answers[i].attr('id', 'answer'+i);
+			answers[i].text(parseInt(questionsAnswers[questionNumber][i+1]));
+
+			if (questionsAnswers[questionNumber][i+1].includes('good')) {
+				correctAnswerId = 'answer'+i;
+			}
+
+		}
 
 	}
 
@@ -124,7 +173,7 @@ $(function(){
 		 *
 		 * @type       {string}
 		 */
-		let questionPopUp = '<div id="questionPopUp"><p>2 x 1 ?<br/></p>' + questionText + '</div>';//basic popup
+		let questionPopUp = '<div id="questionPopUp"><p>'+ questionsAnswers[questionNumber][0] +' ?<br/></p>' + questionText + '</div>';//basic popup
 		$('#drawing').prepend(questionPopUp);
 
 		/**
@@ -158,6 +207,20 @@ $(function(){
 
 	//vars
 		
+		/**
+		 * Question number
+		 *
+		 * @type       {number}
+		 */
+		let questionNumber = 0;
+
+		/**
+		 * Holds question and answers related data
+		 *
+		 * @type       {Object}
+		 */
+		let questionsAnswers = harvestDataFromElement('questionsanswers', '#data');
+
 		/**
 		 * The height of the document.
 		 *
@@ -275,7 +338,7 @@ $(function(){
 		 *
 		 * @type       {string}
 		 */
-		let correctAnswerId = 'answer2';
+		let correctAnswerId = '';
 
 		/**
 		 * HTML code representing the gameover screen
@@ -368,10 +431,13 @@ $(function(){
 
 		numberOfGivenAnswers++;
 
+
 		//if the user clicked on the correct answer
 		if (answerId === correctAnswerId) {
 
+			questionNumber++;
 			numberOfCorrectAnswers++;
+			//updateAnswers();
 
 			$('#questionPopUp').remove();
 			$('#' + (currentRoomNumber + 1)).show(500);//next room appears

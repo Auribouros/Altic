@@ -174,8 +174,8 @@
 	function Answer(id, value, image) {
 		
 		this.id = id;
-		this.value = value;
-		this.image = image === undefined ? '' : image;
+		this.value = (value === '') ? '<input type="text"/>' : value;
+		this.image = (image === undefined) ? '' : image;
 		this.html = '<a href="#" class="answer" id="'+ this.id +'">'+'<img class="ansImg" id="ansImg'+ this.id +'" src="'+ this.image +'"/>'+ this.value +'</a>';
 
 		this.getId = function () {
@@ -189,6 +189,11 @@
 		};
 		this.setElementCSS = function (rules) {
 			$('#'+this.id).css(rules);
+		};
+		this.setInputCSS = function (rules) {
+			if (value === '') {
+				$('#'+this.id+' input').css(rules);
+			}
 		};
 
 

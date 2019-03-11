@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Entity\PersonnageJouable;
 use App\Form\RegistrationFormType;
 use App\Security\UtilisateurAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +36,14 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $baseImage = new PersonnageJouable();
+            $baseImage->setImage('1.png');
+            $baseImage->setPersonnageDebloque(true);
+            $user->addPersonnagejouable($baseImage);
+            $user->setAvatar('default');
+
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($baseImage);
             $entityManager->persist($user);
             $entityManager->flush();
 

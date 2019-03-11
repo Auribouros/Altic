@@ -9,6 +9,7 @@ use App\Entity\Utilisateur;
 use App\Entity\Niveau;
 use App\Entity\Question;
 use App\Entity\ReponsePropose;
+use App\Entity\PersonnageJouable;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
@@ -108,67 +109,69 @@ class AlticController extends AbstractController
     private function generateAnswers($table, $questions, $level)
     {
         foreach ($questions as $key=> $value) {
-        /*
-        INITIALISATION
-        */
-        unset($answers);
-        $ARightAnswer=false;
-        $i=0;
-        $nbOfSameAnswers=0; 
-        $nbOfCurrentRandomAnswer=0;
-        //calculate the number of random answers
-        $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
+            /*
+            INITIALISATION
+            */
+            $answers = array();
+            $ARightAnswer=false;
+            $i=0;
+            $nbOfSameAnswers=0; 
+            $nbOfCurrentRandomAnswer=0;
+            //calculate the number of random answers
+            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
 
-        /*
-            generate answers
-        */
-        while ($i!=$level->getNombreDeReponses()) {
-            $answerType=rand(0,3);
-            switch ($answerType) {
-                case 0:
-                if( ! $ARightAnswer){
-                    //generate the right answer
-                    $answers[$table*$key]=new ReponsePropose();
-                    $answers[$table*$key]->setReponse($table*$key);
-                    $ARightAnswer=true;
-                    $i+=1;
-                }
-                break;
-                case 1:
-                    //generate an answer from the same table
-                    if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
-                        $aMultiplier=rand(0,10);
-                        if( ! isset($answers[$table*$aMultiplier])){
-                       $answers[$table*$aMultiplier]=new ReponsePropose();
-                       $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
-                        $nbOfSameAnswers+=1;
+            /*
+                generate answers
+            */
+            while ($i!=$level->getNombreDeReponses()) {
+                $answerType=rand(0,3);
+                switch ($answerType) {
+                    case 0:
+                    if( ! $ARightAnswer){
+                        //generate the right answer
+                        $answers[$table*$key]=new ReponsePropose();
+                        $answers[$table*$key]->setReponse($table*$key);
+                        $ARightAnswer=true;
                         $i+=1;
-                        }
                     }
                     break;
-                case 2:
-                    break;
-                case 3:
-                    //generate everything else
-                    if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
-                        $valeur=rand(0,$level->getEcartEntreLesReponses());
-                        $estAddition =rand(0,1);
-                        if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
-                            if ($estAddition==1) {
-                                $answers[$table*$key+$valeur]=new ReponsePropose();
-                                $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
-                            } else {
-                                $answers[$table*$key-$valeur]= new ReponsePropose();
-                                $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
-                            }
-                            $nbOfCurrentRandomAnswer+=1;
+                    case 1:
+                        //generate an answer from the same table
+                        if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
+                            $aMultiplier=rand(0,10);
+                            if( ! isset($answers[$table*$aMultiplier])){
+                           $answers[$table*$aMultiplier]=new ReponsePropose();
+                           $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
+                            $nbOfSameAnswers+=1;
                             $i+=1;
+                            }
                         }
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        //generate everything else
+                        if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
+                            $valeur=rand(0,$level->getEcartEntreLesReponses());
+                            $estAddition =rand(0,1);
+                            if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
+                                if ($estAddition==1) {
+                                    $answers[$table*$key+$valeur]=new ReponsePropose();
+                                    $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
+                                } else {
+                                    $answers[$table*$key-$valeur]= new ReponsePropose();
+                                    $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
+                                }
+                                $nbOfCurrentRandomAnswer+=1;
+                                $i+=1;
+                            }
+                        }
+                        break;
                     }
-                    break;
-                }
             }
-            $value->answers=$answers;
+            foreach ($answers as $answer) {
+                $value->addReponsepropose($answer);
+            }
         }
 
         return $questions;
@@ -236,6 +239,23 @@ class AlticController extends AbstractController
         return ['advice1' => $advice1, 'advice2' => $advice2];
     }
 
+    private function simplifyQuestionsAnswers($questions,$table){
+        $questionsAnswerArray = array();
+        foreach ($questions as $key => $question) {
+            $questionAnswerArray=array($question->getLibelle());
+            foreach ($question->getReponsepropose() as $cle => $value) {
+                if($key*$table == $value->getReponse()){
+                    array_push($questionAnswerArray,$value->getReponse()."good");
+                }else{
+                    array_push($questionAnswerArray,$value->getReponse()."bad");
+                }
+            }
+            array_push($questionsAnswerArray,$questionAnswerArray);
+        }
+
+        return $questionsAnswerArray;
+    }
+
     /**
      * @Route("/pupil", name="altic_pupil")
      */
@@ -248,7 +268,6 @@ class AlticController extends AbstractController
                $this->generateUrl('altic_teacherWelcome')
            );
         } else {
-            $profilePic = 'images/pupil/characters/1.png';
             $pupilFullName = $user->getNom()." ".$user->getPrenom();
 
             //initialise mastery levels to non mastered
@@ -337,7 +356,7 @@ class AlticController extends AbstractController
                                 'teacherLynx'=>$lynxTeacher,
                                  'addTeacher'=>$addTeacher->createView(),
                                  'userName'=>$pupilFullName,
-                                 'profilePic'=>$profilePic,
+                                 'profilePic'=>$user->getAvatar(),
                                  'advice1'=>$advice1,
                                  'advice2'=>$advice2,
                                  'percentArray'=>$percentArray,
@@ -358,6 +377,38 @@ class AlticController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute("altic_pupil");
     }
+
+    /*
+     * @Route ("/pupil/{tableNumber}/{levelNumber}/{mapName}", name= "altic_choiceAvatar")
+     */
+    public function choiceAvatar($tableNumber, $levelNumber, $mapName){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        $playableCharacters = $user->getPersonnagejouable();
+
+        return $this->render('altic/choiceAvatar.html.twig', [
+            'tableNumber'=>$tableNumber,
+            'levelNumber'=>$levelNumber,
+            'mapName'=>$mapName,
+            'playableCharacters'=>$playableCharacters,
+            'userName'=>$pupilFullName,
+            'profilePic'=>$user->getAvatar()
+            ]);
+    }
+
+    /**
+     * @Route("/pupil/endgame", name="altic_endgame")
+     */
+    public function endgame(){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+        $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        return $this->render('altic/endgame.html.twig', [
+            'userName'=>$pupilFullName, 
+            'profilePic'=>'default']);
+    }
+
     /**
      * @Route("/pupil/{number}", name="altic_pupilTable")
      */
@@ -430,7 +481,7 @@ class AlticController extends AbstractController
     						 [
                                 'userName'=>$pupilFullName,
                                 'tableNumber'=>$number,
-                                'profilePic'=>$profilePic,
+                                'profilePic'=>$user->getAvatar(),
                                 'images'=>$images,
                                 'bCanPlay'=>$bCanPlay,
                                 'levelsNumbers'=>$levelsNumbers
@@ -438,9 +489,9 @@ class AlticController extends AbstractController
     }
 
     /**
-     * @Route("/pupil/{tableNumber}/{levelNumber}/{mapName}", name="altic_pupilTraining")
+     * @Route("/pupil/{tableNumber}/{levelNumber}/{mapName}/{avatarImage}", name="altic_pupilTraining")
      */
-    public function pupilTraining($tableNumber, $levelNumber, $mapName)
+    public function pupilTraining($tableNumber, $levelNumber, $mapName, $avatarImage)
     {
         //array representing a game for a given map
         $gameFromMap = array(
@@ -459,11 +510,12 @@ class AlticController extends AbstractController
 
         $questionsAnswers = $this->generateAnswers($tableNumber, $this->generateQuestions($tableNumber, $level), $level);
 
-        return $this->render("altic/$gameName.html.twig", 
+        return $this->render("altic/$gameName.html.twig",
             [
-                'questionsAndAnswers'=>json_encode($questionsAnswers),
+                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber),
                 'table'=>$tableNumber,
-                'localLevel'=>$localLevel
+                'localLevel'=>$localLevel,
+                'celestinImg'=>"images/pupil/characters/$avatarImage"
             ]);
     }
 
@@ -473,7 +525,9 @@ class AlticController extends AbstractController
      */
     public function pwdLost()
     {
-        return $this->render('altic/pwdLost.html.twig');
+        return $this->render('altic/pwdLost.html.twig', [
+            'userName'=>'', 
+            'profilePic'=>'default']);
     }
 
     /**
