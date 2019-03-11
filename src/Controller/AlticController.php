@@ -299,6 +299,7 @@ class AlticController extends AbstractController
 
             $addTeacher= $this->createForm(AddTeacherType::class);
             $lynxTeacher = NULL;
+            $isAlreadyAdd = false;
             $addTeacher->handleRequest($request);
             $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
             if($addTeacher->isSubmitted() && $addTeacher->isValid()){
@@ -306,7 +307,23 @@ class AlticController extends AbstractController
                 $teacher = $repositoryUtilisateur->findOneTeacherByEmail($mailTeacher);
                 $entityManager = $this->getDoctrine()->getManager();
                 if(!empty($teacher)){
-                    $user->addProfesseurLie($teacher[0]);
+                    foreach ($user->getProfesseurLie() as $value) {
+                        foreach ($teacher as $value2) {
+                            if($value->getEmail() == $value2->getEmail()){
+                                $isAlreadyAdd =true;
+                            }
+                        }
+                    }
+                    if($isAlreadyAdd){
+                        $this->addFlash(
+                            'warning',
+                            'vous avez deja ajoute cet enseignant'
+                        );
+
+                    }else{
+                        $user->addProfesseurLie($teacher[0]);
+
+                    }
                 }else{
                     $this->addFlash(
                         'warning',
