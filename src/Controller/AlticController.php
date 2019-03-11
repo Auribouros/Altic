@@ -327,7 +327,7 @@ class AlticController extends AbstractController
                 }else{
                     $this->addFlash(
                         'warning',
-                        'Aucun professeur ne possede cet email'
+                        'Aucun professeur ne possède cet email'
                     );
                 }
                 $entityManager->persist($user);
