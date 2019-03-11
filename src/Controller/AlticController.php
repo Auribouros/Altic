@@ -378,8 +378,8 @@ class AlticController extends AbstractController
         return $this->redirectToRoute("altic_pupil");
     }
 
-    /*
-     * @Route ("/pupil/{tableNumber}/{levelNumber}/{mapName}", name= "altic_choiceAvatar")
+    /**
+     * @Route("/pupil/{tableNumber}/{levelNumber}/{mapName}", name= "altic_choiceAvatar")
      */
     public function choiceAvatar($tableNumber, $levelNumber, $mapName){
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
