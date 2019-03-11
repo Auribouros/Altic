@@ -307,6 +307,11 @@ class AlticController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 if(!empty($teacher)){
                     $user->addProfesseurLie($teacher[0]);
+                }else{
+                    $this->addFlash(
+                        'warning',
+                        'Aucun professeur ne possede cet email'
+                    );
                 }
                 $entityManager->persist($user);
                 $entityManager->flush();
