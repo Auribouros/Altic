@@ -6424,7 +6424,6 @@
         },
         {
             "name": "symfony/web-server-bundle",
-<<<<<<< HEAD
             "version": "v4.2.4",
             "source": {
                 "type": "git",
@@ -6435,18 +6434,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/web-server-bundle/zipball/d189cb4349d807df4c4fab932e2764d1fbe65c4f",
                 "reference": "d189cb4349d807df4c4fab932e2764d1fbe65c4f",
-=======
-            "version": "v4.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/web-server-bundle.git",
-                "reference": "8f7afc85c27cf53b77a3ae8d2a3d86f537c323a3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/web-server-bundle/zipball/8f7afc85c27cf53b77a3ae8d2a3d86f537c323a3",
-                "reference": "8f7afc85c27cf53b77a3ae8d2a3d86f537c323a3",
->>>>>>> formulaireAjoutEnseignant
                 "shasum": ""
             },
             "require": {
@@ -6492,9 +6479,6 @@
             ],
             "description": "Symfony WebServerBundle",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2019-02-23T15:17:42+00:00"
-=======
             "time": "2019-01-16T20:35:37+00:00"
         },
         {
@@ -6581,7 +6565,6 @@
             ],
             "description": "A pack for Symfony Encore",
             "time": "2018-07-16T10:15:28+00:00"
->>>>>>> formulaireAjoutEnseignant
         }
     ],
     "aliases": [],
