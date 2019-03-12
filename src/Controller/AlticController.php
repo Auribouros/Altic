@@ -515,7 +515,8 @@ class AlticController extends AbstractController
                 'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel,
-                'celestinImg'=>"images/pupil/characters/$avatarImage"
+                'celestinImg'=>"images/pupil/characters/$avatarImage",
+                'wizardImg'=>"images/pupil/characters/$avatarImage"
             ]);
     }
 
