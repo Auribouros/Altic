@@ -245,9 +245,9 @@ class AppFixtures extends Fixture
             $games[1]->setCheminAcces('altic/moutain.html.twig');
             $games[2]->setCheminAcces('altic/doors.html.twig');
             $games[3]->setCheminAcces('altic/fishing.html.twig');
-        *//*for ($i=0; $i < 4; $i++) { 
+        */ /*for ($i=0; $i < 4; $i++) { 
             $manager->persist($games[$i]);
-        }*//*
+        }*
         //regions init
             $regions[0]->setNom('');
             $regions[0]->setImgMagicien('');
@@ -331,16 +331,11 @@ class AppFixtures extends Fixture
             $table1->addNiveau($baseLevel10);
             $table1->addNiveau($baseLevel11);
             $table1->addNiveau($baseLevel12);
-            $baseLevel1->addTableDeMultiplication($table1);
-            $manager->persist($baseLevel1);
+            /*$baseLevel1->addTableDeMultiplication($table1);
             $baseLevel2->addTableDeMultiplication($table1);
-            $manager->persist($baseLevel2);
             $baseLevel3->addTableDeMultiplication($table1);
-            $manager->persist($baseLevel3);
             $baseLevel4->addTableDeMultiplication($table1);
-            $manager->persist($baseLevel4);
-            $baseLevel5->addTableDeMultiplication($table1);
-            $manager->persist($baseLevel5);
+            $baseLevel5->addTableDeMultiplication($table1);*/
             $manager->persist($table1);
             $table2 = new TableDeMultiplication();
             $table2->setNumero(2);
