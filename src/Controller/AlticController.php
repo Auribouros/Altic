@@ -118,7 +118,7 @@ class AlticController extends AbstractController
             $nbOfSameAnswers=0; 
             $nbOfCurrentRandomAnswer=0;
             //calculate the number of random answers
-            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
+            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+1);
 
             /*
                 generate answers
@@ -137,7 +137,7 @@ class AlticController extends AbstractController
                     break;
                     case 1:
                         //generate an answer from the same table
-                        if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
+                        if ($nbOfSameAnswers != $level->getNbReponsesProposeesDeLaMemeTable()) {
                             $aMultiplier=rand(0,10);
                             if( ! isset($answers[$table*$aMultiplier])){
                            $answers[$table*$aMultiplier]=new ReponsePropose();
@@ -151,20 +151,24 @@ class AlticController extends AbstractController
                         break;
                     case 3:
                         //generate everything else
-                        if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
+                        if ($nbOfCurrentRandomAnswer != $nbOfRandomAnswers) {
                             $valeur=rand(0,$level->getEcartEntreLesReponses());
                             $estAddition =rand(0,1);
-                            if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
-                                if ($estAddition==1) {
-                                    $answers[$table*$key+$valeur]=new ReponsePropose();
-                                    $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
-                                } else {
-                                    $answers[$table*$key-$valeur]= new ReponsePropose();
-                                    $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
+                                if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
+                                    if ($estAddition==1) {
+                                        $answers[$table*$key+$valeur]=new ReponsePropose();
+                                        $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
+                                        $nbOfCurrentRandomAnswer+=1;
+                                        $i+=1;
+                                    } else {
+                                        if($table*$key-$valeur>=0){
+                                        $answers[$table*$key-$valeur]= new ReponsePropose();
+                                        $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
+                                        $nbOfCurrentRandomAnswer+=1;
+                                        $i+=1;
+                                    }
+                                    }
                                 }
-                                $nbOfCurrentRandomAnswer+=1;
-                                $i+=1;
-                            }
                         }
                         break;
                     }
