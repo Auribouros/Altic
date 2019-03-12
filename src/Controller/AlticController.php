@@ -108,70 +108,68 @@ class AlticController extends AbstractController
 
     private function generateAnswers($table, $questions, $level)
     {
-        foreach ($questions as $key=> $value) {
-            /*
-            INITIALISATION
-            */
-            $answers = array();
-            $ARightAnswer=false;
-            $i=0;
-            $nbOfSameAnswers=0; 
-            $nbOfCurrentRandomAnswer=0;
-            //calculate the number of random answers
-            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
+        foreach ($questions as $key=> $value) {//pour chaque question
+        /*
+        INITIALISATION
+        */
+        unset($answers);//on dedefinis la variable answer
+        $ARightAnswer=false;//deviens vrai si une reponse juste est implementer
+        $i=0;//le compteur prend la valeur 0
+        $nbOfSameAnswers=0; //le nombre de reponse d ela meme table deja implementer
+        $nbOfCurrentRandomAnswer=0;//le nombre de reponse autre deja implementer
+        //calculate the number of random answers
+        $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
 
-            /*
-                generate answers
-            */
-            while ($i!=$level->getNombreDeReponses()) {
-                $answerType=rand(0,3);
-                switch ($answerType) {
-                    case 0:
-                    if( ! $ARightAnswer){
-                        //generate the right answer
-                        $answers[$table*$key]=new ReponsePropose();
-                        $answers[$table*$key]->setReponse($table*$key);
-                        $ARightAnswer=true;
-                        $i+=1;
+        /*
+            generate answers
+        */
+        while ($i!=$level->getNombreDeReponses()) {//tant que toute les reponse n'ont pas ete implementer
+            $answerType=rand(0,3);//on prend une valeur de 0 à 3
+            switch ($answerType) {
+                case 0://si answeer type est egale a 0
+                if( ! $ARightAnswer){//si la bonne reponse n'a pas ete ajouté
+                    //generate the right answer
+                    $answers[$table*$key]=new ReponsePropose();//on creer une nouvelle reponse
+                    $answers[$table*$key]->setReponse($table*$key);//la reponse prend la valeur du numero de la table * la cle (qui correspond au deuxieme facteur de la multiplication)
+                    $ARightAnswer=true;//on passe la bonne reponse a vrai
+                    $i+=1;//on ajoutes 1 au nombre de reponse ajouté
+                }
+                break;
+                case 1:
+                    //generate an answer from the same table
+                    if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {//si toute les reponse de la meme table ne sont pas implementer
+                        $aMultiplier=rand(0,10);//on prend une valeur a multiplier de 0 a 10
+                        if( ! isset($answers[$table*$aMultiplier])){//si la reponse n'est pas encore implementer
+                       $answers[$table*$aMultiplier]=new ReponsePropose();//on cree une nouvelle reponse
+                       $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);//on creer une reponse qui va avoir comme valeur le numero de la table * la valeur a multiplier
+                        $nbOfSameAnswers+=1;//on indique que le nombre de reponse de la meme table a augmenter
+                        $i+=1;//on indique que le nombre de reponse implmenter a augmenter
+                        }
                     }
                     break;
-                    case 1:
-                        //generate an answer from the same table
-                        if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
-                            $aMultiplier=rand(0,10);
-                            if( ! isset($answers[$table*$aMultiplier])){
-                           $answers[$table*$aMultiplier]=new ReponsePropose();
-                           $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
-                            $nbOfSameAnswers+=1;
-                            $i+=1;
+                case 2:
+                    break;
+                case 3:
+                    //generate everything else
+                    if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {//si toute les autre reponse n'ont pas encore ete implmenter
+                        $valeur=rand(0,$level->getEcartEntreLesReponses());//on prend une valeur aleatoire entre 0 et l'ecat voulue entre les reponse
+                        $estAddition =rand(0,1);//on prend une valeur qui peut etre soit 0 soit 1 pour definir si on doit additionner ou soustraire
+                        if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur])&&$answers[$table*$key-$valeur]>0)){//si la valeur n'est pas definis et que la soustraction n'est pasinferieur a 0
+                            if ($estAddition==1) {//on additione
+                                $answers[$table*$key+$valeur]=new ReponsePropose();//on creer un nouvelle reponse
+                                $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);//la reponse est la bonne reponse + la valeur
+                            } else {
+                                $answers[$table*$key-$valeur]= new ReponsePropose();
+                                $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);//la reponse est la bonne reponse - la valeur
                             }
+                            $nbOfCurrentRandomAnswer+=1;//on augmente le nombre de reponse aleatoire
+                            $i+=1;//on augmente le nombre de reponse implemnter en tout
                         }
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        //generate everything else
-                        if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
-                            $valeur=rand(0,$level->getEcartEntreLesReponses());
-                            $estAddition =rand(0,1);
-                            if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
-                                if ($estAddition==1) {
-                                    $answers[$table*$key+$valeur]=new ReponsePropose();
-                                    $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
-                                } else {
-                                    $answers[$table*$key-$valeur]= new ReponsePropose();
-                                    $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
-                                }
-                                $nbOfCurrentRandomAnswer+=1;
-                                $i+=1;
-                            }
-                        }
-                        break;
                     }
+                    break;
+                }
             }
-            foreach ($answers as $answer) {
-                $value->addReponsepropose($answer);
-            }
+            $value->answers=$answers;//lie le tableau dobjet reponse a la question
         }
 
         return $questions;
