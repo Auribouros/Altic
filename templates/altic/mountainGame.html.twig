@@ -13,14 +13,13 @@
 	celestin: asset(celestinImg),
 	wizard: asset(wizardImg),
 	background: asset('images/pupil/games/mountain/01.png'),
-	bubble: asset('images/pupil/games/misc/04.png')
+	bubble: asset('images/pupil/games/mountain/04.png')
 } %}
-	<script type="text/javascript" src="JS/jquery-3.3.1.js"></script>
-	<script type="text/javascript" src="JS/tools.js"></script>
-	<script type="text/javascript" src="JS/moutainLogic.js"></script>
 </head>
 <body>
 {% block body %}
+
+{#{{ dump(questionsAndAnswers) }}#}
 
 	<div id=quest></div>
 
@@ -35,7 +34,7 @@
 
 	<script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/games/tools.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/games/moutainLogic.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/games/mountainLogic.js') }}"></script>
 
 {% endblock %}
 

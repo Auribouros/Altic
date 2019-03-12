@@ -175,8 +175,8 @@
 		
 		this.id = id;
 		this.value = (value === '') ? '<input type="text"/>' : value;
-		this.image = (image === undefined) ? '' : image;
-		this.html = '<a href="#" class="answer" id="'+ this.id +'">'+'<img class="ansImg" id="ansImg'+ this.id +'" src="'+ this.image +'"/>'+ this.value +'</a>';
+		this.image = (image === undefined) ? '' : '<img class="ansImg" id="ansImg'+ this.id +'" src="'+ image +'"/>';
+		this.html = '<a href="#" class="answer" id="'+ this.id +'">'+ this.image + this.value +'</a>';
 
 		this.getId = function () {
 			return '#' + this.id;
