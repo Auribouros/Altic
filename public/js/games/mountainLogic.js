@@ -39,7 +39,11 @@ $(function() {
 			reponse.setElementCSS({
 				'position': 'absolute',
 				'top': ((htdoc-0.15*htdoc)-(1/10*(htdoc-0.15*htdoc))*j),
-				'left': ((lgdoc-0.3*lgdoc)/4)*(i+1)
+				'left': ((lgdoc-0.3*lgdoc)/4)*(i+1),
+				'font-size': 0.05*htdoc,
+				'background-color': 'white',
+				'border-radius': '5px',
+				'padding': '10px'
 			});
 		}
 	}
@@ -83,7 +87,15 @@ $(function() {
 
 	function affichageEtChangementQuestion(questionLabel){
 		let question = '<p>'+ questionLabel +'</p>';
-		$('#quest').css({'height': htdoc-0.6*htdoc, 'position': 'absolute', 'width': 0.27*lgdoc, 'top': 150 , 'right': 0, 'z-index': 2});
+		$('#quest').css({
+			'height': htdoc-0.6*htdoc,
+			'position': 'absolute',
+			'width': 0.27*lgdoc,
+			'top': 0.15*htdoc,
+			'right': 0,
+			'z-index': 2,
+			'font-size': 0.1*htdoc
+		});
 		$('#quest').html(question);
 
 	}
