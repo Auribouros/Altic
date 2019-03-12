@@ -301,9 +301,9 @@ class AlticController extends AbstractController
             //Pour tout niveau considéré comme $level
             foreach ($levelArray as $level){
                 //SI le niveau à son numéro modulo 12 étant égal à 0 ET que sa division par 12 n'est pas 0
-                if($level->getNumero()%12==0){
+                if($level->getNumero()%12==0&&$level->getNumero()/12!=0){
                     //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
-                    $percentArray[$level->getTableDeMultiplications()->getNumero()] = 100;
+                    $percentArray[$level->getNumero()/12] = 100;
                 }
                 //SI le niveau à son numéro - 12 fois la table dans laquelle il est inférieur à zéro
                 if($level->getNumero()-12*(int)($level->getNumero()/12) <0){
