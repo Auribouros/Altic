@@ -212,6 +212,33 @@ class AppFixtures extends Fixture
             $baseLevel12->setJeu($test1);
             $manager->persist($baseLevel12);
             //
+            $baseLevel13 = new Niveau();
+            $baseLevel13->setNumero(13);
+            $baseLevel13->setEcartEntreLesReponses(10);
+            $baseLevel13->setNombreDeReponses(3);
+            $baseLevel13->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel13->setReponsesSimilaires(false);
+            $baseLevel13->setTempsDisponible(null);
+            $baseLevel13->setOrdreDesQuestions('croissant');
+            $baseLevel13->setQuestionsATrous(false);
+            $baseLevel13->setJeu($test1);
+            $manager->persist($baseLevel13);
+            $user1->addNiveau($baseLevel13);
+            //
+            $baseLevel14 = new Niveau();
+            $baseLevel14->setNumero(14);
+            $baseLevel14->setEcartEntreLesReponses(10);
+            $baseLevel14->setNombreDeReponses(3);
+            $baseLevel14->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel14->setReponsesSimilaires(false);
+            $baseLevel14->setTempsDisponible(null);
+            $baseLevel14->setOrdreDesQuestions('decroissant');
+            $baseLevel14->setQuestionsATrous(false);
+            $baseLevel14->setJeu($test1);
+            $manager->persist($baseLevel14);
+            $user1->addNiveau($baseLevel14);
+            //
+            
         /*
         //games init
             $games[0]->setCheminAcces('altic/cave.html.twig');
@@ -289,22 +316,34 @@ class AppFixtures extends Fixture
             $region->setNom('');
             $region->setImgMagicien('');
             $manager->persist($region);
-            $table = new TableDeMultiplication();
-            $table->setNumero(2);
-            $table->setRegion($region);
-            $table->addNiveau($baseLevel1);
-            $table->addNiveau($baseLevel2);
-            $table->addNiveau($baseLevel3);
-            $table->addNiveau($baseLevel4);
-            $table->addNiveau($baseLevel5);
-            $table->addNiveau($baseLevel6);
-            $table->addNiveau($baseLevel7);
-            $table->addNiveau($baseLevel8);
-            $table->addNiveau($baseLevel9);
-            $table->addNiveau($baseLevel10);
-            $table->addNiveau($baseLevel11);
-            $table->addNiveau($baseLevel12);
-            $manager->persist($table);
+            $table1 = new TableDeMultiplication();
+            $table1->setNumero(1);
+            $table1->setRegion($region);
+            $table1->addNiveau($baseLevel1);
+            $table1->addNiveau($baseLevel2);
+            $table1->addNiveau($baseLevel3);
+            $table1->addNiveau($baseLevel4);
+            $table1->addNiveau($baseLevel5);
+            $table1->addNiveau($baseLevel6);
+            $table1->addNiveau($baseLevel7);
+            $table1->addNiveau($baseLevel8);
+            $table1->addNiveau($baseLevel9);
+            $table1->addNiveau($baseLevel10);
+            $table1->addNiveau($baseLevel11);
+            $table1->addNiveau($baseLevel12);
+            $baseLevel1->addTableDeMultiplication($table1);
+            $baseLevel2->addTableDeMultiplication($table1);
+            $baseLevel3->addTableDeMultiplication($table1);
+            $baseLevel4->addTableDeMultiplication($table1);
+            $baseLevel5->addTableDeMultiplication($table1);
+            $manager->persist($table1);
+            $table2 = new TableDeMultiplication();
+            $table2->setNumero(2);
+            $table2->setRegion($region);
+            $table2->addNiveau($baseLevel13);
+            $table2->addNiveau($baseLevel14);
+            $manager->persist($table2);
+            
         
         $manager->flush();
     }
