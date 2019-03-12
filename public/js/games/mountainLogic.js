@@ -59,6 +59,7 @@ $(function() {
 		currentQuestion++;
 		if (~$(this).data('answer').indexOf('good')) {
 			nbRightAnswers++;
+			alert(nbRightAnswers);
 		}
 		ligneActuelle += 10 ;
 		for (let i = 0; i < 3; i++) {
