@@ -18,27 +18,27 @@
 	tool3: asset('images/pupil/games/tools/3.png'),
 	tool4: asset('images/pupil/games/tools/4.png')
 } %}
-
+	<script type="text/javascript" src="JS/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="JS/tools.js"></script>
+	<script type="text/javascript" src="JS/moutainLogic.js"></script>
 </head>
 <body>
-
 {% block body %}
-	{#{{ dump(questionsAndAnswers) }}#}
-	<div id="drawing">
-		
-	</div>
+
+	<div id=quest></div>
 
 	<div id="data" 
 		data-questionsanswers="{{ questionsAndAnswers|json_encode() }}"
 		data-images="{{ gameImages|json_encode() }}"
 	></div>
+
 {% endblock %}
 
 {% block javascripts %}
 
 	<script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/games/tools.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/games/caveLogic.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/games/moutainLogic.js') }}"></script>
 
 {% endblock %}
 
