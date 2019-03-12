@@ -292,7 +292,6 @@ class AlticController extends AbstractController
             $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\aider' . $advice['advice2'] : '';
 
             $levelArray = $user-> getNiveaux();
-            
             //initialisation du tableau permettant de contenir les pourcentages de complétion des niveaux
             $percentArray = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             /*La première case (% complet) regarde la taille du tableau récupéré et la divise par 132 afin d'obtenir le nombre
@@ -304,8 +303,7 @@ class AlticController extends AbstractController
                 //SI le niveau à son numéro modulo 12 étant égal à 0 ET que sa division par 12 n'est pas 0
                 if($level->getNumero()%12==0){
                     //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
-                    $indice = $level->getTableDeMultiplications()->getNumero();
-                    $percentArray[$indice] = 100;
+                    $percentArray[$level->getNumero()/12] = 100;
                 }
                 //SI le niveau à son numéro - 12 fois la table dans laquelle il est inférieur à zéro
                 if($level->getNumero()-12*(int)($level->getNumero()/12) <0){
