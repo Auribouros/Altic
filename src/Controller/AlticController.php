@@ -243,10 +243,10 @@ class AlticController extends AbstractController
         return ['advice1' => $advice1, 'advice2' => $advice2];
     }
 
-    private function simplifyQuestionsAnswers($questions,$table){
+    private function simplifyQuestionsAnswers($questions,$table,$time){
         $questionsAnswerArray = array();
         foreach ($questions as $key => $question) {
-            $questionAnswerArray=array($question->getLibelle());
+            $questionAnswerArray=array($question->getLibelle().'t'.$time);
             foreach ($question->getReponsepropose() as $cle => $value) {
                 if($key*$table == $value->getReponse()){
                     array_push($questionAnswerArray,$value->getReponse()."good");
