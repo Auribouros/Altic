@@ -410,7 +410,7 @@ class AlticController extends AbstractController
                     'tableNumber'=>$tableNumber,
                     'levelNumber'=>$levelNumber,
                     'mapName'=>$mapName,
-                    'avatarImage'=>'images/pupil/characters/1.png'
+                    'avatarImage'=>'1.png'
                 ])
             );
 
@@ -532,7 +532,7 @@ class AlticController extends AbstractController
 
         return $this->render("altic/$gameName.html.twig",
             [
-                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber),
+                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber, $level->getTempsDisponible()),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel,
                 'celestinImg'=>"images/pupil/characters/$avatarImage",

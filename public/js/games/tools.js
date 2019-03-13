@@ -174,7 +174,7 @@
 	function Answer(id, value, image) {
 		
 		this.id = id;
-		this.value = (value === '') ? '<input type="text"/><button id="answerBtn" value="Valider"/>' : value;
+		this.value = (value === '') ? '<input type="text"/><button id="answerBtn">Valider</button>' : value;
 		this.image = (image === undefined) ? '' : '<img class="ansImg" id="ansImg'+ this.id +'" src="'+ image +'"/>';
 		this.html = '<a href="#" class="answer" id="'+ this.id +'">'+ this.image + this.value +'</a>';
 

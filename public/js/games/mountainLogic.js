@@ -19,14 +19,20 @@ $(function() {
 	let question1 = questionAnswers[currentQuestion][0];
 	let bUsingTimer = false;
 	let timeConstraintSeconds = 0;
-	let rightAnswers = [];
+	let givenAnswers = [];
+
+	let dataToSend = {
+		questionAnswers: '',
+		givenAnswers: ''
+	};
 	//console.log(questionAnswers);
 
-	if (question1.split('t').length > 1) {
+	if (question1.split('t')[1] != '') {
 		bUsingTimer = true;
 		timeConstraintSeconds = Number(question1.split('t')[1]);
-		question1 = question1.split('t')[0];
 	}
+	
+	question1 = question1.split('t')[0];
 
 	$('body').append(imgfondElement);
 	$('body').append(bulHtml);
@@ -77,13 +83,16 @@ $(function() {
 
 	$('a').click(function() {
 
+
 		if (!bUsingTimer) {
 
 			currentQuestion++;
+			//alert(currentQuestion);
 			if (~$(this).data('answer').indexOf('good')) {
 				nbRightAnswers++;
-				alert(nbRightAnswers);
+				//alert(nbRightAnswers);
 			}
+			givenAnswers[givenAnswers.length] = parseInt($(this).data('answer'));
 			ligneActuelle += 10 ;
 			for (let i = 0; i < 3; i++) {
 				$('#'+(ligneActuelle+i)).fadeIn(1000);
@@ -94,18 +103,25 @@ $(function() {
 			let top = $(this).css('top');
 			tux.setImgCSS({'top': top, 'left': left});
 			$('#tuxImage').hide().fadeIn(1000);
-			question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
+			if (currentQuestion > 10) {
+				$('#terrain').html('');
+				rightAnswersToSend = JSON.stringify(rightAnswers);
+			}
+			question1 = questionAnswers[currentQuestion][0].split('t')[0];
 			affichageEtChangementQuestion(question1);
+
 			
 		}
+		
 	});
 
 	$('#answerBtn').click(function () {
 		
 		currentQuestion++;
+		alert(currentQuestion);
 		if (~$(this).data('answer').indexOf('good')) {
 			nbRightAnswers++;
-			alert(nbRightAnswers);
+			//alert(nbRightAnswers);
 		}
 		ligneActuelle += 10 ;
 		for (let i = 0; i < 3; i++) {
