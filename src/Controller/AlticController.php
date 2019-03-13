@@ -298,7 +298,7 @@ class AlticController extends AbstractController
                     }
                     else if ($tmpLevelNb == $totalMasteryLevel) {
                         $minimalMastery[$tableOrderIndexFromLevel] = true;
-                        $totalMasteryLevel[$tableOrderIndexFromLevel] = true;
+                        $totalMastery[$tableOrderIndexFromLevel] = true;
                         break;
                     }
 
