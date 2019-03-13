@@ -302,7 +302,7 @@ class AlticController extends AbstractController
                     }
                     else if ($tmpLevelNb == $totalMasteryLevel) {
                         $minimalMastery[$tableOrderIndexFromLevel] = true;
-                        $totalMasteryLevel[$tableOrderIndexFromLevel] = true;
+                        $totalMastery[$tableOrderIndexFromLevel] = true;
                         break;
                     }
 
@@ -391,14 +391,30 @@ class AlticController extends AbstractController
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
         $playableCharacters = $user->getPersonnagejouable();
 
-        return $this->render('altic/choiceAvatar.html.twig', [
-            'tableNumber'=>$tableNumber,
-            'levelNumber'=>$levelNumber,
-            'mapName'=>$mapName,
-            'playableCharacters'=>$playableCharacters,
-            'userName'=>$pupilFullName,
-            'profilePic'=>$user->getAvatar()
-            ]);
+        if (sizeof($playableCharacters) > 1) {
+            
+            return $this->render('altic/choiceAvatar.html.twig', [
+                'tableNumber'=>$tableNumber,
+                'levelNumber'=>$levelNumber,
+                'mapName'=>$mapName,
+                'playableCharacters'=>$playableCharacters,
+                'userName'=>$pupilFullName,
+                'profilePic'=>$user->getAvatar()
+                ]);
+
+        }
+        else {
+
+            return $this->redirect(
+               $this->generateUrl('altic_pupilTraining', [
+                    'tableNumber'=>$tableNumber,
+                    'levelNumber'=>$levelNumber,
+                    'mapName'=>$mapName,
+                    'avatarImage'=>'images/pupil/characters/1.png'
+                ])
+            );
+
+        }
     }
 
     /**
