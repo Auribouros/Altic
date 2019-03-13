@@ -17,8 +17,16 @@ $(function() {
 	let currentQuestion = 1;
 	let nbRightAnswers = 0;
 	let question1 = questionAnswers[currentQuestion][0];
+	let bUsingTimer = false;
+	let timeConstraintSeconds = 0;
+	let rightAnswers = [];
 	//console.log(questionAnswers);
 
+	if (question1.split('t').length > 1) {
+		bUsingTimer = true;
+		timeConstraintSeconds = Number(question1.split('t')[1]);
+		question1 = question1.split('t')[0];
+	}
 
 	$('body').append(imgfondElement);
 	$('body').append(bulHtml);
@@ -33,9 +41,18 @@ $(function() {
 
 	for (let j = 0; j < 10; j++) {
 		for (let i = 0; i < questionAnswers[j+1].length-1; i++) {
-			let reponse = new Answer((j*10+i), parseInt(questionAnswers[j+1][i+1]));
+			let reponse = (bUsingTimer)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(questionAnswers[j+1][i+1]));
 			reponse.appendTo('#terrain');
-			$('#'+ (j*10+i)).data('answer', questionAnswers[j+1][i+1]);
+			if (bUsingTimer) {
+
+				$('#'+ (j*10+i) +' #answerBtn').data('answer', questionAnswers[j+1][i+1]);
+			
+			}
+			else {
+
+				$('#'+ (j*10+i)).data('answer', questionAnswers[j+1][i+1]);
+
+			}
 			reponse.setElementCSS({
 				'position': 'absolute',
 				'top': ((htdoc-0.15*htdoc)-(1/10*(htdoc-0.15*htdoc))*j),
@@ -60,6 +77,31 @@ $(function() {
 
 	$('a').click(function() {
 
+		if (!bUsingTimer) {
+
+			currentQuestion++;
+			if (~$(this).data('answer').indexOf('good')) {
+				nbRightAnswers++;
+				alert(nbRightAnswers);
+			}
+			ligneActuelle += 10 ;
+			for (let i = 0; i < 3; i++) {
+				$('#'+(ligneActuelle+i)).fadeIn(1000);
+				$('#'+(ligneActuelle+i-10)).fadeOut(1000);
+			}
+			
+			let left = $(this).css('left');
+			let top = $(this).css('top');
+			tux.setImgCSS({'top': top, 'left': left});
+			$('#tuxImage').hide().fadeIn(1000);
+			question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
+			affichageEtChangementQuestion(question1);
+			
+		}
+	});
+
+	$('#answerBtn').click(function () {
+		
 		currentQuestion++;
 		if (~$(this).data('answer').indexOf('good')) {
 			nbRightAnswers++;
@@ -70,19 +112,40 @@ $(function() {
 			$('#'+(ligneActuelle+i)).fadeIn(1000);
 			$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 		}
-		
+			
 		let left = $(this).css('left');
 		let top = $(this).css('top');
 		tux.setImgCSS({'top': top, 'left': left});
 		$('#tuxImage').hide().fadeIn(1000);
-		question1 = questionAnswers[currentQuestion][0];
+		question1 = questionAnswers[currentQuestion][0].split('t')[0];
 		affichageEtChangementQuestion(question1);
+
 	});
 
 
 	// Afficher la question
 		//affichage de la première question
 		affichageEtChangementQuestion(question1) ;
+
+	//if there is a time constraint
+	if (bUsingTimer) {
+
+		setInterval(function () {
+			
+			currentQuestion++;
+			question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
+			ligneActuelle += 10 ;
+
+			for (let i = 0; i < 3; i++) {
+				$('#'+(ligneActuelle+i)).fadeIn(1000);
+				$('#'+(ligneActuelle+i-10)).fadeOut(1000);
+			}
+			
+			affichageEtChangementQuestion(question1);
+
+		}, timeConstraintSeconds * 1000);
+
+	}
 
 
 	function affichageEtChangementQuestion(questionLabel){
