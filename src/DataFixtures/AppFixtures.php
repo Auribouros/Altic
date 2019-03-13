@@ -331,11 +331,11 @@ class AppFixtures extends Fixture
             $table1->addNiveau($baseLevel10);
             $table1->addNiveau($baseLevel11);
             $table1->addNiveau($baseLevel12);
-            $baseLevel1->addTableDeMultiplication($table1);
+            /*$baseLevel1->addTableDeMultiplication($table1);
             $baseLevel2->addTableDeMultiplication($table1);
             $baseLevel3->addTableDeMultiplication($table1);
             $baseLevel4->addTableDeMultiplication($table1);
-            $baseLevel5->addTableDeMultiplication($table1);
+            $baseLevel5->addTableDeMultiplication($table1);*/
             $manager->persist($table1);
             $table2 = new TableDeMultiplication();
             $table2->setNumero(2);
