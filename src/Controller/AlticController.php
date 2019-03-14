@@ -312,24 +312,38 @@ class AlticController extends AbstractController
             $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\aider' . $advice['advice2'] : '';
 
             $levelArray = $user-> getNiveaux();
+            $trainArray = $user->getEntrainement();
             //initialisation du tableau permettant de contenir les pourcentages de complétion des niveaux
-            $percentArray = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            $percentArray = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            $percentArray[12]=sizeof($trainArray);
+            $time = 0;
+            foreach ($trainArray as $training){
+                $time += $training->getDuree();
+            }
+            $hours = (int)($time/3600);
+            $time = $time - ($hours*3600);
+            $mints = (int)($time/60);
+            $time = $time - ($mints*60);
+            $secs = $time;
+            $percentArray[13]=$hours;
+            $percentArray[14]=$mints;
+            $percentArray[15]=$secs;
             /*La première case (% complet) regarde la taille du tableau récupéré et la divise par 132 afin d'obtenir le nombre
             de niveaux completés sur le nombre total
             Les deux dernières cases du tableau correspondent au nombre d'entraînements et au temps total passé*/
-            $percentArray[0]=(int)(sizeof($levelArray)/132);
+            $percentArray[0]=(int)((sizeof($levelArray)*100)/132);
             //Pour tout niveau considéré comme $level
             foreach ($levelArray as $level){
                 //SI le niveau à son numéro modulo 12 étant égal à 0 ET que sa division par 12 n'est pas 0
-                if($level->getNumero()%12==0&&$level->getNumero()/12!=0){
+                if($level->getNumero()%12==0){
                     //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
                     $percentArray[$level->getNumero()/12] = 100;
-                }
+                }else{
                 //SI le niveau à son numéro - 12 fois la table dans laquelle il est inférieur à zéro
-                if($level->getNumero()-12*(int)($level->getNumero()/12) <0){
+               
                     /*ALORS le pourcentage de completion de ladite table vaut le numéro du niveau en fonction de la table (de 1 à 12)
                     ledit numero divisé par 12 pour obtenir le pourcentage de completion de la table*/
-                    $percentArray[(int)($level->getNumero()/12)] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                    $percentArray[(int)($level->getNumero()/12)+1] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                 }
                 /*(int)($level->getNumero()/12) est le numero de la table en fonction du niveau
                 */

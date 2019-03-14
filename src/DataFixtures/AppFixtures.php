@@ -13,11 +13,34 @@ use App\Entity\PersonnageJouable;
 use App\Entity\Entrainement;
 use App\Entity\Question;
 use App\Entity\ReponsePropose;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder =$encoder;
+    }
     public function load(ObjectManager $manager)
     {
+        $user1 = new Utilisateur();
+        $user1->setEmail("lucy@christ.crux");
+        $user1->setNom("christ");
+        $user1->setPrenom("lucy");
+        $user1->setPassword(
+            $this->encoder->encodePassword($user1,"lucy")
+        );
+        $user1->setEstEnseignant(false);
+        $manager->persist($user1);
+
+        for ($i = 0; $i < 10; $i++) {
+            $training = new Entrainement();
+            $training->setDate(new \DateTime('@'.\strtotime('now')));
+            $training->setDuree(mt_rand(10, 1000));
+            $training->setUtilisateur($user1);
+            $manager->persist($training);
+        }
         $tablesOrder = array(2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7);
         $baseLevels = array_fill(0, 12, new Niveau());
         $games = array_fill(0, 4, new Jeu());
@@ -50,6 +73,7 @@ class AppFixtures extends Fixture
             $baseLevel1->setQuestionsATrous(false);
             $baseLevel1->setJeu($test1);
             $manager->persist($baseLevel1);
+            $user1->addNiveau($baseLevel1);
             //
             $baseLevel2 = new Niveau();
             $baseLevel2->setNumero(2);
@@ -62,6 +86,7 @@ class AppFixtures extends Fixture
             $baseLevel2->setQuestionsATrous(false);
             $baseLevel2->setJeu($test1);
             $manager->persist($baseLevel2);
+            $user1->addNiveau($baseLevel2);
             //
             $baseLevel3 = new Niveau();
             $baseLevel3->setNumero(3);
@@ -74,6 +99,7 @@ class AppFixtures extends Fixture
             $baseLevel3->setQuestionsATrous(false);
             $baseLevel3->setJeu($test1);
             $manager->persist($baseLevel3);
+            $user1->addNiveau($baseLevel3);
             //
             $baseLevel4 = new Niveau();
             $baseLevel4->setNumero(4);
@@ -86,6 +112,7 @@ class AppFixtures extends Fixture
             $baseLevel4->setQuestionsATrous(false);
             $baseLevel4->setJeu($test1);
             $manager->persist($baseLevel4);
+            $user1->addNiveau($baseLevel4);
             //
             $baseLevel5 = new Niveau();
             $baseLevel5->setNumero(5);
@@ -98,6 +125,7 @@ class AppFixtures extends Fixture
             $baseLevel5->setQuestionsATrous(false);
             $baseLevel5->setJeu($test1);
             $manager->persist($baseLevel5);
+            $user1->addNiveau($baseLevel5);
             //
             $baseLevel6 = new Niveau();
             $baseLevel6->setNumero(6);
@@ -110,6 +138,7 @@ class AppFixtures extends Fixture
             $baseLevel6->setQuestionsATrous(false);
             $baseLevel6->setJeu($test1);
             $manager->persist($baseLevel6);
+            $user1->addNiveau($baseLevel6);
             //
             $baseLevel7 = new Niveau();
             $baseLevel7->setNumero(7);
@@ -122,6 +151,7 @@ class AppFixtures extends Fixture
             $baseLevel7->setQuestionsATrous(false);
             $baseLevel7->setJeu($test1);
             $manager->persist($baseLevel7);
+            $user1->addNiveau($baseLevel7);
             //
             $baseLevel8 = new Niveau();
             $baseLevel8->setNumero(8);
@@ -134,6 +164,7 @@ class AppFixtures extends Fixture
             $baseLevel8->setQuestionsATrous(true);
             $baseLevel8->setJeu($test1);
             $manager->persist($baseLevel8);
+            $user1->addNiveau($baseLevel8);
             //
             $baseLevel9 = new Niveau();
             $baseLevel9->setNumero(9);
@@ -146,6 +177,7 @@ class AppFixtures extends Fixture
             $baseLevel9->setQuestionsATrous(true);
             $baseLevel9->setJeu($test1);
             $manager->persist($baseLevel9);
+            $user1->addNiveau($baseLevel9);
             //
             $baseLevel10 = new Niveau();
             $baseLevel10->setNumero(10);
@@ -158,6 +190,7 @@ class AppFixtures extends Fixture
             $baseLevel10->setQuestionsATrous(true);
             $baseLevel10->setJeu($test1);
             $manager->persist($baseLevel10);
+            $user1->addNiveau($baseLevel10);
             //
             $baseLevel11 = new Niveau();
             $baseLevel11->setNumero(11);
@@ -170,6 +203,7 @@ class AppFixtures extends Fixture
             $baseLevel11->setQuestionsATrous(true);
             $baseLevel11->setJeu($test1);
             $manager->persist($baseLevel11);
+            $user1->addNiveau($baseLevel11);
             //
             $baseLevel12 = new Niveau();
             $baseLevel12->setNumero(12);
@@ -182,16 +216,44 @@ class AppFixtures extends Fixture
             $baseLevel12->setQuestionsATrous(true);
             $baseLevel12->setJeu($test1);
             $manager->persist($baseLevel12);
+            
             //
+            $baseLevel13 = new Niveau();
+            $baseLevel13->setNumero(13);
+            $baseLevel13->setEcartEntreLesReponses(10);
+            $baseLevel13->setNombreDeReponses(3);
+            $baseLevel13->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel13->setReponsesSimilaires(false);
+            $baseLevel13->setTempsDisponible(null);
+            $baseLevel13->setOrdreDesQuestions('croissant');
+            $baseLevel13->setQuestionsATrous(false);
+            $baseLevel13->setJeu($test1);
+            $manager->persist($baseLevel13);
+            $user1->addNiveau($baseLevel13);
+            //
+            $baseLevel14 = new Niveau();
+            $baseLevel14->setNumero(14);
+            $baseLevel14->setEcartEntreLesReponses(10);
+            $baseLevel14->setNombreDeReponses(3);
+            $baseLevel14->setNbReponsesProposeesDeLaMemeTable(0);
+            $baseLevel14->setReponsesSimilaires(false);
+            $baseLevel14->setTempsDisponible(null);
+            $baseLevel14->setOrdreDesQuestions('decroissant');
+            $baseLevel14->setQuestionsATrous(false);
+            $baseLevel14->setJeu($test1);
+            $manager->persist($baseLevel14);
+            $user1->addNiveau($baseLevel14);
+            //
+            
         /*
         //games init
             $games[0]->setCheminAcces('altic/cave.html.twig');
             $games[1]->setCheminAcces('altic/moutain.html.twig');
             $games[2]->setCheminAcces('altic/doors.html.twig');
             $games[3]->setCheminAcces('altic/fishing.html.twig');
-        *//*for ($i=0; $i < 4; $i++) { 
+        */ /*for ($i=0; $i < 4; $i++) { 
             $manager->persist($games[$i]);
-        }*//*
+        }*
         //regions init
             $regions[0]->setNom('');
             $regions[0]->setImgMagicien('');
@@ -260,22 +322,34 @@ class AppFixtures extends Fixture
             $region->setNom('');
             $region->setImgMagicien('');
             $manager->persist($region);
-            $table = new TableDeMultiplication();
-            $table->setNumero(2);
-            $table->setRegion($region);
-            $table->addNiveau($baseLevel1);
-            $table->addNiveau($baseLevel2);
-            $table->addNiveau($baseLevel3);
-            $table->addNiveau($baseLevel4);
-            $table->addNiveau($baseLevel5);
-            $table->addNiveau($baseLevel6);
-            $table->addNiveau($baseLevel7);
-            $table->addNiveau($baseLevel8);
-            $table->addNiveau($baseLevel9);
-            $table->addNiveau($baseLevel10);
-            $table->addNiveau($baseLevel11);
-            $table->addNiveau($baseLevel12);
-            $manager->persist($table);
+            $table1 = new TableDeMultiplication();
+            $table1->setNumero(1);
+            $table1->setRegion($region);
+            $table1->addNiveau($baseLevel1);
+            $table1->addNiveau($baseLevel2);
+            $table1->addNiveau($baseLevel3);
+            $table1->addNiveau($baseLevel4);
+            $table1->addNiveau($baseLevel5);
+            $table1->addNiveau($baseLevel6);
+            $table1->addNiveau($baseLevel7);
+            $table1->addNiveau($baseLevel8);
+            $table1->addNiveau($baseLevel9);
+            $table1->addNiveau($baseLevel10);
+            $table1->addNiveau($baseLevel11);
+            $table1->addNiveau($baseLevel12);
+            /*$baseLevel1->addTableDeMultiplication($table1);
+            $baseLevel2->addTableDeMultiplication($table1);
+            $baseLevel3->addTableDeMultiplication($table1);
+            $baseLevel4->addTableDeMultiplication($table1);
+            $baseLevel5->addTableDeMultiplication($table1);*/
+            $manager->persist($table1);
+            $table2 = new TableDeMultiplication();
+            $table2->setNumero(2);
+            $table2->setRegion($region);
+            $table2->addNiveau($baseLevel13);
+            $table2->addNiveau($baseLevel14);
+            $manager->persist($table2);
+            
         
         $manager->flush();
     }

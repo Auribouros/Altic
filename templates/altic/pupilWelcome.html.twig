@@ -44,72 +44,125 @@
 		
 		<div class="col-sm-4">
 			<p class="h5">Trophées</p>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/1.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/2.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/3.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/4.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/5.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/6.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/7.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/8.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/9.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/10.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/11.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/12.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/13.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/14.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/15.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/16.png"><br/><br/>
-			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/17.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/18.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/19.png"><br/><br/>
-			<img style="-webkit-filter: grayscale(100%); filter: grayscale(100%); max-height: 100px; max-width: 100px;" src="images/pupil/characters/20.png"><br/><br/>
+			<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/1.png') }}"><br/><br/>
+			{% if percentArray[1] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/2.png"><br/><br/>
+				{% if percentArray[1] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/3.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[2] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/4.png"><br/><br/>
+				{% if percentArray[2] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/5.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[3] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/6.png"><br/><br/>
+				{% if percentArray[3] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/7.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[4] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/8.png"><br/><br/>
+				{% if percentArray[4] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/9.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[4] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/10.png"><br/><br/>
+				{% if percentArray[4] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/11.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[5] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/12.png"><br/><br/>
+				{% if percentArray[5] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/13.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[6] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/14.png"><br/><br/>
+				{% if percentArray[6] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/15.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[7] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/16.png"><br/><br/>
+				{% if percentArray[7] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/17.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[8] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/18.png"><br/><br/>
+				{% if percentArray[8] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/19.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[9] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/20.png"><br/><br/>
+				{% if percentArray[9] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/21.png"><br/><br/>
+				{% endif %}
+			{% endif %}
+			{% if percentArray[10] >= 70 %}
+    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/2.png"><br/><br/>
+				{% if percentArray[10] >= 100 %}
+					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/3.png"><br/><br/>
+				{% endif %}
+			{% endif %}
 		</div>
 
 		<div class="col-sm-4"><p class="h5">Stastistiques</p>
+		Entraînements effectués : {{percentArray[12]}} <br>
+		Durée totale des entraînements : {{percentArray[13]}}h {{percentArray[14]}}mins <br>
+		Progression Totale = {{ percentArray[0]}}%
 		<div class="progress">
-		Progression Totale
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[0] }}%" aria-valuenow="{{ percentArray[0] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		Table de 0 = {{ percentArray[7]}}%
 		<div class="progress">
-		Table de 1
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
-		</div><br>
-		<div class="progress">
-		Table de 2
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
-		</div><br>
-		<div class="progress">
-		Table de 3
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
-		</div><br>
-		<div class="progress">
-		Table de 4
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
-		</div><br>
-		<div class="progress">
-		Table de 5
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
-		</div><br>
-		<div class="progress">
-		Table de 6
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
-		</div><br>
-		<div class="progress">
-		Table de 7
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[7] }}%" aria-valuenow="{{ percentArray[7] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		Table de 1 = {{ percentArray[4]}}%
 		<div class="progress">
-		Table de 8
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		Table de 2 = {{ percentArray[1]}}%
+		<div class="progress">
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		Table de 3 = {{ percentArray[6]}}%
+		<div class="progress">
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		Table de 4  = {{ percentArray[5]}}%
+		<div class="progress">
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		Table de 5  = {{ percentArray[2]}}%
+		<div class="progress">
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		Table de 6 = {{ percentArray[8]}}%
+		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[8] }}%" aria-valuenow="{{ percentArray[8] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		Table de 7 = {{ percentArray[11]}}%
 		<div class="progress">
-		Table de 9
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[11] }}%" aria-valuenow="{{ percentArray[11] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		Table de 8 = {{ percentArray[9]}}%
+		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[9] }}%" aria-valuenow="{{ percentArray[9] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		Table de 9 = {{ percentArray[10]}}%
 		<div class="progress">
-		Table de 10
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[10] }}%" aria-valuenow="{{ percentArray[10] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		Table de 10 = {{ percentArray[3]}}%
+		<div class="progress">
+		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div>
 		</div>
 
