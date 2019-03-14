@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\AddTeacherType;
+use \Datetime as DateTime;
 
 
 class AlticController extends AbstractController
@@ -434,14 +435,23 @@ class AlticController extends AbstractController
         $user = $this->getUser();
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
 
+        $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+
         //prepare data
         $questions = array();
-        $answers = array();
         $suggestedAnswers = array();
+        $level = $repositoryNiveau->findOneByNumero($globalLevelNumber);
+       
+        $trainingSession = new Entrainement();
+        $trainingSession->setDuree($timeElapsedSeconds);
+        $trainingSession->setDate(new DateTime());
+        $trainingSession->setUtilisateur($user);
 
         for ($j = 0; $j < sizeof($questionsAnswers); $j++) {
 
-            $row = $questionsAnswers[$j];
+            $row = $questionsAnswers[$j+1];
             
             for ($i=0; $i < sizeof($row); $i++) {
                 if ($i == 0) {
@@ -453,25 +463,26 @@ class AlticController extends AbstractController
                 else {
                     $suggestedAnswer = new ReponsePropose();
                     $suggestedAnswer->setReponse((int)preg_replace('/[a-z]*/', '', $row[$i]));
-                    $answers[$j]->addReponsepropose($suggestedAnswer);
+                    $questions[$j]->addReponsepropose($suggestedAnswer);
+                    $entityManager->persist($suggestedAnswer);
+                    $entityManager->persist($questions[$j]);
                 }
             }
 
+            $trainingSession->addQuestion($questions[$j]);
+
         }
 
-        $trainingSession = new Entrainement();
-        $trainingSession->setDuree($timeElapsedSeconds);
-        $trainingSession->setDate(date("Y/m/d"));
-        $trainingSession->setUtilisateur($user);
+        $entityManager->persist($trainingSession);
+
 
         //send data
-        $repositoryEntrainement = $this->getDoctrine()->getRepository(Entrainement::class);
 
 
         return $this->render('altic/endgame.html.twig', [
             'userName'=>$pupilFullName, 
             'profilePic'=>'default',
-            'gameData'=>$questionsAnswers
+            'gameData'=>$level
             ]);
     }
 
