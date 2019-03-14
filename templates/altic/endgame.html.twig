@@ -5,4 +5,13 @@
 {% block body %}
 
 {{ parent() }}
+
+{#{{ dump(gameData) }}#}
+
+{% if nbRightAnswers >= 8 %}
+Bravo, tu as {{ nbRightAnswers }} bonnes réponses !
+{% else %}
+Il faut encore faire des efforts, courage !
+{% endif %}
+
 {% endblock %}

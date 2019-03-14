@@ -30,7 +30,7 @@
                     {% endif %}
     				<div class="col-sm-2">
                         {% if userName != '' %}
-    					   <p>{{userName}}</p>
+    					   <a href="{{ path('altic_pupil') }}"><p>{{userName}}</p></a>
     					   <a href="/logout">Déconnexion</a>
                            <a href="/modifyAccount"><img style="height: 20px; width: auto;" src="{{ asset('images/utility/icons/cog.png') }}"></a>
                         {% endif %}

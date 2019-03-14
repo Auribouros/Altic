@@ -1,0 +1,15 @@
+html
+{
+	font-family: 'Med1';
+}
+
+a
+{
+	text-decoration: none;
+}
+
+@font-face
+{
+	font-family: "Med1";
+	src: url('../../fonts/o.ttf');
+}

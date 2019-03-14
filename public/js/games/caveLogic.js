@@ -379,7 +379,7 @@ $(function(){
 	
 
 	//adjust all elements of the room CSS
-		rooms[1].setRoomImgCSS({'width': roomWidth, 'height': roomHeight});
+		rooms[1].setRoomImgCSS({'width': 0.7*roomWidth, 'height': roomHeight});
 		rooms[1].setDoorImgCSS({
 			'width': 0.3*roomWidth,
 			'height': 0.3*roomHeight,
