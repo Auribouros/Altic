@@ -212,3 +212,14 @@
 		return $(element).data(variableName);
 
 	}
+
+	function sendDataToController(data, url, callback) {
+		
+		$.ajax({
+			url: url,
+			data: data,
+			type: 'POST',
+			success: callback
+		});
+
+	}

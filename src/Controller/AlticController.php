@@ -10,6 +10,7 @@ use App\Entity\Niveau;
 use App\Entity\Question;
 use App\Entity\ReponsePropose;
 use App\Entity\PersonnageJouable;
+use App\Entity\Entrainement;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
@@ -421,12 +422,57 @@ class AlticController extends AbstractController
      * @Route("/pupil/endgame", name="altic_endgame")
      */
     public function endgame(){
+
+        $questionsAnswers = $_POST['questionAnswers'];
+        $givenAnswers = $_POST['givenAnswers'];
+        $timeElapsedSeconds = $_POST['timeElapsedSeconds'];
+        $globalLevelNumber = $_POST['globalLevel'];
+
+        unset($questionsAnswers[0]);
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
+
+        //prepare data
+        $questions = array();
+        $answers = array();
+        $suggestedAnswers = array();
+
+        for ($j = 0; $j < sizeof($questionsAnswers); $j++) {
+
+            $row = $questionsAnswers[$j];
+            
+            for ($i=0; $i < sizeof($row); $i++) {
+                if ($i == 0) {
+                    $currentQuestion = new Question();
+                    $currentQuestion->setLibelle(str_replace('t', '', $row[$i]));
+                    $currentQuestion->setReponseEnfant($givenAnswers[$j]);
+                    array_push($questions, $currentQuestion);
+                }
+                else {
+                    $suggestedAnswer = new ReponsePropose();
+                    $suggestedAnswer->setReponse((int)preg_replace('/[a-z]*/', '', $row[$i]));
+                    $answers[$j]->addReponsepropose($suggestedAnswer);
+                }
+            }
+
+        }
+
+        $trainingSession = new Entrainement();
+        $trainingSession->setDuree($timeElapsedSeconds);
+        $trainingSession->setDate(date("Y/m/d"));
+        $trainingSession->setUtilisateur($user);
+
+        //send data
+        $repositoryEntrainement = $this->getDoctrine()->getRepository(Entrainement::class);
+
+
         return $this->render('altic/endgame.html.twig', [
             'userName'=>$pupilFullName, 
-            'profilePic'=>'default']);
+            'profilePic'=>'default',
+            'gameData'=>$questionsAnswers
+            ]);
     }
 
     /**
@@ -535,6 +581,7 @@ class AlticController extends AbstractController
                 'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber, $level->getTempsDisponible()),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel,
+                'globalLevel'=>$levelNumber,
                 'celestinImg'=>"images/pupil/characters/$avatarImage",
                 'wizardImg'=>"images/pupil/characters/$avatarImage"
             ]);

@@ -24,11 +24,13 @@ $(function() {
 	let timeElapsedSeconds = 0;
 	let elapsedTimer = undefined;
 	let dataToSendJSON = null;
+	let controllerURL = '/pupil/endgame';
 
 	let dataToSend = {
 		questionAnswers: '',
 		givenAnswers: '',
-		timeElapsedSeconds: ''
+		timeElapsedSeconds: '',
+		globalLevel: ''
 	};
 	//console.log(questionAnswers);
 
@@ -90,7 +92,7 @@ $(function() {
 	$('a').click(function() {
 
 
-		if (~$(this).data('answer').indexOf('good') && $(this).data('answer').indexOf('bad')) {
+		if (~$(this).data('answer').indexOf('good') || ~$(this).data('answer').indexOf('bad')) {
 
 			currentQuestion++;
 			//alert(currentQuestion);
@@ -110,7 +112,6 @@ $(function() {
 			tux.setImgCSS({'top': top, 'left': left});
 			$('#tuxImage').hide().fadeIn(1000);
 			if (currentQuestion > 10) {
-				$('#terrain').html('');
 				if (bUsingTimer) {
 					window.clearInterval(timer);
 				}
@@ -118,7 +119,10 @@ $(function() {
 				dataToSend.questionAnswers = questionAnswers;
 				dataToSend.givenAnswers = givenAnswers;
 				dataToSend.timeElapsedSeconds = timeElapsedSeconds;
-				dataToSendJSON = JSON.stringify(dataToSend);
+				dataToSend.globalLevel = harvestDataFromElement('globallevel', '#data');
+				sendDataToController(dataToSend, controllerURL, function (data) {
+					$('body').html(data);
+				});
 			}
 			question1 = questionAnswers[currentQuestion][0].split('t')[0];
 			affichageEtChangementQuestion(question1);
@@ -133,7 +137,7 @@ $(function() {
 		currentQuestion++;
 		alert(currentQuestion);
 		let answerId = $(this).data('answerId');
-		if (Number($(this).data('answer')) == Number($('#'+ answerId +' input').val()) {
+		if (Number($(this).data('answer')) == Number($('#'+ answerId +' input').val())) {
 			nbRightAnswers++;
 			//alert(nbRightAnswers);
 		}
@@ -148,7 +152,6 @@ $(function() {
 		tux.setImgCSS({'top': top, 'left': left});
 		$('#tuxImage').hide().fadeIn(1000);
 		if (currentQuestion > 10) {
-			$('#terrain').html('');
 			if (bUsingTimer) {
 				window.clearInterval(timer);
 			}
@@ -156,7 +159,10 @@ $(function() {
 			dataToSend.questionAnswers = questionAnswers;
 			dataToSend.givenAnswers = givenAnswers;
 			dataToSend.timeElapsedSeconds = timeElapsedSeconds;
-			dataToSendJSON = JSON.stringify(dataToSend);
+			dataToSend.globalLevel = harvestDataFromElement('globallevel', '#data');
+			sendDataToController(dataToSend, controllerURL, function (data) {
+				$('body').html(data);
+			});
 		}
 		question1 = questionAnswers[currentQuestion][0].split('t')[0];
 		affichageEtChangementQuestion(question1);
