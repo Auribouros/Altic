@@ -632,7 +632,8 @@ class AlticController extends AbstractController
         return $this->render('altic/endgame.html.twig', [
             'userName'=>$pupilFullName, 
             'profilePic'=>'default',
-            'gameData'=>$level
+            'gameData'=>$level,
+            'nbRightAnswers'=>$nbRightAnswers
             ]);
     }
 
@@ -723,8 +724,8 @@ class AlticController extends AbstractController
         //array representing a game for a given map
         $gameFromMap = array(
             'castleMAP.png'=>'mountainGame',
-            'riverMAP.png'=>'fishingGame',
-            'caveMAP.png'=>'caveGame',
+            'riverMAP.png'=>'mountainGame',
+            'caveMAP.png'=>'mountainGame',
             'mountainMAP.png'=>'mountainGame'
         );
         $gameName = $gameFromMap[$mapName];
