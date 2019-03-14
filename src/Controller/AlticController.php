@@ -10,11 +10,14 @@ use App\Entity\Niveau;
 use App\Entity\Question;
 use App\Entity\ReponsePropose;
 use App\Entity\PersonnageJouable;
+use App\Entity\Entrainement;
+use App\Entity\Jeu;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\AddTeacherType;
+use \Datetime as DateTime;
 
 
 class AlticController extends AbstractController
@@ -118,7 +121,7 @@ class AlticController extends AbstractController
             $nbOfSameAnswers=0; 
             $nbOfCurrentRandomAnswer=0;
             //calculate the number of random answers
-            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable())-1;
+            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+1);
 
             /*
                 generate answers
@@ -137,7 +140,7 @@ class AlticController extends AbstractController
                     break;
                     case 1:
                         //generate an answer from the same table
-                        if ($nbOfSameAnswers <= $level->getNbReponsesProposeesDeLaMemeTable()) {
+                        if ($nbOfSameAnswers != $level->getNbReponsesProposeesDeLaMemeTable()) {
                             $aMultiplier=rand(0,10);
                             if( ! isset($answers[$table*$aMultiplier])){
                            $answers[$table*$aMultiplier]=new ReponsePropose();
@@ -151,20 +154,24 @@ class AlticController extends AbstractController
                         break;
                     case 3:
                         //generate everything else
-                        if ($nbOfCurrentRandomAnswer <= $nbOfRandomAnswers) {
+                        if ($nbOfCurrentRandomAnswer != $nbOfRandomAnswers) {
                             $valeur=rand(0,$level->getEcartEntreLesReponses());
                             $estAddition =rand(0,1);
-                            if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
-                                if ($estAddition==1) {
-                                    $answers[$table*$key+$valeur]=new ReponsePropose();
-                                    $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
-                                } else {
-                                    $answers[$table*$key-$valeur]= new ReponsePropose();
-                                    $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
+                                if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
+                                    if ($estAddition==1) {
+                                        $answers[$table*$key+$valeur]=new ReponsePropose();
+                                        $answers[$table*$key+$valeur]->setReponse($table*$key+$valeur);
+                                        $nbOfCurrentRandomAnswer+=1;
+                                        $i+=1;
+                                    } else {
+                                        if($table*$key-$valeur>=0){
+                                        $answers[$table*$key-$valeur]= new ReponsePropose();
+                                        $answers[$table*$key-$valeur]->setReponse($table*$key-$valeur);
+                                        $nbOfCurrentRandomAnswer+=1;
+                                        $i+=1;
+                                    }
+                                    }
                                 }
-                                $nbOfCurrentRandomAnswer+=1;
-                                $i+=1;
-                            }
                         }
                         break;
                     }
@@ -239,10 +246,10 @@ class AlticController extends AbstractController
         return ['advice1' => $advice1, 'advice2' => $advice2];
     }
 
-    private function simplifyQuestionsAnswers($questions,$table){
+    private function simplifyQuestionsAnswers($questions,$table,$time){
         $questionsAnswerArray = array();
         foreach ($questions as $key => $question) {
-            $questionAnswerArray=array($question->getLibelle());
+            $questionAnswerArray=array($question->getLibelle().'t'.$time);
             foreach ($question->getReponsepropose() as $cle => $value) {
                 if($key*$table == $value->getReponse()){
                     array_push($questionAnswerArray,$value->getReponse()."good");
@@ -414,8 +421,8 @@ class AlticController extends AbstractController
         return $this->redirectToRoute("altic_pupil");
     }
 
-    /*
-     * @Route ("/pupil/{tableNumber}/{levelNumber}/{mapName}", name= "altic_choiceAvatar")
+    /**
+     * @Route("/pupil/{tableNumber}/{levelNumber}/{mapName}", name= "altic_choiceAvatar")
      */
     public function choiceAvatar($tableNumber, $levelNumber, $mapName){
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -423,26 +430,247 @@ class AlticController extends AbstractController
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
         $playableCharacters = $user->getPersonnagejouable();
 
-        return $this->render('altic/choiceAvatar.html.twig', [
-            'tableNumber'=>$tableNumber,
-            'levelNumber'=>$levelNumber,
-            'mapName'=>$mapName,
-            'playableCharacters'=>$playableCharacters,
-            'userName'=>$pupilFullName,
-            'profilePic'=>$user->getAvatar()
-            ]);
+        if (sizeof($playableCharacters) > 1) {
+            
+            return $this->render('altic/choiceAvatar.html.twig', [
+                'tableNumber'=>$tableNumber,
+                'levelNumber'=>$levelNumber,
+                'mapName'=>$mapName,
+                'playableCharacters'=>$playableCharacters,
+                'userName'=>$pupilFullName,
+                'profilePic'=>$user->getAvatar()
+                ]);
+
+        }
+        else {
+
+            return $this->redirect(
+               $this->generateUrl('altic_pupilTraining', [
+                    'tableNumber'=>$tableNumber,
+                    'levelNumber'=>$levelNumber,
+                    'mapName'=>$mapName,
+                    'avatarImage'=>'1.png'
+                ])
+            );
+
+        }
     }
 
     /**
      * @Route("/pupil/endgame", name="altic_endgame")
      */
     public function endgame(){
+
+        //base variables
+            $charactersToWinFromLevel = array(10=>'2.png', 12=>'3.png', 22=>'4.png', 24=>'5.png', 34=>'6.png', 36=>'7.png', 46=>'8.png', 48=>'9.png', 58=>'10.png', 60=>'11.png', 70=>'12.png', 72=>'13.png', 82=>'14.png', 84=>'15.png', 94=>'16.png', 96=>'17.png', 106=>'18.png', 108=>'19.png', 118=>'20.png', 120=>'21.png', 130=>'22.png', 132=>'23.png');
+            $templateLevels = array_fill(0, 12, new Niveau());
+            $games = array_fill(0, 4, new Jeu());
+            foreach ($games as $game) {
+                $game->setCheminAcces('');
+            }
+
+            $templateLevels[0]->setNumero(-1);
+            $templateLevels[0]->setEcartEntreLesReponses(10);
+            $templateLevels[0]->setNombreDeReponses(3);
+            $templateLevels[0]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[0]->setReponsesSimilaires(false);
+            $templateLevels[0]->setTempsDisponible(null);
+            $templateLevels[0]->setOrdreDesQuestions('croissant');
+            $templateLevels[0]->setQuestionsATrous(false);
+            //
+            $templateLevels[1]->setNumero(-1);
+            $templateLevels[1]->setEcartEntreLesReponses(10);
+            $templateLevels[1]->setNombreDeReponses(3);
+            $templateLevels[1]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[1]->setReponsesSimilaires(false);
+            $templateLevels[1]->setTempsDisponible(null);
+            $templateLevels[1]->setOrdreDesQuestions('decroissant');
+            $templateLevels[1]->setQuestionsATrous(false);
+            //
+            $templateLevels[2]->setNumero(-1);
+            $templateLevels[2]->setEcartEntreLesReponses(7);
+            $templateLevels[2]->setNombreDeReponses(3);
+            $templateLevels[2]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[2]->setReponsesSimilaires(true);
+            $templateLevels[2]->setTempsDisponible(null);
+            $templateLevels[2]->setOrdreDesQuestions('aleatoire');
+            $templateLevels[2]->setQuestionsATrous(false);
+            //
+            $templateLevels[3]->setNumero(-1);
+            $templateLevels[3]->setEcartEntreLesReponses(7);
+            $templateLevels[3]->setNombreDeReponses(4);
+            $templateLevels[3]->setNbReponsesProposeesDeLaMemeTable(1);
+            $templateLevels[3]->setReponsesSimilaires(false);
+            $templateLevels[3]->setTempsDisponible(30);
+            $templateLevels[3]->setOrdreDesQuestions('croissant');
+            $templateLevels[3]->setQuestionsATrous(false);
+            //
+            $templateLevels[4]->setNumero(-1);
+            $templateLevels[4]->setEcartEntreLesReponses(5);
+            $templateLevels[4]->setNombreDeReponses(4);
+            $templateLevels[4]->setNbReponsesProposeesDeLaMemeTable(1);
+            $templateLevels[4]->setReponsesSimilaires(false);
+            $templateLevels[4]->setTempsDisponible(20);
+            $templateLevels[4]->setOrdreDesQuestions('decroissant');
+            $templateLevels[4]->setQuestionsATrous(false);
+            //
+            $templateLevels[5]->setNumero(-1);
+            $templateLevels[5]->setEcartEntreLesReponses(5);
+            $templateLevels[5]->setNombreDeReponses(4);
+            $templateLevels[5]->setNbReponsesProposeesDeLaMemeTable(2);
+            $templateLevels[5]->setReponsesSimilaires(true);
+            $templateLevels[5]->setTempsDisponible(10);
+            $templateLevels[5]->setOrdreDesQuestions('aleatoire');
+            $templateLevels[5]->setQuestionsATrous(false);
+            //
+            $templateLevels[6]->setNumero(-1);
+            $templateLevels[6]->setEcartEntreLesReponses(5);
+            $templateLevels[6]->setNombreDeReponses(4);
+            $templateLevels[6]->setNbReponsesProposeesDeLaMemeTable(2);
+            $templateLevels[6]->setReponsesSimilaires(true);
+            $templateLevels[6]->setTempsDisponible(10);
+            $templateLevels[6]->setOrdreDesQuestions('croissant');
+            $templateLevels[6]->setQuestionsATrous(false);
+            //
+            $templateLevels[7]->setNumero(-1);
+            $templateLevels[7]->setEcartEntreLesReponses(10);
+            $templateLevels[7]->setNombreDeReponses(0);
+            $templateLevels[7]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[7]->setReponsesSimilaires(false);
+            $templateLevels[7]->setTempsDisponible(20);
+            $templateLevels[7]->setOrdreDesQuestions('croissant');
+            $templateLevels[7]->setQuestionsATrous(true);
+            //
+            $templateLevels[8]->setNumero(-1);
+            $templateLevels[8]->setEcartEntreLesReponses(10);
+            $templateLevels[8]->setNombreDeReponses(0);
+            $templateLevels[8]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[8]->setReponsesSimilaires(false);
+            $templateLevels[8]->setTempsDisponible(10);
+            $templateLevels[8]->setOrdreDesQuestions('croissant');
+            $templateLevels[8]->setQuestionsATrous(true);
+            //
+            $templateLevels[9]->setNumero(-1);
+            $templateLevels[9]->setEcartEntreLesReponses(10);
+            $templateLevels[9]->setNombreDeReponses(0);
+            $templateLevels[9]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[9]->setReponsesSimilaires(false);
+            $templateLevels[9]->setTempsDisponible(10);
+            $templateLevels[9]->setOrdreDesQuestions('croissant');
+            $templateLevels[9]->setQuestionsATrous(true);
+            //
+            $templateLevels[10]->setNumero(-1);
+            $templateLevels[10]->setEcartEntreLesReponses(10);
+            $templateLevels[10]->setNombreDeReponses(0);
+            $templateLevels[10]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[10]->setReponsesSimilaires(false);
+            $templateLevels[10]->setTempsDisponible(10);
+            $templateLevels[10]->setOrdreDesQuestions('croissant');
+            $templateLevels[10]->setQuestionsATrous(true);
+            //
+            $templateLevels[11]->setNumero(-1);
+            $templateLevels[11]->setEcartEntreLesReponses(10);
+            $templateLevels[11]->setNombreDeReponses(0);
+            $templateLevels[11]->setNbReponsesProposeesDeLaMemeTable(0);
+            $templateLevels[11]->setReponsesSimilaires(false);
+            $templateLevels[11]->setTempsDisponible(10);
+            $templateLevels[11]->setOrdreDesQuestions('croissant');
+            $templateLevels[11]->setQuestionsATrous(true);
+
+        $questionsAnswers = $_POST['questionAnswers'];
+        $givenAnswers = $_POST['givenAnswers'];
+        $timeElapsedSeconds = $_POST['timeElapsedSeconds'];
+        $globalLevelNumber = $_POST['globalLevel'];
+        $localLevelNumber = $_POST['localLevel'];
+        $table = $_POST['table'];
+        $nbRightAnswers = $_POST['nbRightAnswers'];
+
+        unset($questionsAnswers[0]);
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
+
+        $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        //prepare data
+        $questions = array();
+        $suggestedAnswers = array();
+        $level = $repositoryNiveau->findOneByNumero($globalLevelNumber);
+       
+        $trainingSession = new Entrainement();
+        $trainingSession->setDuree($timeElapsedSeconds);
+        $trainingSession->setDate(new DateTime());
+        $trainingSession->setUtilisateur($user);
+
+        for ($j = 0; $j < sizeof($questionsAnswers); $j++) {
+
+            $row = $questionsAnswers[$j+1];
+            
+            for ($i=0; $i < sizeof($row); $i++) {
+                if ($i == 0) {
+                    $currentQuestion = new Question();
+                    $currentQuestion->setLibelle(str_replace('t', '', $row[$i]));
+                    $currentQuestion->setReponseEnfant($givenAnswers[$j]);
+                    array_push($questions, $currentQuestion);
+                }
+                else {
+                    $suggestedAnswer = new ReponsePropose();
+                    $suggestedAnswer->setReponse((int)preg_replace('/[a-z]*/', '', $row[$i]));
+                    $questions[$j]->addReponsepropose($suggestedAnswer);
+                    $entityManager->persist($suggestedAnswer);
+                    $entityManager->persist($questions[$j]);
+                }
+            }
+
+            $trainingSession->addQuestion($questions[$j]);
+
+        }
+
+        if ($level) {
+            $trainingSession->addNiveau($level);
+        }
+        else {
+            $entityManager->persist($games[0]);
+            $templateLevel = $templateLevels[$localLevel-1];
+            $level = new Niveau();
+            $level->setNumero($globalLevelNumber);
+            $level->setEcartEntreLesReponses($templateLevel->getEcartEntreLesReponses());
+            $level->setNombreDeReponses($templateLevel->getNombreDeReponses());
+            $level->setNbReponsesProposeesDeLaMemeTable($templateLevel->getNbReponsesProposeesDeLaMemeTable());
+            $level->setReponsesSimilaires($templateLevel->getReponsesSimilaires());
+            $level->setTempsDisponible($templateLevel->getTempsDisponible());
+            $level->setOrdreDesQuestions($templateLevel->getOrdreDesQuestions());
+            $level->setQuestionsATrous($templateLevel->getQuestionsATrous());
+            $level->addTableDeMultiplication($table);
+            $level->setJeu($games[0]);
+            $entityManager->persist($level);
+            $trainingSession->addNiveau($level);
+        }
+
+
+        if ($nbRightAnswers >= 8) {
+            $user->addNiveau($level);
+            foreach ($charactersToWinFromLevel as $index => $character) {
+                if ($globalLevelNumber == $index) {
+                    $user->addPersonnageJouable($character);
+                }
+            }
+        }
+
+        $entityManager->persist($user);
+        $entityManager->persist($trainingSession);
+
+        //send data
+        $entityManager->flush();
+
         return $this->render('altic/endgame.html.twig', [
             'userName'=>$pupilFullName, 
-            'profilePic'=>'default']);
+            'profilePic'=>'default',
+            'gameData'=>$level,
+            'nbRightAnswers'=>$nbRightAnswers
+            ]);
     }
 
     /**
@@ -531,9 +759,9 @@ class AlticController extends AbstractController
     {
         //array representing a game for a given map
         $gameFromMap = array(
-            'castleMAP.png'=>'caveGame',
-            'riverMAP.png'=>'fishingGame',
-            'caveMAP.png'=>'caveGame',
+            'castleMAP.png'=>'mountainGame',
+            'riverMAP.png'=>'mountainGame',
+            'caveMAP.png'=>'mountainGame',
             'mountainMAP.png'=>'mountainGame'
         );
         $gameName = $gameFromMap[$mapName];
@@ -548,10 +776,12 @@ class AlticController extends AbstractController
 
         return $this->render("altic/$gameName.html.twig",
             [
-                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber),
+                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber, $level->getTempsDisponible()),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel,
-                'celestinImg'=>"images/pupil/characters/$avatarImage"
+                'globalLevel'=>$levelNumber,
+                'celestinImg'=>"images/pupil/characters/$avatarImage",
+                'wizardImg'=>"images/pupil/characters/$avatarImage"
             ]);
     }
 
