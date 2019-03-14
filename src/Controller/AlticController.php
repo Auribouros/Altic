@@ -426,6 +426,7 @@ class AlticController extends AbstractController
     public function endgame(){
 
         //base variables
+            $charactersToWinFromLevel = array();
             $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
