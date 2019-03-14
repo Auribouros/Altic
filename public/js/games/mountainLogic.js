@@ -20,10 +20,15 @@ $(function() {
 	let bUsingTimer = false;
 	let timeConstraintSeconds = 0;
 	let givenAnswers = [];
+	let timer = undefined;
+	let timeElapsedSeconds = 0;
+	let elapsedTimer = undefined;
+	let dataToSendJSON = null;
 
 	let dataToSend = {
 		questionAnswers: '',
-		givenAnswers: ''
+		givenAnswers: '',
+		timeElapsedSeconds: ''
 	};
 	//console.log(questionAnswers);
 
@@ -47,11 +52,12 @@ $(function() {
 
 	for (let j = 0; j < 10; j++) {
 		for (let i = 0; i < questionAnswers[j+1].length-1; i++) {
-			let reponse = (bUsingTimer)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(questionAnswers[j+1][i+1]));
+			let reponse = (questionAnswers[j+1][i+1].indexOf('good') < 0 && questionAnswers[j+1][i+1].indexOf('bad') < 0)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(questionAnswers[j+1][i+1]));
 			reponse.appendTo('#terrain');
-			if (bUsingTimer) {
+			if (questionAnswers[j+1][i+1].indexOf('good') < 0 && questionAnswers[j+1][i+1].indexOf('bad') < 0) {
 
 				$('#'+ (j*10+i) +' #answerBtn').data('answer', questionAnswers[j+1][i+1]);
+				$('#'+ (j*10+i) +' #answerBtn').data('answerId', (j*10+i));
 			
 			}
 			else {
@@ -84,7 +90,7 @@ $(function() {
 	$('a').click(function() {
 
 
-		if (!bUsingTimer) {
+		if (~$(this).data('answer').indexOf('good') && $(this).data('answer').indexOf('bad')) {
 
 			currentQuestion++;
 			//alert(currentQuestion);
@@ -105,7 +111,14 @@ $(function() {
 			$('#tuxImage').hide().fadeIn(1000);
 			if (currentQuestion > 10) {
 				$('#terrain').html('');
-				rightAnswersToSend = JSON.stringify(rightAnswers);
+				if (bUsingTimer) {
+					window.clearInterval(timer);
+				}
+				window.clearInterval(elapsedTimer);
+				dataToSend.questionAnswers = questionAnswers;
+				dataToSend.givenAnswers = givenAnswers;
+				dataToSend.timeElapsedSeconds = timeElapsedSeconds;
+				dataToSendJSON = JSON.stringify(dataToSend);
 			}
 			question1 = questionAnswers[currentQuestion][0].split('t')[0];
 			affichageEtChangementQuestion(question1);
@@ -119,7 +132,8 @@ $(function() {
 		
 		currentQuestion++;
 		alert(currentQuestion);
-		if (~$(this).data('answer').indexOf('good')) {
+		let answerId = $(this).data('answerId');
+		if (Number($(this).data('answer')) == Number($('#'+ answerId +' input').val()) {
 			nbRightAnswers++;
 			//alert(nbRightAnswers);
 		}
@@ -133,6 +147,17 @@ $(function() {
 		let top = $(this).css('top');
 		tux.setImgCSS({'top': top, 'left': left});
 		$('#tuxImage').hide().fadeIn(1000);
+		if (currentQuestion > 10) {
+			$('#terrain').html('');
+			if (bUsingTimer) {
+				window.clearInterval(timer);
+			}
+			window.clearInterval(elapsedTimer);
+			dataToSend.questionAnswers = questionAnswers;
+			dataToSend.givenAnswers = givenAnswers;
+			dataToSend.timeElapsedSeconds = timeElapsedSeconds;
+			dataToSendJSON = JSON.stringify(dataToSend);
+		}
 		question1 = questionAnswers[currentQuestion][0].split('t')[0];
 		affichageEtChangementQuestion(question1);
 
@@ -146,7 +171,7 @@ $(function() {
 	//if there is a time constraint
 	if (bUsingTimer) {
 
-		setInterval(function () {
+		timer = setInterval(function () {
 			
 			currentQuestion++;
 			question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
@@ -162,6 +187,10 @@ $(function() {
 		}, timeConstraintSeconds * 1000);
 
 	}
+
+	elapsedTimer = setInterval(function () {
+		timeElapsedSeconds++;
+	}, 1000);
 
 
 	function affichageEtChangementQuestion(questionLabel){
