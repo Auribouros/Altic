@@ -30,7 +30,9 @@ $(function() {
 		questionAnswers: '',
 		givenAnswers: '',
 		timeElapsedSeconds: '',
-		globalLevel: ''
+		globalLevel: '',
+		localLevel: '',
+		table: ''
 	};
 	//console.log(questionAnswers);
 
@@ -120,6 +122,8 @@ $(function() {
 				dataToSend.givenAnswers = givenAnswers;
 				dataToSend.timeElapsedSeconds = timeElapsedSeconds;
 				dataToSend.globalLevel = harvestDataFromElement('globallevel', '#data');
+				dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
+				dataToSend.table = harvestDataFromElement('table', '#data');
 				sendDataToController(dataToSend, controllerURL, function (data) {
 					$('body').html(data);
 				});
@@ -160,6 +164,8 @@ $(function() {
 			dataToSend.givenAnswers = givenAnswers;
 			dataToSend.timeElapsedSeconds = timeElapsedSeconds;
 			dataToSend.globalLevel = harvestDataFromElement('globallevel', '#data');
+			dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
+			dataToSend.table = harvestDataFromElement('table', '#data');
 			sendDataToController(dataToSend, controllerURL, function (data) {
 				$('body').html(data);
 			});
