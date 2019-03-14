@@ -32,7 +32,8 @@ $(function() {
 		timeElapsedSeconds: '',
 		globalLevel: '',
 		localLevel: '',
-		table: ''
+		table: '',
+		nbRightAnswers: ''
 	};
 	//console.log(questionAnswers);
 
@@ -124,6 +125,7 @@ $(function() {
 				dataToSend.globalLevel = harvestDataFromElement('globallevel', '#data');
 				dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
 				dataToSend.table = harvestDataFromElement('table', '#data');
+				dataToSend.nbRightAnswers = nbRightAnswers;
 				sendDataToController(dataToSend, controllerURL, function (data) {
 					$('body').html(data);
 				});
@@ -166,6 +168,7 @@ $(function() {
 			dataToSend.globalLevel = harvestDataFromElement('globallevel', '#data');
 			dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
 			dataToSend.table = harvestDataFromElement('table', '#data');
+			dataToSend.nbRightAnswers = nbRightAnswers;
 			sendDataToController(dataToSend, controllerURL, function (data) {
 				$('body').html(data);
 			});

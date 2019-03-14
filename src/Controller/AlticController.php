@@ -426,7 +426,7 @@ class AlticController extends AbstractController
     public function endgame(){
 
         //base variables
-            $charactersToWinFromLevel = array();
+            $charactersToWinFromLevel = array(10=>'2.png', 12=>'3.png', 22=>'4.png', 24=>'5.png', 34=>'6.png', 36=>'7.png', 46=>'8.png', 48=>'9.png', 58=>'10.png', 60=>'11.png', 70=>'12.png', 72=>'13.png', 82=>'14.png', 84=>'15.png', 94=>'16.png', 96=>'17.png', 106=>'18.png', 108=>'19.png', 118=>'20.png', 120=>'21.png', 130=>'22.png', 132=>'23.png');
             $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
@@ -547,6 +547,7 @@ class AlticController extends AbstractController
         $globalLevelNumber = $_POST['globalLevel'];
         $localLevelNumber = $_POST['localLevel'];
         $table = $_POST['table'];
+        $nbRightAnswers = $_POST['nbRightAnswers'];
 
         unset($questionsAnswers[0]);
 
@@ -556,7 +557,6 @@ class AlticController extends AbstractController
 
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($user);
 
         //prepare data
         $questions = array();
@@ -613,6 +613,17 @@ class AlticController extends AbstractController
             $trainingSession->addNiveau($level);
         }
 
+
+        if ($nbRightAnswers >= 8) {
+            $user->addNiveau($level);
+            foreach ($charactersToWinFromLevel as $index => $character) {
+                if ($globalLevelNumber == $index) {
+                    $user->addPersonnageJouable($character);
+                }
+            }
+        }
+
+        $entityManager->persist($user);
         $entityManager->persist($trainingSession);
 
         //send data
