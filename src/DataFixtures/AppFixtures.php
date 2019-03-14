@@ -216,6 +216,7 @@ class AppFixtures extends Fixture
             $baseLevel12->setQuestionsATrous(true);
             $baseLevel12->setJeu($test1);
             $manager->persist($baseLevel12);
+            $user1->addNiveau($baseLevel12);
             
             //
             $baseLevel13 = new Niveau();
