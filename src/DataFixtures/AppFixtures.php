@@ -32,6 +32,7 @@ class AppFixtures extends Fixture
             $this->encoder->encodePassword($user1,"lucy")
         );
         $user1->setEstEnseignant(false);
+        $user1->setAvatar("default");
         $manager->persist($user1);
 
         for ($i = 0; $i < 10; $i++) {
