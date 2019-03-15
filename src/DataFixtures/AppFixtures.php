@@ -294,17 +294,17 @@ class AppFixtures extends Fixture
             $baseLevel18->setJeu($test1);
             $manager->persist($baseLevel18);
             //
-            $baseLevel7 = new Niveau();
-            $baseLevel7->setNumero(19);
-            $baseLevel7->setEcartEntreLesReponses(5);
-            $baseLevel7->setNombreDeReponses(4);
-            $baseLevel7->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevel7->setReponsesSimilaires(true);
-            $baseLevel7->setTempsDisponible(10);
-            $baseLevel7->setOrdreDesQuestions('croissant');
-            $baseLevel7->setQuestionsATrous(false);
-            $baseLevel7->setJeu($test1);
-            $manager->persist($baseLevel7);
+            $baseLevel19 = new Niveau();
+            $baseLevel19->setNumero(19);
+            $baseLevel19->setEcartEntreLesReponses(5);
+            $baseLevel19->setNombreDeReponses(4);
+            $baseLevel19->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel19->setReponsesSimilaires(true);
+            $baseLevel19->setTempsDisponible(10);
+            $baseLevel19->setOrdreDesQuestions('croissant');
+            $baseLevel19->setQuestionsATrous(false);
+            $baseLevel19->setJeu($test1);
+            $manager->persist($baseLevel19);
             //
             $baseLevel20 = new Niveau();
             $baseLevel20->setNumero(20);
@@ -449,18 +449,18 @@ class AppFixtures extends Fixture
             $manager->persist($baseLevel30);
             $user1->addNiveau($baseLevel30);
             //
-            $baseLevel7 = new Niveau();
-            $baseLevel7->setNumero(31);
-            $baseLevel7->setEcartEntreLesReponses(5);
-            $baseLevel7->setNombreDeReponses(4);
-            $baseLevel7->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevel7->setReponsesSimilaires(true);
-            $baseLevel7->setTempsDisponible(10);
-            $baseLevel7->setOrdreDesQuestions('croissant');
-            $baseLevel7->setQuestionsATrous(false);
-            $baseLevel7->setJeu($test1);
-            $manager->persist($baseLevel7);
-            $user1->addNiveau($baseLevel7);
+            $baseLevel31 = new Niveau();
+            $baseLevel31->setNumero(31);
+            $baseLevel31->setEcartEntreLesReponses(5);
+            $baseLevel31->setNombreDeReponses(4);
+            $baseLevel31->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel31->setReponsesSimilaires(true);
+            $baseLevel31->setTempsDisponible(10);
+            $baseLevel31->setOrdreDesQuestions('croissant');
+            $baseLevel31->setQuestionsATrous(false);
+            $baseLevel31->setJeu($test1);
+            $manager->persist($baseLevel31);
+            $user1->addNiveau($baseLevel31);
             //
             $baseLevel32 = new Niveau();
             $baseLevel32->setNumero(32);
@@ -605,18 +605,18 @@ class AppFixtures extends Fixture
             $manager->persist($baseLevel42);
             $user1->addNiveau($baseLevel42);
             //
-            $baseLevel7 = new Niveau();
-            $baseLevel7->setNumero(43);
-            $baseLevel7->setEcartEntreLesReponses(5);
-            $baseLevel7->setNombreDeReponses(4);
-            $baseLevel7->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevel7->setReponsesSimilaires(true);
-            $baseLevel7->setTempsDisponible(10);
-            $baseLevel7->setOrdreDesQuestions('croissant');
-            $baseLevel7->setQuestionsATrous(false);
-            $baseLevel7->setJeu($test1);
-            $manager->persist($baseLevel7);
-            $user1->addNiveau($baseLevel7);
+            $baseLevel43 = new Niveau();
+            $baseLevel43->setNumero(43);
+            $baseLevel43->setEcartEntreLesReponses(5);
+            $baseLevel43->setNombreDeReponses(4);
+            $baseLevel43->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel43->setReponsesSimilaires(true);
+            $baseLevel43->setTempsDisponible(10);
+            $baseLevel43->setOrdreDesQuestions('croissant');
+            $baseLevel43->setQuestionsATrous(false);
+            $baseLevel43->setJeu($test1);
+            $manager->persist($baseLevel43);
+            $user1->addNiveau($baseLevel43);
             //
             $baseLevel44 = new Niveau();
             $baseLevel44->setNumero(44);
@@ -761,18 +761,18 @@ class AppFixtures extends Fixture
             $manager->persist($baseLevel54);
             $user1->addNiveau($baseLevel54);
             //
-            $baseLevel7 = new Niveau();
-            $baseLevel7->setNumero(55);
-            $baseLevel7->setEcartEntreLesReponses(5);
-            $baseLevel7->setNombreDeReponses(4);
-            $baseLevel7->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevel7->setReponsesSimilaires(true);
-            $baseLevel7->setTempsDisponible(10);
-            $baseLevel7->setOrdreDesQuestions('croissant');
-            $baseLevel7->setQuestionsATrous(false);
-            $baseLevel7->setJeu($test1);
-            $manager->persist($baseLevel7);
-            $user1->addNiveau($baseLevel7);
+            $baseLevel55 = new Niveau();
+            $baseLevel55->setNumero(55);
+            $baseLevel55->setEcartEntreLesReponses(5);
+            $baseLevel55->setNombreDeReponses(4);
+            $baseLevel55->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel55->setReponsesSimilaires(true);
+            $baseLevel55->setTempsDisponible(10);
+            $baseLevel55->setOrdreDesQuestions('croissant');
+            $baseLevel55->setQuestionsATrous(false);
+            $baseLevel55->setJeu($test1);
+            $manager->persist($baseLevel55);
+            $user1->addNiveau($baseLevel55);
             //
             $baseLevel56 = new Niveau();
             $baseLevel56->setNumero(56);
@@ -917,18 +917,18 @@ class AppFixtures extends Fixture
             $manager->persist($baseLevel66);
             $user1->addNiveau($baseLevel66);
             //
-            $baseLevel7 = new Niveau();
-            $baseLevel7->setNumero(67);
-            $baseLevel7->setEcartEntreLesReponses(5);
-            $baseLevel7->setNombreDeReponses(4);
-            $baseLevel7->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevel7->setReponsesSimilaires(true);
-            $baseLevel7->setTempsDisponible(10);
-            $baseLevel7->setOrdreDesQuestions('croissant');
-            $baseLevel7->setQuestionsATrous(false);
-            $baseLevel7->setJeu($test1);
-            $manager->persist($baseLevel7);
-            $user1->addNiveau($baseLevel7);
+            $baseLevel67 = new Niveau();
+            $baseLevel67->setNumero(67);
+            $baseLevel67->setEcartEntreLesReponses(5);
+            $baseLevel67->setNombreDeReponses(4);
+            $baseLevel67->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel67->setReponsesSimilaires(true);
+            $baseLevel67->setTempsDisponible(10);
+            $baseLevel67->setOrdreDesQuestions('croissant');
+            $baseLevel67->setQuestionsATrous(false);
+            $baseLevel67->setJeu($test1);
+            $manager->persist($baseLevel67);
+            $user1->addNiveau($baseLevel67);
             //
             $baseLevel68 = new Niveau();
             $baseLevel68->setNumero(68);
@@ -1073,18 +1073,18 @@ class AppFixtures extends Fixture
             $manager->persist($baseLevel78);
             $user1->addNiveau($baseLevel78);
             //
-            $baseLevel7 = new Niveau();
-            $baseLevel7->setNumero(79);
-            $baseLevel7->setEcartEntreLesReponses(5);
-            $baseLevel7->setNombreDeReponses(4);
-            $baseLevel7->setNbReponsesProposeesDeLaMemeTable(2);
-            $baseLevel7->setReponsesSimilaires(true);
-            $baseLevel7->setTempsDisponible(10);
-            $baseLevel7->setOrdreDesQuestions('croissant');
-            $baseLevel7->setQuestionsATrous(false);
-            $baseLevel7->setJeu($test1);
-            $manager->persist($baseLevel7);
-            $user1->addNiveau($baseLevel7);
+            $baseLevel79 = new Niveau();
+            $baseLevel79->setNumero(79);
+            $baseLevel79->setEcartEntreLesReponses(5);
+            $baseLevel79->setNombreDeReponses(4);
+            $baseLevel79->setNbReponsesProposeesDeLaMemeTable(2);
+            $baseLevel79->setReponsesSimilaires(true);
+            $baseLevel79->setTempsDisponible(10);
+            $baseLevel79->setOrdreDesQuestions('croissant');
+            $baseLevel79->setQuestionsATrous(false);
+            $baseLevel79->setJeu($test1);
+            $manager->persist($baseLevel79);
+            $user1->addNiveau($baseLevel79);
             //
             $baseLevel80 = new Niveau();
             $baseLevel80->setNumero(80);
