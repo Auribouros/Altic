@@ -72,13 +72,13 @@ class AlticController extends AbstractController
         //calculate begining and end
         switch ($level->getOrdreDesQuestions()) {
             case 'croissant':
-                $begining=0;
+                $begining=1;
                 $ending=11;
                 $inc=1;
                 break;
             case 'decroissant':
                 $begining=10;
-                $ending=-1;
+                $ending=0;
                 $inc=-1;
                 break;
             default:
@@ -91,7 +91,7 @@ class AlticController extends AbstractController
         if ($inc==-2) {
             //random question
             do {
-                $value=rand(0,10);
+                $value=rand(1,10);
                 if (! isset($questions[$value])) {
                     $questions[$value] = new Question();
                     $questions[$value]->setLibelle("$table x $value");
