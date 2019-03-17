@@ -7,8 +7,6 @@
 {{ parent() }}
 
 <div class="container">
-	
-
 	<!--map and Constantin-->
 	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam', 'Will'] %}
 	{% set numOrder = [2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7] %}
@@ -35,7 +33,7 @@
 		<!--Constantin-->
 		<div class="col-3">
 			<h4 style="color: white; font-weight: bold;">Bonjour, je suis Constantin ! {{ advice1 }}. {{ advice2 }}</h4 style="font-weight: bold;">
-			<img class="img-fluid" src="{{ asset('images/pupil/characters/21.png') }}">
+			<img class="img-fluid" src="{{ asset('images/pupil/characters/92.png') }}">
 		</div>
 	</div>
 
@@ -47,72 +45,10 @@
 		<div class="col-sm-4">
 			<p class="h5">Trophées</p>
 			<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/1.png') }}">Débloqué de base<br/><br/>
-			{% if percentArray[1] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/2.png">Débloqué au niveau 9 d'Imoc(2)<br/><br/>
-				{% if percentArray[1] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/3.png">Débloqué pour avoir fini Imoc(2)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[2] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/4.png">Débloqué au niveau 9 d'Isia(5)<br/><br/>
-				{% if percentArray[2] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/5.png">Débloqué pour avoir fini Isia(5)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[3] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/6.png">Débloqué au niveau 9 de Vorod(10)<br/><br/>
-				{% if percentArray[3] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/7.png">Débloqué pour avoir fini Vorod(10)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[4] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/8.png">Débloqué au niveau 9 d'Elemia(1)<br/><br/>
-				{% if percentArray[4] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/9.png">Débloqué pour avoir fini Elemia(1)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[4] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/10.png">Débloqué au niveau 9 de Rania(4)<br/><br/>
-				{% if percentArray[4] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/11.png">Débloqué pour avoir fini Rania(4)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[5] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/12.png">Débloqué au niveau 9 de Pona(3)<br/><br/>
-				{% if percentArray[5] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/13.png">Débloqué pour avoir fini Pona(3)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[6] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/14.png">Débloqué au niveau 9 de Nesa(0)<br/><br/>
-				{% if percentArray[6] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/15.png">Débloqué pour avoir fini Nesa(0)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[7] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/16.png">Débloqué au niveau 9 de Sovia(6)<br/><br/>
-				{% if percentArray[7] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/17.png">Débloqué pour avoir fini Sovia(6)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[8] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/18.png">Débloqué au niveau 9 de Caguma(8)<br/><br/>
-				{% if percentArray[8] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/19.png">Débloqué pour avoir fini Caguma(8)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[9] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/20.png">Débloqué au niveau 9 de Belam(9)<br/><br/>
-				{% if percentArray[9] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/21.png">Débloqué pour avoir fini Belam(9)<br/><br/>
-				{% endif %}
-			{% endif %}
-			{% if percentArray[10] >= 70 %}
-    			<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/2.png">Débloqué au niveau 9 de Will(7)<br/><br/>
-				{% if percentArray[10] >= 100 %}
-					<img style="max-height: 100px; max-width: 100px;" src="images/pupil/characters/3.png">Débloqué pour avoir fini Will(7)<br/><br/>
-				{% endif %}
-			{% endif %}
+			{% for trophy in hallOfTrophy %}
+			{% set obtention = trophy| split("") %}
+			<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/'~trophy~'.png') }}">Debloque a la table {{obtention[0]}} au niveau {% if obtention[1]=="1" %}9{% else %}12{% endif %}<br/><br/>
+			{% endfor %}
 		</div>
 
 		<div class="col-sm-4"><p class="h5">Stastistiques</p>
