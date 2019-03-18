@@ -14,7 +14,7 @@ $(function() {
 	let tux = new Character('tux', tuxImage);
 	let mag = new Character('mag', magImage);
 	let questionAnswers = harvestDataFromElement('questionsanswers', '#data');
-	let currentQuestion = 1;
+	let currentQuestion = 0;
 	let nbRightAnswers = 0;
 	let question1 = questionAnswers[currentQuestion][0];
 	let bUsingTimer = false;
@@ -56,18 +56,18 @@ $(function() {
 	// Générer les positions des questions des réponses et les afficher
 
 	for (let j = 0; j < 10; j++) {
-		for (let i = 0; i < questionAnswers[j+1].length-1; i++) {
-			let reponse = (questionAnswers[j+1][i+1].indexOf('good') < 0 && questionAnswers[j+1][i+1].indexOf('bad') < 0)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(questionAnswers[j+1][i+1]));
+		for (let i = 0; i < questionAnswers[j].length-1; i++) {
+			let reponse = (questionAnswers[j][i+1].indexOf('good') < 0 && questionAnswers[j][i+1].indexOf('bad') < 0)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(questionAnswers[j][i+1]));
 			reponse.appendTo('#terrain');
-			if (questionAnswers[j+1][i+1].indexOf('good') < 0 && questionAnswers[j+1][i+1].indexOf('bad') < 0) {
+			if (questionAnswers[j][i+1].indexOf('good') < 0 && questionAnswers[j][i+1].indexOf('bad') < 0) {
 
-				$('#'+ (j*10+i) +' #answerBtn').data('answer', questionAnswers[j+1][i+1]);
+				$('#'+ (j*10+i) +' #answerBtn').data('answer', questionAnswers[j][i+1]);
 				$('#'+ (j*10+i) +' #answerBtn').data('answerId', (j*10+i));
 			
 			}
 			else {
 
-				$('#'+ (j*10+i)).data('answer', questionAnswers[j+1][i+1]);
+				$('#'+ (j*10+i)).data('answer', questionAnswers[j][i+1]);
 
 			}
 			reponse.setElementCSS({
@@ -114,7 +114,7 @@ $(function() {
 			let top = $(this).css('top');
 			tux.setImgCSS({'top': top, 'left': left});
 			$('#tuxImage').hide().fadeIn(1000);
-			if (currentQuestion > 10) {
+			if (currentQuestion > 9) {
 				if (bUsingTimer) {
 					window.clearInterval(timer);
 				}
@@ -157,7 +157,7 @@ $(function() {
 		let top = $(this).css('top');
 		tux.setImgCSS({'top': top, 'left': left});
 		$('#tuxImage').hide().fadeIn(1000);
-		if (currentQuestion > 10) {
+		if (currentQuestion > 9) {
 			if (bUsingTimer) {
 				window.clearInterval(timer);
 			}

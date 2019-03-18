@@ -97,7 +97,7 @@ class AlticController extends AbstractController
                     $questions[$value]->setLibelle("$table x $value");
                     $begining += 1;
                 }
-            } while ($begining<11);
+            } while ($begining<10);
         }else {
             //ordered question
             for ($i=$begining; $i!=$ending ; $i+=$inc) {
