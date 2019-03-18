@@ -219,7 +219,11 @@
 			url: url,
 			data: data,
 			type: 'POST',
-			success: callback
+			success: callback,
+			error: function(XMLHttpRequest, textStatus, errorThrown) { 
+		        alert("Status: " + textStatus); 
+		        alert("Error: " + errorThrown); 
+		    }    
 		});
 
 	}

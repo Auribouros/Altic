@@ -250,6 +250,7 @@ class AlticController extends AbstractController
         $questionsAnswerArray = array();
         foreach ($questions as $key => $question) {
             $questionAnswerArray=array($question->getLibelle().'t'.$time);
+            if($question->getReponsepropose()==null){
             foreach ($question->getReponsepropose() as $cle => $value) {
                 if($key*$table == $value->getReponse()){
                     array_push($questionAnswerArray,$value->getReponse()."good");
@@ -257,6 +258,10 @@ class AlticController extends AbstractController
                     array_push($questionAnswerArray,$value->getReponse()."bad");
                 }
             }
+        }else{
+            array_push($questionAnswerArray,$key*$table);
+        }
+
             array_push($questionsAnswerArray,$questionAnswerArray);
         }
 
@@ -513,7 +518,7 @@ class AlticController extends AbstractController
             $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
-                $game->setCheminAcces('');
+                $game->setCheminAcces('test');
             }
 
             $templateLevels[0]->setNumero(-1);
@@ -701,7 +706,11 @@ class AlticController extends AbstractController
             $user->addNiveau($level);
             foreach ($charactersToWinFromLevel as $index => $character) {
                 if ($globalLevelNumber == $index) {
-                    $user->addPersonnageJouable($character);
+                    $wonCharacter = new PersonnageJouable();
+                    $wonCharacter->setPersonnageDebloque(true);
+                    $wonCharacter->setImage($character);
+                    $entityManager->persist($wonCharacter);
+                    $user->addPersonnageJouable($wonCharacter);
                 }
             }
         }

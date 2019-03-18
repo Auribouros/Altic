@@ -1,20 +1,19 @@
 $(function() {
 
-	//alert(harvestDataFromElement('images', '#data'));
 	let images = harvestDataFromElement('images', '#data');
 	let imgfond = images.background;//'Image/01.png' 
 	let imgfondElement = '<div id="terrain"><img src="'+imgfond+'" id="imgfond"/></div>' ;
 	let htdoc = $(document).height();
 	let lgdoc = $(document).width();
 	let ligneActuelle = 0 ;
-	let tuxImage =  images.celestin;//'Image/02.png'
-	let magImage =  images.wizard;//'Image/03.png'
-	let bul =  images.bubble;//'Image/04.png'
+	let tuxImage =  images.celestin;
+	let magImage =  images.wizard;
+	let bul =  images.bubble;
 	let bulHtml = '<div id="bul"><img src="'+bul+'"id="bulimg"/></div>' ;
 	let tux = new Character('tux', tuxImage);
 	let mag = new Character('mag', magImage);
 	let questionAnswers = harvestDataFromElement('questionsanswers', '#data');
-	let currentQuestion = 1;
+	let currentQuestion = 0;
 	let nbRightAnswers = 0;
 	let question1 = questionAnswers[currentQuestion][0];
 	let bUsingTimer = false;
@@ -25,6 +24,7 @@ $(function() {
 	let elapsedTimer = undefined;
 	let dataToSendJSON = null;
 	let controllerURL = '/pupil/endgame';
+	let nbOfAnswersPerRow = [];
 
 	let dataToSend = {
 		questionAnswers: '',
@@ -56,24 +56,26 @@ $(function() {
 	// Générer les positions des questions des réponses et les afficher
 
 	for (let j = 0; j < 10; j++) {
-		for (let i = 0; i < questionAnswers[j+1].length-1; i++) {
-			let reponse = (questionAnswers[j+1][i+1].indexOf('good') < 0 && questionAnswers[j+1][i+1].indexOf('bad') < 0)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(questionAnswers[j+1][i+1]));
+		nbOfAnswersPerRow[j] = questionAnswers[j].length-1;
+		for (let i = 0; i < questionAnswers[j].length-1; i++) {
+			let currentAnswer = questionAnswers[j][i+1];
+			let reponse = (/*currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0*/ typeof currentAnswer == 'number')? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(currentAnswer));
 			reponse.appendTo('#terrain');
-			if (questionAnswers[j+1][i+1].indexOf('good') < 0 && questionAnswers[j+1][i+1].indexOf('bad') < 0) {
+			if (/*currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0*/ typeof currentAnswer == 'number') {
 
-				$('#'+ (j*10+i) +' #answerBtn').data('answer', questionAnswers[j+1][i+1]);
+				$('#'+ (j*10+i) +' #answerBtn').data('answer', currentAnswer);
 				$('#'+ (j*10+i) +' #answerBtn').data('answerId', (j*10+i));
 			
 			}
 			else {
 
-				$('#'+ (j*10+i)).data('answer', questionAnswers[j+1][i+1]);
+				$('#'+ (j*10+i)).data('answer', currentAnswer);
 
 			}
 			reponse.setElementCSS({
 				'position': 'absolute',
 				'top': ((htdoc-0.15*htdoc)-(1/10*(htdoc-0.15*htdoc))*j),
-				'left': ((lgdoc-0.3*lgdoc)/4)*(i+1),
+				'left': ((lgdoc-0.3*lgdoc)/questionAnswers[j].length)*(i+1),
 				'font-size': 0.05*htdoc,
 				'background-color': 'white',
 				'border-radius': '5px',
@@ -81,6 +83,8 @@ $(function() {
 			});
 		}
 	}
+
+	nbOfAnswersPerRow = Math.max.apply(Math, nbOfAnswersPerRow);
 
 	// Rendre invisible les lignes des futures réponses
 
@@ -94,8 +98,12 @@ $(function() {
 
 	$('a').click(function() {
 
-
 		if (~$(this).data('answer').indexOf('good') || ~$(this).data('answer').indexOf('bad')) {
+
+			if (bUsingTimer) {
+				clearTimeout(timer);
+				timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
+			}
 
 			currentQuestion++;
 			//alert(currentQuestion);
@@ -104,8 +112,9 @@ $(function() {
 				//alert(nbRightAnswers);
 			}
 			givenAnswers[givenAnswers.length] = parseInt($(this).data('answer'));
+			//alert(givenAnswers);
 			ligneActuelle += 10 ;
-			for (let i = 0; i < 3; i++) {
+			for (let i = 0; i < nbOfAnswersPerRow; i++) {
 				$('#'+(ligneActuelle+i)).fadeIn(1000);
 				$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 			}
@@ -114,7 +123,7 @@ $(function() {
 			let top = $(this).css('top');
 			tux.setImgCSS({'top': top, 'left': left});
 			$('#tuxImage').hide().fadeIn(1000);
-			if (currentQuestion > 10) {
+			if (currentQuestion > 9) {
 				if (bUsingTimer) {
 					window.clearInterval(timer);
 				}
@@ -138,17 +147,21 @@ $(function() {
 		
 	});
 
-	$('#answerBtn').click(function () {
-		
+	$('button').click(function () {
+
+		if (bUsingTimer) {
+			clearTimeout(timer);
+			timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
+		}
+
 		currentQuestion++;
-		alert(currentQuestion);
 		let answerId = $(this).data('answerId');
 		if (Number($(this).data('answer')) == Number($('#'+ answerId +' input').val())) {
 			nbRightAnswers++;
-			//alert(nbRightAnswers);
 		}
+		givenAnswers[givenAnswers.length] = parseInt($(this).data('answer'));
 		ligneActuelle += 10 ;
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < nbOfAnswersPerRow; i++) {
 			$('#'+(ligneActuelle+i)).fadeIn(1000);
 			$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 		}
@@ -157,7 +170,7 @@ $(function() {
 		let top = $(this).css('top');
 		tux.setImgCSS({'top': top, 'left': left});
 		$('#tuxImage').hide().fadeIn(1000);
-		if (currentQuestion > 10) {
+		if (currentQuestion > 9) {
 			if (bUsingTimer) {
 				window.clearInterval(timer);
 			}
@@ -184,15 +197,17 @@ $(function() {
 		affichageEtChangementQuestion(question1) ;
 
 	//if there is a time constraint
-	if (bUsingTimer) {
+	/*if (bUsingTimer) {
 
 		timer = setInterval(function () {
 			
+			givenAnswers[givenAnswers.length] = -1;
+			//alert(givenAnswers);
 			currentQuestion++;
 			question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
 			ligneActuelle += 10 ;
 
-			for (let i = 0; i < 3; i++) {
+			for (let i = 0; i < nbOfAnswersPerRow; i++) {
 				$('#'+(ligneActuelle+i)).fadeIn(1000);
 				$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 			}
@@ -201,12 +216,16 @@ $(function() {
 
 		}, timeConstraintSeconds * 1000);
 
-	}
+	}*/
 
 	elapsedTimer = setInterval(function () {
 		timeElapsedSeconds++;
 	}, 1000);
 
+	if (bUsingTimer) {
+		clearTimeout(timer);
+		timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
+	}
 
 	function affichageEtChangementQuestion(questionLabel){
 		let question = '<p>'+ questionLabel +'</p>';
@@ -221,6 +240,25 @@ $(function() {
 		});
 		$('#quest').html(question);
 
+	}
+
+	function timerHandler() {
+
+		givenAnswers[givenAnswers.length] = -1;
+		//alert(givenAnswers);
+		currentQuestion++;
+		question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
+		ligneActuelle += 10 ;
+
+		for (let i = 0; i < nbOfAnswersPerRow; i++) {
+			$('#'+(ligneActuelle+i)).fadeIn(1000);
+			$('#'+(ligneActuelle+i-10)).fadeOut(1000);
+		}
+			
+		affichageEtChangementQuestion(question1);
+
+		clearTimeout(timer);
+		timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
 	}
 
 
