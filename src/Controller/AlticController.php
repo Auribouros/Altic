@@ -339,22 +339,22 @@ class AlticController extends AbstractController
                                 case 3:
                                 $imageNumber = 10;
                                     break;
-                                    case 1:
+                                    case 4:
                                     $imageNumber = 1;
                                         break;
                                         case 1:
                                         $imageNumber = 4;
                                             break;
-                                            case 1:
+                                            case 5:
                                             $imageNumber = 3;
                                                 break;
-                                                case 1:
+                                                case 6:
                                                 $imageNumber = 0;
                                                     break;
-                                                    case 1:
+                                                    case 7:
                                                     $imageNumber = 6;
                                                         break;
-                                                        case 1:
+                                                        case 8:
                                                         $imageNumber = 8;
                                                             break;
                                                             case 10:
@@ -365,10 +365,14 @@ class AlticController extends AbstractController
                                                                     break;
                     }
                         if ($percentArray[$i]>=70) {
-                            $trophyArray["$imageNumber"."1"]="$imageNumber"."1";
+                            $trophyArray["$imageNumber"."1"]=true;
+                        }else {
+                            $trophyArray["$imageNumber"."1"]=false;
                         }
                         if($percentArray[$i]>=90){
-                            $trophyArray["$imageNumber"."2"]="$imageNumber"."2";
+                            $trophyArray["$imageNumber"."2"]=true;
+                        }else{
+                            $trophyArray["$imageNumber"."2"]=false;
                         }
             }
         }
