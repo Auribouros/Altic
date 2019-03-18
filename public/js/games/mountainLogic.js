@@ -1,15 +1,14 @@
 $(function() {
 
-	//alert(harvestDataFromElement('images', '#data'));
 	let images = harvestDataFromElement('images', '#data');
 	let imgfond = images.background;//'Image/01.png' 
 	let imgfondElement = '<div id="terrain"><img src="'+imgfond+'" id="imgfond"/></div>' ;
 	let htdoc = $(document).height();
 	let lgdoc = $(document).width();
 	let ligneActuelle = 0 ;
-	let tuxImage =  images.celestin;//'Image/02.png'
-	let magImage =  images.wizard;//'Image/03.png'
-	let bul =  images.bubble;//'Image/04.png'
+	let tuxImage =  images.celestin;
+	let magImage =  images.wizard;
+	let bul =  images.bubble;
 	let bulHtml = '<div id="bul"><img src="'+bul+'"id="bulimg"/></div>' ;
 	let tux = new Character('tux', tuxImage);
 	let mag = new Character('mag', magImage);
@@ -25,6 +24,7 @@ $(function() {
 	let elapsedTimer = undefined;
 	let dataToSendJSON = null;
 	let controllerURL = '/pupil/endgame';
+	let nbOfAnswersPerRow = [];
 
 	let dataToSend = {
 		questionAnswers: '',
@@ -56,24 +56,26 @@ $(function() {
 	// Générer les positions des questions des réponses et les afficher
 
 	for (let j = 0; j < 10; j++) {
+		nbOfAnswersPerRow[j] = questionAnswers[j].length-1;
 		for (let i = 0; i < questionAnswers[j].length-1; i++) {
-			let reponse = (questionAnswers[j][i+1].indexOf('good') < 0 && questionAnswers[j][i+1].indexOf('bad') < 0)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(questionAnswers[j][i+1]));
+			let currentAnswer = questionAnswers[j][i+1];
+			let reponse = (currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(currentAnswer));
 			reponse.appendTo('#terrain');
-			if (questionAnswers[j][i+1].indexOf('good') < 0 && questionAnswers[j][i+1].indexOf('bad') < 0) {
+			if (currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0) {
 
-				$('#'+ (j*10+i) +' #answerBtn').data('answer', questionAnswers[j][i+1]);
+				$('#'+ (j*10+i) +' #answerBtn').data('answer', currentAnswer);
 				$('#'+ (j*10+i) +' #answerBtn').data('answerId', (j*10+i));
 			
 			}
 			else {
 
-				$('#'+ (j*10+i)).data('answer', questionAnswers[j][i+1]);
+				$('#'+ (j*10+i)).data('answer', currentAnswer);
 
 			}
 			reponse.setElementCSS({
 				'position': 'absolute',
 				'top': ((htdoc-0.15*htdoc)-(1/10*(htdoc-0.15*htdoc))*j),
-				'left': ((lgdoc-0.3*lgdoc)/4)*(i+1),
+				'left': ((lgdoc-0.3*lgdoc)/questionAnswers[j].length)*(i+1),
 				'font-size': 0.05*htdoc,
 				'background-color': 'white',
 				'border-radius': '5px',
@@ -81,6 +83,8 @@ $(function() {
 			});
 		}
 	}
+
+	nbOfAnswersPerRow = Math.max.apply(Math, nbOfAnswersPerRow);
 
 	// Rendre invisible les lignes des futures réponses
 
@@ -105,7 +109,7 @@ $(function() {
 			}
 			givenAnswers[givenAnswers.length] = parseInt($(this).data('answer'));
 			ligneActuelle += 10 ;
-			for (let i = 0; i < 3; i++) {
+			for (let i = 0; i < nbOfAnswersPerRow; i++) {
 				$('#'+(ligneActuelle+i)).fadeIn(1000);
 				$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 			}
@@ -145,10 +149,9 @@ $(function() {
 		let answerId = $(this).data('answerId');
 		if (Number($(this).data('answer')) == Number($('#'+ answerId +' input').val())) {
 			nbRightAnswers++;
-			//alert(nbRightAnswers);
 		}
 		ligneActuelle += 10 ;
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < nbOfAnswersPerRow; i++) {
 			$('#'+(ligneActuelle+i)).fadeIn(1000);
 			$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 		}
