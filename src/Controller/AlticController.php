@@ -658,7 +658,11 @@ class AlticController extends AbstractController
             $user->addNiveau($level);
             foreach ($charactersToWinFromLevel as $index => $character) {
                 if ($globalLevelNumber == $index) {
-                    $user->addPersonnageJouable($character);
+                    $wonCharacter = new PersonnageJouable();
+                    $wonCharacter->setPersonnageDebloque(true);
+                    $wonCharacter->setImage($character);
+                    $entityManager->persist($wonCharacter);
+                    $user->addPersonnageJouable($wonCharacter);
                 }
             }
         }
