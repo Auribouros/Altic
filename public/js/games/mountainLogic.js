@@ -222,8 +222,10 @@ $(function() {
 		timeElapsedSeconds++;
 	}, 1000);
 
-	timerHandler();
-
+	if (bUsingTimer) {
+		clearTimeout(timer);
+		timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
+	}
 
 	function affichageEtChangementQuestion(questionLabel){
 		let question = '<p>'+ questionLabel +'</p>';
