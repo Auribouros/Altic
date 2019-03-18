@@ -465,7 +465,7 @@ class AlticController extends AbstractController
             $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
-                $game->setCheminAcces('');
+                $game->setCheminAcces('test');
             }
 
             $templateLevels[0]->setNumero(-1);
