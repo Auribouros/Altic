@@ -97,7 +97,7 @@ class AlticController extends AbstractController
                     $questions[$value]->setLibelle("$table x $value");
                     $begining += 1;
                 }
-            } while ($begining<11);
+            } while ($begining<10);
         }else {
             //ordered question
             for ($i=$begining; $i!=$ending ; $i+=$inc) {
@@ -353,8 +353,55 @@ class AlticController extends AbstractController
                 }
                 /*(int)($level->getNumero()/12) est le numero de la table en fonction du niveau
                 */
-
+                $trophyArray=array();
+                for($i=1;$i<11;$i++){
+                    switch ($i) {
+                        case 1:
+                        $imageNumber = 2;
+                            break;
+                            case 2:
+                            $imageNumber = 5;
+                                break;
+                                case 3:
+                                $imageNumber = 10;
+                                    break;
+                                    case 4:
+                                    $imageNumber = 1;
+                                        break;
+                                        case 1:
+                                        $imageNumber = 4;
+                                            break;
+                                            case 5:
+                                            $imageNumber = 3;
+                                                break;
+                                                case 6:
+                                                $imageNumber = 0;
+                                                    break;
+                                                    case 7:
+                                                    $imageNumber = 6;
+                                                        break;
+                                                        case 8:
+                                                        $imageNumber = 8;
+                                                            break;
+                                                            case 10:
+                                                            $imageNumber = 9;
+                                                                break;
+                                                                case 11:
+                                                                $imageNumber = 7;
+                                                                    break;
+                    }
+                        if ($percentArray[$i]>=70) {
+                            $trophyArray["$imageNumber"."1"]=true;
+                        }else {
+                            $trophyArray["$imageNumber"."1"]=false;
+                        }
+                        if($percentArray[$i]>=90){
+                            $trophyArray["$imageNumber"."2"]=true;
+                        }else{
+                            $trophyArray["$imageNumber"."2"]=false;
+                        }
             }
+        }
 
             $addTeacher= $this->createForm(AddTeacherType::class);
             $lynxTeacher = NULL;
@@ -397,6 +444,7 @@ class AlticController extends AbstractController
                                  [
                                 'teacherLynx'=>$lynxTeacher,
                                  'addTeacher'=>$addTeacher->createView(),
+                                  'hallOfTrophy'=>$trophyArray,
                                  'userName'=>$pupilFullName,
                                  'profilePic'=>$user->getAvatar(),
                                  'advice1'=>$advice1,
