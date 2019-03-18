@@ -108,6 +108,7 @@ $(function() {
 				//alert(nbRightAnswers);
 			}
 			givenAnswers[givenAnswers.length] = parseInt($(this).data('answer'));
+			//alert(givenAnswers);
 			ligneActuelle += 10 ;
 			for (let i = 0; i < nbOfAnswersPerRow; i++) {
 				$('#'+(ligneActuelle+i)).fadeIn(1000);
@@ -191,11 +192,13 @@ $(function() {
 
 		timer = setInterval(function () {
 			
+			givenAnswers[givenAnswers.length] = -1;
+			//alert(givenAnswers);
 			currentQuestion++;
 			question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
 			ligneActuelle += 10 ;
 
-			for (let i = 0; i < 3; i++) {
+			for (let i = 0; i < nbOfAnswersPerRow; i++) {
 				$('#'+(ligneActuelle+i)).fadeIn(1000);
 				$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 			}
