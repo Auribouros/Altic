@@ -43,14 +43,33 @@
 	<div style="font-family: 'roboto'; font-weight: bold;" class="row align-items-top">
 		<div class="col-sm-4">
 			<p class="h5">Trophées</p>
-			<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/1.png') }}">Débloqué de base<br/><br/>
+			<div class="row">
+				<div class="col">
+					<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/1.png') }}">
+				</div>
+				<div class="col">
+					Débloqué de base<br/><br/>
+				</div>
+			</div>
 			{% for trophy,isDone in hallOfTrophy %}
-			{% set obtention = trophy| split("") %}
-			{% if isDone%}
-			<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/'~trophy~'.png') }}">Debloqué à la table {{obtention[0]}} au niveau {% if obtention[1]=="1" %}9{% else %}12{% endif %}<br/><br/>
-			{% else %}
-				<img style="max-height: 100px; max-width: 100px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" src="{{ asset('images/pupil/characters/'~trophy~'.png') }}">Se debloque {{obtention[0]}} au niveau {% if obtention[1]=="1" %}9{% else %}12{% endif %}<br/><br/>
-			{% endif %}
+			<div class="row">
+				{% set obtention = trophy| split("") %}
+				{% if isDone%}
+				<div class="col">
+					<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/'~trophy~'.png') }}">
+				</div>
+				<div class="col">
+					Débloqué à la table {{obtention[0]}} au niveau {% if obtention[1]=="1" %}9{% else %}12{% endif %}<br/><br/>
+				</div>
+				{% else %}
+				<div class="col">
+					<img style="max-height: 100px; max-width: 100px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" src="{{ asset('images/pupil/characters/'~trophy~'.png') }}">
+				</div>
+				<div class="col">
+					Se débloque à la table de {{obtention[0]}} au niveau {% if obtention[1]=="1" %}9{% else %}12{% endif %}<br/><br/>
+				</div>
+				{% endif %}
+			</div>
 			{% endfor %}
 		</div>
 		<div class="col-sm-4"><p class="h5">Stastistiques</p>
