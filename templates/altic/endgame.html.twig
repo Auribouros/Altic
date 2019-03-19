@@ -8,10 +8,36 @@
 
 {#{{ dump(gameData) }}#}
 
-{% if nbRightAnswers >= 8 %}
-Bravo, tu as {{ nbRightAnswers }} bonnes réponses !
-{% else %}
-Il faut encore faire des efforts, courage !
-{% endif %}
+<div class="container">
+	<!--go back-->
+	<div class="row">
+		<a href="{{ path('altic_pupilTable', {number:tableNumber}) }}">
+			<p>Revenir à la table</p>
+			<img src="">
+		</a>
+	</div>
+	<!--results-->
+	<div class="row">
+		{% if nbRightAnswers >= 8 %}
+		Bravo, tu as {{ nbRightAnswers }} bonnes réponses !
+		{% else %}
+		Il faut encore faire des efforts, courage !
+		{% endif %}
+	</div>
+	<!--play paths-->
+	<div class="row text-center">
+		<div class="col">
+			<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:'t', avatarImage:avatarImg}) }}">Niveau précédent</a>
+		</div>
+		<div class="col">
+			<a href="#">Rejouer</a>
+		</div>
+		<div class="col">
+			{% if nbRightAnswers >= 8 and localLevel < 12 %}
+				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:'t', avatarImage:avatarImg}) }}">Niveau suivant</a>
+			{% endif %}
+		</div>
+	</div>
+</div>
 
 {% endblock %}

@@ -33,7 +33,8 @@ $(function() {
 		globalLevel: '',
 		localLevel: '',
 		table: '',
-		nbRightAnswers: ''
+		nbRightAnswers: '',
+		avatarImg: ''
 	};
 	//console.log(questionAnswers);
 
@@ -59,9 +60,9 @@ $(function() {
 		nbOfAnswersPerRow[j] = questionAnswers[j].length-1;
 		for (let i = 0; i < questionAnswers[j].length-1; i++) {
 			let currentAnswer = questionAnswers[j][i+1];
-			let reponse = (currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0)? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(currentAnswer));
+			let reponse = (/*currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0*/ typeof currentAnswer == 'number')? new Answer((j*10+i), '') : new Answer((j*10+i), parseInt(currentAnswer));
 			reponse.appendTo('#terrain');
-			if (currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0) {
+			if (/*currentAnswer.indexOf('good') < 0 && currentAnswer.indexOf('bad') < 0*/ typeof currentAnswer == 'number') {
 
 				$('#'+ (j*10+i) +' #answerBtn').data('answer', currentAnswer);
 				$('#'+ (j*10+i) +' #answerBtn').data('answerId', (j*10+i));
@@ -98,8 +99,12 @@ $(function() {
 
 	$('a').click(function() {
 
-
 		if (~$(this).data('answer').indexOf('good') || ~$(this).data('answer').indexOf('bad')) {
+
+			if (bUsingTimer) {
+				clearTimeout(timer);
+				timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
+			}
 
 			currentQuestion++;
 			//alert(currentQuestion);
@@ -131,6 +136,7 @@ $(function() {
 				dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
 				dataToSend.table = harvestDataFromElement('table', '#data');
 				dataToSend.nbRightAnswers = nbRightAnswers;
+				dataToSend.avatarImg = tuxImage.split('/')[tuxImage.split('/').length-1];
 				sendDataToController(dataToSend, controllerURL, function (data) {
 					$('body').html(data);
 				});
@@ -143,14 +149,19 @@ $(function() {
 		
 	});
 
-	$('#answerBtn').click(function () {
-		
+	$('button').click(function () {
+
+		if (bUsingTimer) {
+			clearTimeout(timer);
+			timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
+		}
+
 		currentQuestion++;
-		alert(currentQuestion);
 		let answerId = $(this).data('answerId');
 		if (Number($(this).data('answer')) == Number($('#'+ answerId +' input').val())) {
 			nbRightAnswers++;
 		}
+		givenAnswers[givenAnswers.length] = parseInt($(this).data('answer'));
 		ligneActuelle += 10 ;
 		for (let i = 0; i < nbOfAnswersPerRow; i++) {
 			$('#'+(ligneActuelle+i)).fadeIn(1000);
@@ -173,6 +184,7 @@ $(function() {
 			dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
 			dataToSend.table = harvestDataFromElement('table', '#data');
 			dataToSend.nbRightAnswers = nbRightAnswers;
+			dataToSend.avatarImg = tuxImage.split('/')[tuxImage.split('/').length-1];
 			sendDataToController(dataToSend, controllerURL, function (data) {
 				$('body').html(data);
 			});
@@ -188,7 +200,7 @@ $(function() {
 		affichageEtChangementQuestion(question1) ;
 
 	//if there is a time constraint
-	if (bUsingTimer) {
+	/*if (bUsingTimer) {
 
 		timer = setInterval(function () {
 			
@@ -207,12 +219,16 @@ $(function() {
 
 		}, timeConstraintSeconds * 1000);
 
-	}
+	}*/
 
 	elapsedTimer = setInterval(function () {
 		timeElapsedSeconds++;
 	}, 1000);
 
+	if (bUsingTimer) {
+		clearTimeout(timer);
+		timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
+	}
 
 	function affichageEtChangementQuestion(questionLabel){
 		let question = '<p>'+ questionLabel +'</p>';
@@ -227,6 +243,25 @@ $(function() {
 		});
 		$('#quest').html(question);
 
+	}
+
+	function timerHandler() {
+
+		givenAnswers[givenAnswers.length] = -1;
+		//alert(givenAnswers);
+		currentQuestion++;
+		question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
+		ligneActuelle += 10 ;
+
+		for (let i = 0; i < nbOfAnswersPerRow; i++) {
+			$('#'+(ligneActuelle+i)).fadeIn(1000);
+			$('#'+(ligneActuelle+i-10)).fadeOut(1000);
+		}
+			
+		affichageEtChangementQuestion(question1);
+
+		clearTimeout(timer);
+		timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
 	}
 
 

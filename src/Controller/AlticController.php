@@ -358,8 +358,55 @@ class AlticController extends AbstractController
                 }
                 /*(int)($level->getNumero()/12) est le numero de la table en fonction du niveau
                 */
-
+                $trophyArray=array();
+                for($i=1;$i<11;$i++){
+                    switch ($i) {
+                        case 1:
+                        $imageNumber = 2;
+                            break;
+                            case 2:
+                            $imageNumber = 5;
+                                break;
+                                case 3:
+                                $imageNumber = 10;
+                                    break;
+                                    case 4:
+                                    $imageNumber = 1;
+                                        break;
+                                        case 1:
+                                        $imageNumber = 4;
+                                            break;
+                                            case 5:
+                                            $imageNumber = 3;
+                                                break;
+                                                case 6:
+                                                $imageNumber = 0;
+                                                    break;
+                                                    case 7:
+                                                    $imageNumber = 6;
+                                                        break;
+                                                        case 8:
+                                                        $imageNumber = 8;
+                                                            break;
+                                                            case 10:
+                                                            $imageNumber = 9;
+                                                                break;
+                                                                case 11:
+                                                                $imageNumber = 7;
+                                                                    break;
+                    }
+                        if ($percentArray[$i]>=70) {
+                            $trophyArray["$imageNumber"."1"]=true;
+                        }else {
+                            $trophyArray["$imageNumber"."1"]=false;
+                        }
+                        if($percentArray[$i]>=90){
+                            $trophyArray["$imageNumber"."2"]=true;
+                        }else{
+                            $trophyArray["$imageNumber"."2"]=false;
+                        }
             }
+        }
 
             $addTeacher= $this->createForm(AddTeacherType::class);
             $lynxTeacher = NULL;
@@ -402,6 +449,7 @@ class AlticController extends AbstractController
                                  [
                                 'teacherLynx'=>$lynxTeacher,
                                  'addTeacher'=>$addTeacher->createView(),
+                                  'hallOfTrophy'=>$trophyArray,
                                  'userName'=>$pupilFullName,
                                  'profilePic'=>$user->getAvatar(),
                                  'advice1'=>$advice1,
@@ -588,6 +636,7 @@ class AlticController extends AbstractController
         $localLevelNumber = $_POST['localLevel'];
         $table = $_POST['table'];
         $nbRightAnswers = $_POST['nbRightAnswers'];
+        $avatarImage = $_POST['avatarImg'];
 
         unset($questionsAnswers[0]);
 
@@ -658,7 +707,11 @@ class AlticController extends AbstractController
             $user->addNiveau($level);
             foreach ($charactersToWinFromLevel as $index => $character) {
                 if ($globalLevelNumber == $index) {
-                    $user->addPersonnageJouable($character);
+                    $wonCharacter = new PersonnageJouable();
+                    $wonCharacter->setPersonnageDebloque(true);
+                    $wonCharacter->setImage($character);
+                    $entityManager->persist($wonCharacter);
+                    $user->addPersonnageJouable($wonCharacter);
                 }
             }
         }
@@ -673,7 +726,10 @@ class AlticController extends AbstractController
             'userName'=>$pupilFullName, 
             'profilePic'=>'default',
             'gameData'=>$level,
-            'nbRightAnswers'=>$nbRightAnswers
+            'nbRightAnswers'=>$nbRightAnswers,
+            'avatarImg'=>$avatarImage,
+            'globalLevel'=>$globalLevelNumber,
+            'tableNumber'=>$table
             ]);
     }
 
