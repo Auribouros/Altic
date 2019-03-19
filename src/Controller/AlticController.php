@@ -270,7 +270,7 @@ class AlticController extends AbstractController
 
     private function getLevelMaps()
     {
-        $map0 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
+        $map0 = array('startMAP.png', 'caveMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'mountainMAP.png', 'endMAP.png');
         $map1 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
         $map2 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
         $map3 = array('startMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'endMAP.png');
@@ -532,7 +532,7 @@ class AlticController extends AbstractController
     public function endgame(){
 
         //base variables
-            $charactersToWinFromLevel = array(10=>'2.png', 12=>'3.png', 22=>'4.png', 24=>'5.png', 34=>'6.png', 36=>'7.png', 46=>'8.png', 48=>'9.png', 58=>'10.png', 60=>'11.png', 70=>'12.png', 72=>'13.png', 82=>'14.png', 84=>'15.png', 94=>'16.png', 96=>'17.png', 106=>'18.png', 108=>'19.png', 118=>'20.png', 120=>'21.png', 130=>'22.png', 132=>'23.png');
+            $charactersToWinFromLevel = array(10=>'21.png', 12=>'22.png', 22=>'51.png', 24=>'52.png', 34=>'101.png', 36=>'102.png', 46=>'11.png', 48=>'12.png', 58=>'41.png', 60=>'42.png', 70=>'31.png', 72=>'32.png', 82=>'01.png', 84=>'02.png', 94=>'61.png', 96=>'62.png', 106=>'81.png', 108=>'82.png', 118=>'91.png', 120=>'92.png', 130=>'71.png', 132=>'72.png');
             $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
