@@ -660,6 +660,7 @@ class AlticController extends AbstractController
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
+        $user->setAvatar($avatarImage);
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
 
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
@@ -742,7 +743,7 @@ class AlticController extends AbstractController
 
         return $this->render('altic/endgame.html.twig', [
             'userName'=>$pupilFullName, 
-            'profilePic'=>'default',
+            'profilePic'=>$user->getAvatar(),
             'gameData'=>$level,
             'nbRightAnswers'=>$nbRightAnswers,
             'avatarImg'=>$avatarImage,
