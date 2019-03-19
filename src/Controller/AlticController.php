@@ -250,7 +250,7 @@ class AlticController extends AbstractController
         $questionsAnswerArray = array();
         foreach ($questions as $key => $question) {
             $questionAnswerArray=array($question->getLibelle().'t'.$level->getTempsDisponible());
-            if($level->getQuestionsATrous()){
+            if(!$level->getQuestionsATrous()){
             foreach ($question->getReponsepropose() as $cle => $value) {
                 if($key*$table == $value->getReponse()){
                     array_push($questionAnswerArray,$value->getReponse()."good");
