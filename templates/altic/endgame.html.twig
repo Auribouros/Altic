@@ -27,14 +27,16 @@
 	<!--play paths-->
 	<div class="row text-center">
 		<div class="col">
-			<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:'t', avatarImage:avatarImg}) }}">Niveau précédent</a>
+		{% if localLevel > 1 %}
+			<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:maps[localLevel - 1], avatarImage:avatarImg}) }}">Niveau précédent</a>
+		{% endif %}
 		</div>
 		<div class="col">
-			<a href="#">Rejouer</a>
+			<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel], avatarImage:avatarImg}) }}">Rejouer</a>
 		</div>
 		<div class="col">
 			{% if nbRightAnswers >= 8 and localLevel < 12 %}
-				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:'t', avatarImage:avatarImg}) }}">Niveau suivant</a>
+				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1], avatarImage:avatarImg}) }}">Niveau suivant</a>
 			{% endif %}
 		</div>
 	</div>
