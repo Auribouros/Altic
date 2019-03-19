@@ -184,7 +184,7 @@ class AlticController extends AbstractController
         return $questions;
     }
 
-    private function generateAdvice($totalMastery, $minimalMastery)
+    private function generateAdvice($minimalMastery, $totalMastery)
     {
         $isMastered = true;
         $isTotallyMastered = true;
@@ -216,14 +216,13 @@ class AlticController extends AbstractController
                 $advice1 = $levels[$analysedColumn];
                 $isMastered = false;
                 $isTotallyMastered = false;
+                $maxColumn = $analysedColumn;
                 break;
             }
 
             $analysedColumn++;
 
         }
-
-        $maxColumn = $analysedColumn;
             //check if a timetable is not totally mastered
         if ($maxColumn != 0) {
                 //init
@@ -231,10 +230,10 @@ class AlticController extends AbstractController
                 //find
             while ($analysedColumn != $maxColumn) {
 
-                if ($totalMastery[$analysedColumn] == false) {
+                if (!$totalMastery[$analysedColumn]) {
 
-                    ($advice2 != '')? $advice2 += ', ' : $isTotallyMastered = false;
-                    $advice2 += $levels[$analysedColumn];
+                    ($advice2 != '')? $advice2 =$advice2.', ' : $isTotallyMastered = false;
+                    $advice2 = $advice2.$levels[$analysedColumn];
 
                 }
 
@@ -304,7 +303,7 @@ class AlticController extends AbstractController
                         break;
                     }
                     else if ($tmpLevelNb == $totalMasteryLevel) {
-                        $minimalMastery[$tableOrderIndexFromLevel] = true;
+                        $minimalMastery[$tableOrderIndexFromLevel] = true; 
                         $totalMastery[$tableOrderIndexFromLevel] = true;
                         break;
                     }
@@ -313,11 +312,9 @@ class AlticController extends AbstractController
                     $tableOrderIndexFromLevel++;
                 }
             }
-
             $advice = $this->generateAdvice($minimalMastery, $totalMastery);
             $advice1 = 'Je te conseille d\'aider ' . $advice['advice1'];
             $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\aider' . $advice['advice2'] : '';
-
             //Récupération des données en base
             $levelArray = $user-> getNiveaux();
             $trainArray = $user->getEntrainement();
