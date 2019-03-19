@@ -246,11 +246,11 @@ class AlticController extends AbstractController
         return ['advice1' => $advice1, 'advice2' => $advice2];
     }
 
-    private function simplifyQuestionsAnswers($questions,$table,$time){
+    private function simplifyQuestionsAnswers($questions,$table,$level){
         $questionsAnswerArray = array();
         foreach ($questions as $key => $question) {
-            $questionAnswerArray=array($question->getLibelle().'t'.$time);
-            if($question->getReponsepropose()==null){
+            $questionAnswerArray=array($question->getLibelle().'t'.$level->getTempsDisponible());
+            if($level->getQuestionsATrous()){
             foreach ($question->getReponsepropose() as $cle => $value) {
                 if($key*$table == $value->getReponse()){
                     array_push($questionAnswerArray,$value->getReponse()."good");
@@ -836,7 +836,7 @@ class AlticController extends AbstractController
 
         return $this->render("altic/$gameName.html.twig",
             [
-                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber, $level->getTempsDisponible()),
+                'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber, $level),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel,
                 'globalLevel'=>$levelNumber,
