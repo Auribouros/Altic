@@ -344,7 +344,7 @@ class AlticController extends AbstractController
             }
             $advice = $this->generateAdvice($minimalMastery, $totalMastery);
             $advice1 = 'Je te conseille d\'aider ' . $advice['advice1'];
-            $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\'aider' . $advice['advice2'] : '';
+            $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\'aider ' . $advice['advice2'] : '';
             //Récupération des données en base
             $levelArray = $user-> getNiveaux();
             $trainArray = $user->getEntrainement();
@@ -866,7 +866,7 @@ class AlticController extends AbstractController
                 'localLevel'=>$localLevel,
                 'globalLevel'=>$levelNumber,
                 'celestinImg'=>"images/pupil/characters/$avatarImage",
-                'wizardImg'=>"images/pupil/characters/$avatarImage"
+                'wizardImg'=>"images/pupil/characters/mago.png"
             ]);
     }
 
