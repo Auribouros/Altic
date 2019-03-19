@@ -184,6 +184,13 @@ class AlticController extends AbstractController
         return $questions;
     }
 
+    private function getTableNameFromNumber($number)
+    {
+        $names = [2=>'Imoc', 5=>'Isia', 10=>'Vorod', 1=>'Elemia', 4=>'Rania', 3=>'Pona', 0=>'Nesa', 6=>'Sovia', 8=>'Caguma', 9=>'Belam', 7=>'Will'];
+
+        return $names[$number];
+    }
+
     private function generateAdvice($minimalMastery, $totalMastery)
     {
         $isMastered = true;
@@ -213,7 +220,7 @@ class AlticController extends AbstractController
         while ($analysedColumn != 11) {
             
             if ($minimalMastery[$analysedColumn] == false) {
-                $advice1 = $levels[$analysedColumn];
+                $advice1 = $this->getTableNameFromNumber($levels[$analysedColumn]);
                 $isMastered = false;
                 $isTotallyMastered = false;
                 $maxColumn = $analysedColumn;
@@ -232,8 +239,8 @@ class AlticController extends AbstractController
 
                 if (!$totalMastery[$analysedColumn]) {
 
-                    ($advice2 != '')? $advice2 =$advice2.', ' : $isTotallyMastered = false;
-                    $advice2 = $advice2.$levels[$analysedColumn];
+                    ($advice2 != '')? $advice2 .= ', ' : $isTotallyMastered = false;
+                    $advice2 = $this->getTableNameFromNumber($advice2.$levels[$analysedColumn]);
 
                 }
 
@@ -244,6 +251,7 @@ class AlticController extends AbstractController
 
         return ['advice1' => $advice1, 'advice2' => $advice2];
     }
+
 
     private function simplifyQuestionsAnswers($questions,$table,$time){
         $questionsAnswerArray = array();
