@@ -636,6 +636,7 @@ class AlticController extends AbstractController
         $localLevelNumber = $_POST['localLevel'];
         $table = $_POST['table'];
         $nbRightAnswers = $_POST['nbRightAnswers'];
+        $avatarImage = $_POST['avatarImg'];
 
         unset($questionsAnswers[0]);
 
@@ -725,7 +726,10 @@ class AlticController extends AbstractController
             'userName'=>$pupilFullName, 
             'profilePic'=>'default',
             'gameData'=>$level,
-            'nbRightAnswers'=>$nbRightAnswers
+            'nbRightAnswers'=>$nbRightAnswers,
+            'avatarImg'=>$avatarImage,
+            'globalLevel'=>$globalLevelNumber,
+            'tableNumber'=>$table
             ]);
     }
 

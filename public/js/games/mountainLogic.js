@@ -33,7 +33,8 @@ $(function() {
 		globalLevel: '',
 		localLevel: '',
 		table: '',
-		nbRightAnswers: ''
+		nbRightAnswers: '',
+		avatarImg: ''
 	};
 	//console.log(questionAnswers);
 
@@ -135,6 +136,7 @@ $(function() {
 				dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
 				dataToSend.table = harvestDataFromElement('table', '#data');
 				dataToSend.nbRightAnswers = nbRightAnswers;
+				dataToSend.avatarImg = tuxImage.split('/')[tuxImage.split('/').length-1];
 				sendDataToController(dataToSend, controllerURL, function (data) {
 					$('body').html(data);
 				});
@@ -182,6 +184,7 @@ $(function() {
 			dataToSend.localLevel = harvestDataFromElement('locallevel', '#data');
 			dataToSend.table = harvestDataFromElement('table', '#data');
 			dataToSend.nbRightAnswers = nbRightAnswers;
+			dataToSend.avatarImg = tuxImage.split('/')[tuxImage.split('/').length-1];
 			sendDataToController(dataToSend, controllerURL, function (data) {
 				$('body').html(data);
 			});
