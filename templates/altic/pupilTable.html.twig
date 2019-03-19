@@ -37,9 +37,11 @@
 				<script type="text/javascript">
 					$(function () {
 						
+						let imgHeight = $('#mapLink1 img').height();
+						
 						$('#avatar').css({
 							left: '40%',
-							top: '{{ i * 9 }}%'
+							top: {{ i }} * imgHeight
 						});
 
 					});
