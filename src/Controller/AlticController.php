@@ -328,51 +328,51 @@ class AlticController extends AbstractController
                 /*(int)($level->getNumero()/12) est le numero de la table en fonction du niveau
                 */
                 $trophyArray=array();
-                for($i=1;$i<11;$i++){
+                for($i=1;$i<=11;$i++){
                     switch ($i) {
                         case 1:
-                        $imageNumber = 2;
-                            break;
-                            case 2:
+                            $imageNumber = 2;
+                        break;
+                        case 2:
                             $imageNumber = 5;
-                                break;
-                                case 3:
+                         break;
+                        case 3:
                                 $imageNumber = 10;
-                                    break;
-                                    case 4:
-                                    $imageNumber = 1;
-                                        break;
-                                        case 1:
-                                        $imageNumber = 4;
-                                            break;
-                                            case 5:
-                                            $imageNumber = 3;
-                                                break;
-                                                case 6:
-                                                $imageNumber = 0;
-                                                    break;
-                                                    case 7:
-                                                    $imageNumber = 6;
-                                                        break;
-                                                        case 8:
-                                                        $imageNumber = 8;
-                                                            break;
-                                                            case 10:
-                                                            $imageNumber = 9;
-                                                                break;
-                                                                case 11:
-                                                                $imageNumber = 7;
-                                                                    break;
+                            break;
+                        case 4:
+                            $imageNumber = 1;
+                        break;
+                        case 5:
+                            $imageNumber = 4;
+                        break;
+                         case 6:
+                            $imageNumber = 3;
+                        break;
+                        case 7:
+                            $imageNumber = 0;
+                        break;
+                        case 8:
+                            $imageNumber = 6;
+                        break;
+                        case 9  :
+                            $imageNumber = 8;
+                        break;
+                        case 10:
+                            $imageNumber = 9;
+                        break;
+                        case 11:
+                            $imageNumber = 7;
+                        break;
                     }
                         if ($percentArray[$i]>=70) {
-                            $trophyArray["$imageNumber"."1"]=true;
+                            $trophyArray["$imageNumber"."d1"]=true;
                         }else {
-                            $trophyArray["$imageNumber"."1"]=false;
+                            $trophyArray["$imageNumber"."d1"]=false;
                         }
                         if($percentArray[$i]>=90){
-                            $trophyArray["$imageNumber"."2"]=true;
+                            $trophyArray["$imageNumber"."d2"]=true;
                         }else{
-                            $trophyArray["$imageNumber"."2"]=false;
+                            $trophyArray["$imageNumber"."d2"]=false;
                         }
             }
         }
