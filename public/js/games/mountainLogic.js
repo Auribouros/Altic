@@ -1,42 +1,42 @@
 $(function() {
 
-	let images = harvestDataFromElement('images', '#data');
-	let imgfond = images.background;//'Image/01.png' 
-	let imgfondElement = '<div id="terrain"><img src="'+imgfond+'" id="imgfond"/></div>' ;
-	let htdoc = $(document).height();
-	let lgdoc = $(document).width();
-	let ligneActuelle = 0 ;
-	let tuxImage =  images.celestin;
-	let magImage =  images.wizard;
-	let bul =  images.bubble;
-	let bulHtml = '<div id="bul"><img src="'+bul+'"id="bulimg"/></div>' ;
-	let tux = new Character('tux', tuxImage);
-	let mag = new Character('mag', magImage);
-	let questionAnswers = harvestDataFromElement('questionsanswers', '#data');
-	let currentQuestion = 0;
-	let nbRightAnswers = 0;
-	let question1 = questionAnswers[currentQuestion][0];
-	let bUsingTimer = false;
-	let timeConstraintSeconds = 0;
-	let givenAnswers = [];
-	let timer = undefined;
-	let timeElapsedSeconds = 0;
-	let elapsedTimer = undefined;
-	let dataToSendJSON = null;
-	let controllerURL = '/pupil/endgame';
-	let nbOfAnswersPerRow = [];
+	//vars
+		let images = harvestDataFromElement('images', '#data');
+		let imgfond = images.background;//'Image/01.png' 
+		let imgfondElement = '<div id="terrain"><img src="'+imgfond+'" id="imgfond"/></div>' ;
+		let htdoc = $(document).height();
+		let lgdoc = $(document).width();
+		let ligneActuelle = 0 ;
+		let tuxImage =  images.celestin;
+		let magImage =  images.wizard;
+		let bul =  images.bubble;
+		let bulHtml = '<div id="bul"><img src="'+bul+'"id="bulimg"/></div>' ;
+		let tux = new Character('tux', tuxImage);
+		let mag = new Character('mag', magImage);
+		let questionAnswers = harvestDataFromElement('questionsanswers', '#data');
+		let currentQuestion = 0;
+		let nbRightAnswers = 0;
+		let question1 = questionAnswers[currentQuestion][0];
+		let bUsingTimer = false;
+		let timeConstraintSeconds = 0;
+		let givenAnswers = [];
+		let timer = undefined;
+		let timeElapsedSeconds = 0;
+		let elapsedTimer = undefined;
+		let dataToSendJSON = null;
+		let controllerURL = '/pupil/endgame';
+		let nbOfAnswersPerRow = [];
 
-	let dataToSend = {
-		questionAnswers: '',
-		givenAnswers: '',
-		timeElapsedSeconds: '',
-		globalLevel: '',
-		localLevel: '',
-		table: '',
-		nbRightAnswers: '',
-		avatarImg: ''
-	};
-	//console.log(questionAnswers);
+		let dataToSend = {
+			questionAnswers: '',
+			givenAnswers: '',
+			timeElapsedSeconds: '',
+			globalLevel: '',
+			localLevel: '',
+			table: '',
+			nbRightAnswers: '',
+			avatarImg: ''
+		};
 
 	if (question1.split('t')[1] != '') {
 		bUsingTimer = true;
@@ -142,7 +142,7 @@ $(function() {
 				});
 			}
 			question1 = questionAnswers[currentQuestion][0].split('t')[0];
-			affichageEtChangementQuestion(question1);
+			affichageEtChangementQuestion(question1 +' ?');
 
 			
 		}
@@ -190,14 +190,14 @@ $(function() {
 			});
 		}
 		question1 = questionAnswers[currentQuestion][0].split('t')[0];
-		affichageEtChangementQuestion(question1);
+		affichageEtChangementQuestion(question1 +' ?');
 
 	});
 
 
 	// Afficher la question
 		//affichage de la première question
-		affichageEtChangementQuestion(question1) ;
+		affichageEtChangementQuestion(question1 +' ?') ;
 
 	//if there is a time constraint
 	/*if (bUsingTimer) {
