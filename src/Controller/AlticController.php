@@ -659,8 +659,7 @@ class AlticController extends AbstractController
         $table = $_POST['table'];
         $nbRightAnswers = $_POST['nbRightAnswers'];
         $avatarImage = $_POST['avatarImg'];
-
-        unset($questionsAnswers[0]);
+        $templateQuestionsAnswers = array();
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
@@ -682,7 +681,11 @@ class AlticController extends AbstractController
 
         for ($j = 0; $j < sizeof($questionsAnswers); $j++) {
 
-            $row = $questionsAnswers[$j+1];
+            $row = $questionsAnswers[$j];
+            $explodedQuestion = explode('t', $row[0])[0];
+            $explodedQuestion = explode(' x ', $explodedQuestion);
+            $currentExplodedQuestion = [$explodedQuestion[0], $explodedQuestion[1]];
+            array_push($templateQuestionsAnswers, $currentExplodedQuestion);
             
             for ($i=0; $i < sizeof($row); $i++) {
                 if ($i == 0) {
@@ -754,7 +757,10 @@ class AlticController extends AbstractController
             'globalLevel'=>$globalLevelNumber,
             'localLevel'=>$localLevelNumber,
             'tableNumber'=>$table,
-            'maps'=>$this->getLevelMaps()[$table]
+            'maps'=>$this->getLevelMaps()[$table],
+            'timeElapsed'=>$timeElapsedSeconds,
+            'questions'=>$templateQuestionsAnswers,
+            'givenAnswers'=>$givenAnswers
             ]);
     }
 

@@ -18,28 +18,62 @@
 	</div>
 	<!--results-->
 	<div class="row">
-		{% if nbRightAnswers >= 8 %}
-		Bravo, tu as {{ nbRightAnswers }} bonnes réponses !
-		{% else %}
-		Il faut encore faire des efforts, courage !
-		{% endif %}
+		<div class="col-9">
+			{% if nbRightAnswers >= 8 %}
+			<h2>Bravo, tu as {{ nbRightAnswers }} bonnes réponses !</h2>
+			{% else %}
+			<h2>Il faut encore faire des efforts, courage !</h2>
+			{% endif %}
+			<div class="row">
+				<div class="row">
+					<h4>Tu as mis {{ timeElapsed }} secondes pour finir cet entraînement.</h4>
+				</div>
+			</div>
+			{#{ dump(questions) }#}
+			<div class="jumbotron">
+			{% for question in questions %}
+				{% set currentGivenAnswer = givenAnswers[loop.index0] %}
+				<div class="row">
+					<h4>{{ question[0] }} x {{ question[1] }} = 
+					{% if currentGivenAnswer != question[0] * question[1] %}
+						<h4 style="color: red;"> {{ currentGivenAnswer }} La bonne réponse était {{ question[0] * question[1] }}</h4>
+					{% else %}
+						<h4 style="color: green;">{{ currentGivenAnswer }}</h4>
+					{% endif %}
+					</h4>
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+		<div class="col-3">
+			<img class="img-fluid" src="{{ asset('images/pupil/characters/mago.png') }}">
+		</div>
 	</div>
+	<br>
 	<!--play paths-->
 	<div class="row text-center">
 		<div class="col">
 		{% if localLevel > 1 %}
-			<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:maps[localLevel - 1], avatarImage:avatarImg}) }}">Niveau précédent</a>
+			<button type="button" class="btn btn-outline-info">
+				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:maps[localLevel - 1], avatarImage:avatarImg}) }}">Niveau précédent</a>
+			</button>
 		{% endif %}
 		</div>
 		<div class="col">
-			<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel], avatarImage:avatarImg}) }}">Rejouer</a>
+			<button type="button" class="btn btn-outline-info">
+				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel], avatarImage:avatarImg}) }}">Rejouer</a>
+			</button>
 		</div>
 		<div class="col">
 			{% if nbRightAnswers >= 8 and localLevel < 12 %}
-				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1], avatarImage:avatarImg}) }}">Niveau suivant</a>
+				<button type="button" class="btn btn-outline-success">
+					<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1], avatarImage:avatarImg}) }}">Niveau suivant</a>
+				</button>
 			{% endif %}
 		</div>
 	</div>
+	<br>
+	<br>
 </div>
 
 {% endblock %}
