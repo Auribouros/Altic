@@ -848,6 +848,8 @@ class AlticController extends AbstractController
      */
     public function pupilTraining($tableNumber, $levelNumber, $mapName, $avatarImage)
     {
+        $mapName .= '.png';
+        $avatarImage .= '.png';
         //array representing a game for a given map
         $gameFromMap = array(
             'castleMAP.png'=>'mountainGame',

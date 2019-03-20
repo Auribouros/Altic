@@ -55,19 +55,19 @@
 		<div class="col">
 		{% if localLevel > 1 %}
 			<button type="button" class="btn btn-outline-info">
-				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:maps[localLevel - 1], avatarImage:avatarImg}) }}">Niveau précédent</a>
+				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:maps[localLevel - 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">Niveau précédent</a>
 			</button>
 		{% endif %}
 		</div>
 		<div class="col">
 			<button type="button" class="btn btn-outline-info">
-				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel], avatarImage:avatarImg}) }}">Rejouer</a>
+				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">Rejouer</a>
 			</button>
 		</div>
 		<div class="col">
 			{% if nbRightAnswers >= 8 and localLevel < 12 %}
 				<button type="button" class="btn btn-outline-success">
-					<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1], avatarImage:avatarImg}) }}">Niveau suivant</a>
+					<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">Niveau suivant</a>
 				</button>
 			{% endif %}
 		</div>

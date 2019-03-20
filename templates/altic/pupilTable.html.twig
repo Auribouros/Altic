@@ -28,8 +28,9 @@
 
 			{% for i in 0..12 %}
 			{% if images[i] != 'startMAP.png' and images[i] != 'endMAP.png' and bCanPlay[i-1] == true %}
+				{% set urlFriendlyImg = images[i]|split('.') %}
 				<a id="mapLink{{ i }}" href="{{ path('altic_choiceAvatar', {
-					tableNumber:tableNumber,levelNumber:levelsNumbers[i-1],mapName:images[i]
+					tableNumber:tableNumber,levelNumber:levelsNumbers[i-1],mapName:urlFriendlyImg[0]
 				}) }}">
 					<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
 				</a>

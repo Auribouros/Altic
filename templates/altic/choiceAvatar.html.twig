@@ -17,7 +17,7 @@
 			tableNumber:tableNumber, 
 			levelNumber:levelNumber,
 			mapName:mapName, 
-			avatarImage:img.image
+			avatarImage:img.image|split('.')[0]
 		}) }}"><img class="img-thumbnail" style="height: 100px;" src="{{ asset('images/pupil/characters/' ~ img.image) }}"></a>
 
 		{% endfor %}
