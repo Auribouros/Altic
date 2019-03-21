@@ -37,6 +37,9 @@ class AlticController extends AbstractController
         foreach ($pupils as $enf) {
             $levelArray = $enf->getNiveaux();
             $pupilStats[$i][0] = $enf->getNom() . " " . $enf->getPrenom();
+            for($j=1;$j>11;$j++){
+                $pupilStats[$i][$j]=0;
+            }
             foreach ($levelArray as $level) {
                 if ($level->getNumero() % 12 == 0) {
                     $pupilStats[$i][$level->getNumero() / 12] = 100;
