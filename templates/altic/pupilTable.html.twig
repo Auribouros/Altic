@@ -19,7 +19,7 @@
 
 	<br/>
 
-	<div id="map" class="row" style="background-image: url({{ asset('images/pupil/map/scrollTexture.png') }})">
+	<div id="map" class="row" style="background-image: url({{ asset('images/pupil/map/tableMap.jpg') }})">
 
 		<div class="col"></div>
 		<div class="col">
@@ -28,9 +28,8 @@
 
 			{% for i in 0..12 %}
 			{% if images[i] != 'startMAP.png' and images[i] != 'endMAP.png' and bCanPlay[i-1] == true %}
-				{% set urlFriendlyImg = images[i]|split('.') %}
 				<a id="mapLink{{ i }}" href="{{ path('altic_choiceAvatar', {
-					tableNumber:tableNumber,levelNumber:levelsNumbers[i-1],mapName:urlFriendlyImg[0]
+					tableNumber:tableNumber,levelNumber:levelsNumbers[i-1],mapName:images[i]|split('.')[0]
 				}) }}">
 					<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
 				</a>
@@ -56,7 +55,7 @@
 
 		<script type="text/javascript">
 			$(function () {
-				$('#map').css('background-size', $('#map').width() + 'px ' + (Number($('#map').height()) + 150) + 'px');
+				$('#map').css('background-size', $('#map').width() + 'px ' + (Number($('#map').height()) + 500) + 'px');
 				//alert($('#map').width() + ' ' + $('#map').height());
 			});
 		</script>

@@ -66,6 +66,14 @@ $(function() {
 
 				$('#'+ (j*10+i) +' #answerBtn').data('answer', currentAnswer);
 				$('#'+ (j*10+i) +' #answerBtn').data('answerId', (j*10+i));
+
+				reponse.setInputCSS({
+					'border': 'solid 1px black',
+					'border-radius': '5px',
+					'padding': '5px',
+					'box-shadow': '5px 10px 18px #888888',
+					'width': '50px'
+				});
 			
 			}
 			else {
@@ -161,7 +169,7 @@ $(function() {
 		if (Number($(this).data('answer')) == Number($('#'+ answerId +' input').val())) {
 			nbRightAnswers++;
 		}
-		givenAnswers[givenAnswers.length] = parseInt($(this).data('answer'));
+		givenAnswers[givenAnswers.length] = Number($('#'+ answerId +' input').val());
 		ligneActuelle += 10 ;
 		for (let i = 0; i < nbOfAnswersPerRow; i++) {
 			$('#'+(ligneActuelle+i)).fadeIn(1000);

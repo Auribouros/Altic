@@ -29,7 +29,7 @@
 					<h4>Tu as mis {{ timeElapsed }} secondes pour finir cet entraînement.</h4>
 				</div>
 			</div>
-			{#{ dump(questions) }#}
+			{#{ dump(givenAnswers) }#}
 			<div class="jumbotron">
 			{% for question in questions %}
 				{% set currentGivenAnswer = givenAnswers[loop.index0] %}
