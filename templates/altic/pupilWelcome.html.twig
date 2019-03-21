@@ -42,15 +42,7 @@
     <!--stats-->
 	<div style="font-family: 'roboto'; font-weight: bold;" class="row align-items-top">
 		<div class="col-sm-4 jumbotron">
-			<p class="h5">Trophées</p>
-			<div class="row">
-				<div class="col">
-					<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/1.png') }}">
-				</div>
-				<div class="col">
-					Débloqué de base<br/><br/>
-				</div>
-			</div>
+			<p class="h5">Rois</p>
 			{% for trophy,isDone in hallOfTrophy %}
 			<div class="row">
 				{% set obtention = trophy| split("d") %}
@@ -73,54 +65,54 @@
 			</div>
 			{% endfor %}
 		</div>
-		<div class="col-sm-4 jumbotron"><p class="h5">Stastistiques</p>
-		Entraînements effectués : {{percentArray[12]}} <br>
-		Durée totale des entraînements : {{percentArray[13]}}h {{percentArray[14]}}mins <br>
+		<div class="col-sm-4 jumbotron"><p class="h5">Progression</p>
+		Parties jouées : {{percentArray[12]}} <br>
+		Durée totale de jeu : {{percentArray[13]}}h {{percentArray[14]}}mins <br>
 		Progression Totale : {{ percentArray[0]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[0] }}%" aria-valuenow="{{ percentArray[0] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 0 - Complétée à {{ percentArray[7]}}%
+		Table de 0 - Maîtrisée à {{ percentArray[7]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[7] }}%" aria-valuenow="{{ percentArray[7] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 1 - Complétée à {{ percentArray[4]}}%
+		Table de 1 - Maîtrisée à {{ percentArray[4]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 2 - Complétée à {{ percentArray[1]}}%
+		Table de 2 - Maîtrisée à {{ percentArray[1]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 3 - Complétée à {{ percentArray[6]}}%
+		Table de 3 - Maîtrisée à {{ percentArray[6]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 4 - Complétée à {{ percentArray[5]}}%
+		Table de 4 - Maîtrisée à {{ percentArray[5]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 5 - Complétée à {{ percentArray[2]}}%
+		Table de 5 - Maîtrisée à {{ percentArray[2]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 6 - Complétée à {{ percentArray[8]}}%
+		Table de 6 - Maîtrisée à {{ percentArray[8]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[8] }}%" aria-valuenow="{{ percentArray[8] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 7 - Complétée à {{ percentArray[11]}}%
+		Table de 7 - Maîtrisée à {{ percentArray[11]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[11] }}%" aria-valuenow="{{ percentArray[11] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 8 - Complétée à {{ percentArray[9]}}%
+		Table de 8 - Maîtrisée à {{ percentArray[9]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[9] }}%" aria-valuenow="{{ percentArray[9] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 9 - Complétée à {{ percentArray[10]}}%
+		Table de 9 - Maîtrisée à {{ percentArray[10]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[10] }}%" aria-valuenow="{{ percentArray[10] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 10 - Complétée à {{ percentArray[3]}}%
+		Table de 10 - Maîtrisée à {{ percentArray[3]}}%
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div>

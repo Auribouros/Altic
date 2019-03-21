@@ -30,9 +30,28 @@ class AlticController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
-    	return $this->render('altic/teacherWelcome.html.twig',
-    						 ['pupils'=>'', 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+        $teacherFullName = $user->getNom() . " " . $user->getPrenom();
+        $pupils = $user->getElevesLie();
+        $pupilStats = array();
+        $i = 0;
+        foreach ($pupils as $enf) {
+            $levelArray = $enf->getNiveaux();
+            $pupilStats[$i][0] = $enf->getNom() . " " . $enf->getPrenom();
+            for($j=1;$j>11;$j++){
+                $pupilStats[$i][$j]=0;
+            }
+            foreach ($levelArray as $level) {
+                if ($level->getNumero() % 12 == 0) {
+                    $pupilStats[$i][$level->getNumero() / 12] = 100;
+                } else {
+                    $pupilStats[$i][(int) ($level->getNumero() / 12) + 1] = (int) (100 * ($level->getNumero() - 12 * (int) ($level->getNumero() / 12)) / 12);
+                }
+                
+            }
+            $i++;
+        }
+        return $this->render('altic/teacherWelcome.html.twig',
+            ['pupils' => $pupilStats, 'userName' => $teacherFullName, 'profilePic' => 'default']);
     }
 
     /**
