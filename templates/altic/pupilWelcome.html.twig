@@ -43,14 +43,6 @@
 	<div style="font-family: 'roboto'; font-weight: bold;" class="row align-items-top">
 		<div class="col-sm-4 jumbotron">
 			<p class="h5">Rois</p>
-			<div class="row">
-				<div class="col">
-					<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/1.png') }}">
-				</div>
-				<div class="col">
-					Débloqué de base<br/><br/>
-				</div>
-			</div>
 			{% for trophy,isDone in hallOfTrophy %}
 			<div class="row">
 				{% set obtention = trophy| split("d") %}
