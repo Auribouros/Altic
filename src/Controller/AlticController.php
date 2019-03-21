@@ -111,6 +111,11 @@ class AlticController extends AbstractController
 
     private function generateAnswers($table, $questions, $level)
     {
+        if($level->getReponsesSimilaires()){
+            $nbRepSupp =2;
+        }else{
+            $nbRepSupp=1;
+        }
         foreach ($questions as $key=> $value) {
             /*
             INITIALISATION
@@ -118,10 +123,11 @@ class AlticController extends AbstractController
             $answers = array();
             $ARightAnswer=false;
             $i=0;
-            $nbOfSameAnswers=0; 
+            $nbOfSameAnswers=0;
+            $AReponseSim=false;
             $nbOfCurrentRandomAnswer=0;
             //calculate the number of random answers
-            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+1);
+            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+$nbRepSupp);
 
             /*
                 generate answers
@@ -151,6 +157,18 @@ class AlticController extends AbstractController
                         }
                         break;
                     case 2:
+                        if(! $AReponseSim){
+                            if(abs($key*$table)<=20){
+                                $aInverser = $key*$table;
+                                $arrayNumber=split($aInverser,'');
+                                $inverse=$arrayNumber[0].$arrayNumber[1];
+                                $answers[$inverse]=new ReponsePropose();
+                                $answers[$inverse]->setReponse($inverse);
+                                $i+=1;
+                            }else{
+                                $nbOfRandomAnswers+=1;
+                            }
+                        }
                         break;
                     case 3:
                         //generate everything else
