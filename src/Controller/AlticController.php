@@ -306,6 +306,7 @@ class AlticController extends AbstractController
         } else {
             $pupilFullName = $user->getNom()." ".$user->getPrenom();
 
+            $trophyArray=array();
             //initialise mastery levels to non mastered
             $minimalMastery = array();
             $totalMastery = array();
@@ -380,7 +381,7 @@ class AlticController extends AbstractController
                 }
                 /*(int)($level->getNumero()/12) est le numero de la table en fonction du niveau
                 */
-                $trophyArray=array();
+                
                 for($i=1;$i<=11;$i++){
                     switch ($i) {
                         case 1:
@@ -536,7 +537,7 @@ class AlticController extends AbstractController
     public function endgame(){
 
         //base variables
-            $charactersToWinFromLevel = array(10=>'21.png', 12=>'22.png', 22=>'51.png', 24=>'52.png', 34=>'101.png', 36=>'102.png', 46=>'11.png', 48=>'12.png', 58=>'41.png', 60=>'42.png', 70=>'31.png', 72=>'32.png', 82=>'01.png', 84=>'02.png', 94=>'61.png', 96=>'62.png', 106=>'81.png', 108=>'82.png', 118=>'91.png', 120=>'92.png', 130=>'71.png', 132=>'72.png');
+            $charactersToWinFromLevel = array(9=>'21.png', 12=>'22.png', 21=>'51.png', 24=>'52.png', 33=>'101.png', 36=>'102.png', 45=>'11.png', 48=>'12.png', 57=>'41.png', 60=>'42.png', 69=>'31.png', 72=>'32.png', 81=>'01.png', 84=>'02.png', 93=>'61.png', 96=>'62.png', 105=>'81.png', 108=>'82.png', 117=>'91.png', 120=>'92.png', 129=>'71.png', 132=>'72.png');
             $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
@@ -663,7 +664,7 @@ class AlticController extends AbstractController
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-        $user->setAvatar($avatarImage);
+        $user->setAvatar(explode('.', $avatarImage)[0] . '.png');
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
 
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
@@ -920,7 +921,7 @@ class AlticController extends AbstractController
             }
         }
         return $this->render('altic/modifyAccount.html.twig', ['userName'=>$pupilFullName, 
-        'profilePic'=>'default','modifyForm'=>$form->createView()]);
+        'profilePic'=>$user->getAvatar(),'modifyForm'=>$form->createView()]);
     }
     
     /**

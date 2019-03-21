@@ -255,7 +255,7 @@ $(function() {
 
 	function timerHandler() {
 
-		givenAnswers[givenAnswers.length] = -1;
+		givenAnswers[givenAnswers.length] = 0;
 		//alert(givenAnswers);
 		currentQuestion++;
 		question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];

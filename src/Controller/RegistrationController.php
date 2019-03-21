@@ -36,15 +36,17 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $entityManager = $this->getDoctrine()->getManager();
+
             $baseImage = new PersonnageJouable();
             $baseImage->setImage('1.png');
             $baseImage->setPersonnageDebloque(true);
-            $user->addPersonnagejouable($baseImage);
-            $user->setAvatar('default');
-
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($baseImage);
+
+            $user->addPersonnagejouable($baseImage);
+            $user->setAvatar('1.png');
             $entityManager->persist($user);
+            
             $entityManager->flush();
 
             // do anything else you need here, like send an email
