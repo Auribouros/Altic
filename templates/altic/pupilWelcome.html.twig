@@ -72,50 +72,193 @@
 		<div class="progress">
 		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[0] }}%" aria-valuenow="{{ percentArray[0] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+
 		Table de 0 - Maîtrisée à {{ percentArray[7]}}%
+		{% if percentArray[7]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[7] }}%" aria-valuenow="{{ percentArray[7] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[7] }}%" aria-valuenow="{{ percentArray[7] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[7]>25 and percentArray[7]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[7] }}%" aria-valuenow="{{ percentArray[7] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[7]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[7] }}%" aria-valuenow="{{ percentArray[7] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 1 - Maîtrisée à {{ percentArray[4]}}%
+		{% if percentArray[4]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[4]>25 and percentArray[4]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[4]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[4] }}%" aria-valuenow="{{ percentArray[4] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 2 - Maîtrisée à {{ percentArray[1]}}%
+		{% if percentArray[1]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[1]>25 and percentArray[1]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[1]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[1] }}%" aria-valuenow="{{ percentArray[1] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 3 - Maîtrisée à {{ percentArray[6]}}%
+		{% if percentArray[6]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[6]>25 and percentArray[6]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[6]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[6] }}%" aria-valuenow="{{ percentArray[6] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 4 - Maîtrisée à {{ percentArray[5]}}%
+		{% if percentArray[5]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[5]>25 and percentArray[5]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[5]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[5] }}%" aria-valuenow="{{ percentArray[5] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 5 - Maîtrisée à {{ percentArray[2]}}%
+		{% if percentArray[2]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[2]>25 and percentArray[2]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[2]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[2] }}%" aria-valuenow="{{ percentArray[2] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 6 - Maîtrisée à {{ percentArray[8]}}%
+		{% if percentArray[8]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[8] }}%" aria-valuenow="{{ percentArray[8] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[8] }}%" aria-valuenow="{{ percentArray[8] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[8]>25 and percentArray[8]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[8] }}%" aria-valuenow="{{ percentArray[8] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[8]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[8] }}%" aria-valuenow="{{ percentArray[8] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 7 - Maîtrisée à {{ percentArray[11]}}%
+		{% if percentArray[11]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[11] }}%" aria-valuenow="{{ percentArray[11] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[11] }}%" aria-valuenow="{{ percentArray[11] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[11]>25 and percentArray[11]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[11] }}%" aria-valuenow="{{ percentArray[11] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[11]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[11] }}%" aria-valuenow="{{ percentArray[11] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 8 - Maîtrisée à {{ percentArray[9]}}%
+		{% if percentArray[9]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[9] }}%" aria-valuenow="{{ percentArray[9] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[9] }}%" aria-valuenow="{{ percentArray[9] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
+		{% endif %}
+		{% if percentArray[9]>25 and percentArray[9]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[9] }}%" aria-valuenow="{{ percentArray[9] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[9]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[9] }}%" aria-valuenow="{{ percentArray[9] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
 		Table de 9 - Maîtrisée à {{ percentArray[10]}}%
+		{% if percentArray[10]<=25 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[10] }}%" aria-valuenow="{{ percentArray[10] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[10] }}%" aria-valuenow="{{ percentArray[10] }}" aria-valuemin="0" aria-valuemax="100"></div>
 		</div><br>
-		Table de 10 - Maîtrisée à {{ percentArray[3]}}%
+		{% endif %}
+		{% if percentArray[10]>25 and percentArray[10]<75 %}
 		<div class="progress">
-		<div class="progress-bar bg-info" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
-		</div>
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[10] }}%" aria-valuenow="{{ percentArray[10] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[10]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[10] }}%" aria-valuenow="{{ percentArray[10] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+
+		Table de 10 - Maîtrisée à {{ percentArray[3]}}%
+		{% if percentArray[3]<=25 %}
+		<div class="progress">
+		<div class="progress-bar bg-danger" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[3]>25 and percentArray[3]<75 %}
+		<div class="progress">
+		<div class="progress-bar bg-warning" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
+		{% if percentArray[3]>=75 %}
+		<div class="progress">
+		<div class="progress-bar bg-success" role="progressbar" style="width: {{ percentArray[3] }}%" aria-valuenow="{{ percentArray[3] }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div><br>
+		{% endif %}
 		</div>
 
 		<div class="col-sm-4"><p class="h5">Mes enseignants</p>
