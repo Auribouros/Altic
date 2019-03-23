@@ -36,8 +36,9 @@ class AlticController extends AbstractController
         $i = 0;
         foreach ($pupils as $enf) {
             $levelArray = $enf->getNiveaux();
-            $pupilStats[$i][0] = $enf->getNom() . " " . $enf->getPrenom();
-            for($j=1;$j>11;$j++){
+            $pupilStats[$i][0] = $enf->getId();
+            $pupilStats[$i][1] = $enf->getNom() . " " . $enf->getPrenom();
+            for($j=2;$j>12;$j++){
                 $pupilStats[$i][$j]=0;
             }
             foreach ($levelArray as $level) {
@@ -55,15 +56,34 @@ class AlticController extends AbstractController
     }
 
     /**
-     * @Route("/teacher/{name}", name="altic_teacherPupilData")
+     * @Route("/teacher/{id}", name="altic_teacherPupilData")
      */
-    public function teacherPupilData($name)
+    public function teacherPupilData($id)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $pupils = $user->getElevesLie();
+        foreach ($pupils as $enf) {
+            if($id==$enf->getId()){
+            $levelArray = $enf->getNiveaux();
+            $pupilStats[0] = $enf->getNom() . " " . $enf->getPrenom();
+            $pupilStats[1] = (int)((sizeof($levelArray)*100)/132);
+            for($j=2;$j>12;$j++){
+                $pupilStats[$j]=0;
+            }
+            foreach ($levelArray as $level) {
+                if ($level->getNumero() % 12 == 0) {
+                    $pupilStats[$level->getNumero() / 12] = 100;
+                } else {
+                    $pupilStats[(int) ($level->getNumero() / 12) + 1] = (int) (100 * ($level->getNumero() - 12 * (int) ($level->getNumero() / 12)) / 12);
+                }
+                
+            }
+        }
+        }
     	return $this->render('altic/teacherPupilData.html.twig',
-    						 ['userName'=>$teacherFullName, 'pupilName'=>$name, 'profilePic'=>'default']);
+    						 ['userName'=>$teacherFullName, 'pupilId'=>$id, 'profilePic'=>'default']);
     }
 
     /**
