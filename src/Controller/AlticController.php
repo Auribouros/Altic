@@ -66,9 +66,25 @@ class AlticController extends AbstractController
         $pupils = $user->getElevesLie();
         foreach ($pupils as $enf) {
             if($id==$enf->getId()){
+            $trainArray = $user->getEntrainement();
             $levelArray = $enf->getNiveaux();
-            $pupilStats[0] = $enf->getNom() . " " . $enf->getPrenom();
-            $pupilStats[1] = (int)((sizeof($levelArray)*100)/132);
+            $pupilStats[0][0] = $enf->getNom() . " " . $enf->getPrenom();
+            //Number of plays
+            $pupilStats[0][1] = (int)(sizeof($enf->getEntrainement()));
+            //Total progression
+            $pupilStats[0][2] = (int)((sizeof($levelArray)*100)/132);
+            foreach ($trainArray as $training){
+                $time += $training->getDuree();
+            }
+            $hours = (int)($time/3600);
+            $time = $time - ($hours*3600);
+            $mints = (int)($time/60);
+            $time = $time - ($mints*60);
+            $secs = $time;
+            $time = $time - $secs;
+            $pupilStats[0][3]=$hours;
+            $pupilStats[0][4]=$mints;
+            $pupilStats[0][5]=$secs;
             for($j=2;$j>12;$j++){
                 $pupilStats[$j]=0;
             }
