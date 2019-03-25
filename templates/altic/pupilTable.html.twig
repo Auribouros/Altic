@@ -19,48 +19,34 @@
 
 	<br/>
 
-	<div id="map" class="row" style="background-image: url({{ asset('images/pupil/map/tableMap.jpg') }})">
-
-		<div class="col"></div>
-		<div class="col">
-
-			<img id="avatar" src="{{ asset('images/pupil/characters/' ~ profilePic) }}" style="position: absolute; z-index: 3; max-height: 3%;">
-
-			{% for i in 0..12 %}
-			{% if images[i] != 'startMAP.png' and images[i] != 'endMAP.png' and bCanPlay[i-1] == true %}
-				<a id="mapLink{{ i }}" href="{{ path('altic_choiceAvatar', {
-					tableNumber:tableNumber,levelNumber:levelsNumbers[i-1],mapName:images[i]|split('.')[0]
-				}) }}">
-					<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
-				</a>
-				<script type="text/javascript" src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script> 
-				<script type="text/javascript">
-					$(function () {
-						
-						let imgHeight = $('#mapLink1 img').height();
-						
-						$('#avatar').css({
-							left: '40%',
-							top: {{ i }} * imgHeight
-						});
-
-					});
-				</script>
-			{% else %}
-				<img style="max-height: 200px;" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
-			{% endif %}
-			{% endfor %}
-		</div>
-		<div class="col"></div>
-
-		<script type="text/javascript">
-			$(function () {
-				$('#map').css('background-size', $('#map').width() + 'px ' + (Number($('#map').height()) + 500) + 'px');
-				//alert($('#map').width() + ' ' + $('#map').height());
-			});
-		</script>
-
+	<div class="row">
+		{% for i in 0..(images|length - 1) / 2 %}
+		<a href="{{ path('altic_choiceAvatar', {
+			tableNumber: tableNumber,
+			levelNumber: levelsNumbers[i],
+			mapName: images[i]|split('.')[0]
+		}) }}">
+			<img style="max-width: 150px;" class="img-thumbnail" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
+		</a>
+		{% endfor %}
 	</div>
+	<div class="row">
+		{% for i in images|length / 2..images|length - 1 %}
+		<a href="{{ path('altic_choiceAvatar', {
+			tableNumber: tableNumber,
+			levelNumber: levelsNumbers[i],
+			mapName: images[i]|split('.')[0]
+		}) }}">
+			<img style="max-width: 150px;" class="img-thumbnail" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
+		</a>
+		{% endfor %}
+	</div>
+
+	<script type="text/javascript">
+		$(function () {
+			$('#map').css('background-size', $('#map').width() + 'px ' + (Number($('#map').height()) + 500) + 'px');
+		});
+	</script>
 
 
 </div>
