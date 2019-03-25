@@ -36,9 +36,8 @@ class AlticController extends AbstractController
         $i = 0;
         foreach ($pupils as $enf) {
             $levelArray = $enf->getNiveaux();
-            $pupilStats[$i][0] = $enf->getId();
-            $pupilStats[$i][1] = $enf->getNom() . " " . $enf->getPrenom();
-            for($j=2;$j>12;$j++){
+            $pupilStats[$i][0] = $enf->getNom() . " " . $enf->getPrenom();
+            for($j=1;$j<12;$j++){
                 $pupilStats[$i][$j]=0;
             }
             foreach ($levelArray as $level) {
@@ -52,7 +51,11 @@ class AlticController extends AbstractController
             $i++;
         }
         return $this->render('altic/teacherWelcome.html.twig',
-            ['pupils' => $pupilStats, 'userName' => $teacherFullName, 'profilePic' => 'default']);
+            [
+            'pupils' => $pupilStats,
+            'userName' => $teacherFullName,
+            'profilePic' => 'default'
+            ]);
     }
 
     /**
