@@ -11,7 +11,8 @@ $(function() {
 		let magImage =  images.wizard;
 		let bul =  images.bubble;
 		let bulHtml = '<div id="bul"><img src="'+bul+'"id="bulimg"/></div>' ;
-		let tux = new Character('tux', tuxImage);
+		let parachute = images.parachute;
+		let tux = new Character('tux', tuxImage, parachute);
 		let mag = new Character('mag', magImage);
 		let questionAnswers = harvestDataFromElement('questionsanswers', '#data');
 		let currentQuestion = 0;
@@ -51,7 +52,8 @@ $(function() {
 	mag.appendTo('body');
 	$('#imgfond').css({'height': htdoc-0.11*htdoc, 'width': lgdoc-0.3*lgdoc, 'position': 'absolute', 'top': 50});
 	$('#bulimg').css({'height': htdoc-0.6*htdoc, 'position': 'absolute', 'width': 0.27*lgdoc, 'top': 80 , 'right': 50});
-	tux.setImgCSS({'height': htdoc*0.07, 'position': 'absolute', 'bottom': 1});
+	tux.setImgCSS({'height': htdoc*0.1, 'position': 'absolute', 'top': 1});
+	tux.setPropImgCSS({'height': htdoc*0.1, 'position': 'absolute', 'top': 1-htdoc*0.1});
 	mag.setImgCSS({'height': htdoc-0.6*htdoc, 'position': 'absolute', 'width': 0.2*lgdoc, 'top': 400, 'right': 50});
 
 	// Générer les positions des questions des réponses et les afficher
@@ -83,7 +85,7 @@ $(function() {
 			}
 			reponse.setElementCSS({
 				'position': 'absolute',
-				'top': ((htdoc-0.15*htdoc)-(1/10*(htdoc-0.15*htdoc))*j),
+				'top': ((0.15*htdoc)+(1/10*(htdoc-0.15*htdoc))*j),
 				'left': ((lgdoc-0.3*lgdoc)/questionAnswers[j].length)*(i+1),
 				'font-size': 0.05*htdoc,
 				'background-color': 'white',
@@ -131,6 +133,7 @@ $(function() {
 			let left = $(this).css('left');
 			let top = $(this).css('top');
 			tux.setImgCSS({'top': top, 'left': left});
+			tux.setPropImgCSS({'top': parseFloat(top)-htdoc*0.1, 'left': left});
 			$('#tuxImage').hide().fadeIn(1000);
 			if (currentQuestion > 9) {
 				if (bUsingTimer) {
@@ -179,6 +182,7 @@ $(function() {
 		let left = $(this).css('left');
 		let top = $(this).css('top');
 		tux.setImgCSS({'top': top, 'left': left});
+		tux.setPropImgCSS({'top': parseFloat(top)-htdoc*0.1, 'left': left});
 		$('#tuxImage').hide().fadeIn(1000);
 		if (currentQuestion > 9) {
 			if (bUsingTimer) {

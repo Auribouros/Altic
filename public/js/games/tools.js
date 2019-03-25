@@ -7,7 +7,7 @@
 	 * @param      {string}  id      The character's identifier
 	 * @param      {string}  img     The character's image
 	 */
-	function Character(id, img) {
+	function Character(id, img, propImg) {
 		
 		/**
 		 * The character's identifier.
@@ -22,11 +22,20 @@
 		 */
 		this.img = img;
 		/**
+		 * Prop image
+		 * 
+		 * @type       {string}
+		 */
+		this.propImg = (propImg != undefined)? '<img src="' + propImg + '" id="'+ this.id +'PropImage"/>' : '';
+		/**
 		 * HTML code representing the character.
 		 * 
 		 * @type     {string}
 		 */
-		this.html = '<div id="'+ this.id +'"><img src="' + this.img + '" id="'+ this.id +'Image"/></div>';
+		this.html = '<div id="'+ this.id +'">'+
+		'<img src="' + this.img + '" id="'+ this.id +'Image"/>'+
+		this.propImg +
+		'</div>';
 
 		/**
 		 * Gets the character's identifier.
@@ -38,7 +47,7 @@
 			return '#' + this.id;
 		};
 		/**
-		 * Appends the charcter to an element.
+		 * Appends the character to an element.
 		 *
 		 * @function
 		 * @param      {string}  element  The element to append the character to.
@@ -63,6 +72,9 @@
 		 */
 		this.setImgCSS = function (cssRules) {
 			$('#'+this.id+'Image').css(cssRules);
+		};
+		this.setPropImgCSS = function (cssRules) {
+			$('#'+this.id+'PropImage').css(cssRules);
 		};
 
 	}
