@@ -10,6 +10,7 @@
 
 <div id="container">
 
+	{% if pupils|length > 0 %}
 	<table class="table">
 		<thead>
 			<tr>
@@ -42,6 +43,9 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<h2>Vous ne suivez pas encore d'élèves !</h2>
+	{% endif %}
 
 </div>
 
