@@ -797,19 +797,6 @@ class AlticController extends AbstractController
         //represents the first global level number for each table
         $minLevelFromTable = array(2=>1, 5=>13, 10=>25, 1=>37, 4=>49, 3=>61, 0=>73, 6=>85, 8=>97, 9=>109, 7=>121);
 
-        //arrays representing the games order
-            /*$map0 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map1 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map2 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map3 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map4 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map5 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map6 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map7 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map8 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map9 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-            $map10 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');     
-            $maps = array($map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0);*/
         $images = $this->getLevelMaps()[$number];
 
         //array telling if the level can be played, each element representing a level
@@ -870,14 +857,6 @@ class AlticController extends AbstractController
     {
         $mapName .= '.png';
         $avatarImage .= '.png';
-        //array representing a game for a given map
-        $gameFromMap = array(
-            'castleMAP.png'=>'mountainGame',
-            'riverMAP.png'=>'mountainGame',
-            'caveMAP.png'=>'mountainGame',
-            'mountainMAP.png'=>'mountainGame'
-        );
-        $gameName = $gameFromMap[$mapName];
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
@@ -887,14 +866,15 @@ class AlticController extends AbstractController
 
         $questionsAnswers = $this->generateAnswers($tableNumber, $this->generateQuestions($tableNumber, $level), $level);
 
-        return $this->render("altic/$gameName.html.twig",
+        return $this->render("altic/game.html.twig",
             [
                 'questionsAndAnswers'=>$this->simplifyQuestionsAnswers($questionsAnswers, $tableNumber, $level),
                 'table'=>$tableNumber,
                 'localLevel'=>$localLevel,
                 'globalLevel'=>$levelNumber,
                 'celestinImg'=>"images/pupil/characters/$avatarImage",
-                'wizardImg'=>"images/pupil/characters/mago.png"
+                'wizardImg'=>"images/pupil/characters/mago.png",
+                'map'=>$mapName
             ]);
     }
 
