@@ -409,8 +409,8 @@ class AlticController extends AbstractController
                             $imageNumber = 5;
                          break;
                         case 3:
-                                $imageNumber = 10;
-                            break;
+                            $imageNumber = 10;
+                        break;
                         case 4:
                             $imageNumber = 1;
                         break;
@@ -436,16 +436,11 @@ class AlticController extends AbstractController
                             $imageNumber = 7;
                         break;
                     }
-                        if ($percentArray[$i]>=70) {
-                            $trophyArray["$imageNumber"."d1"]=true;
-                        }else {
-                            $trophyArray["$imageNumber"."d1"]=false;
-                        }
-                        if($percentArray[$i]>=90){
-                            $trophyArray["$imageNumber"."d2"]=true;
-                        }else{
-                            $trophyArray["$imageNumber"."d2"]=false;
-                        }
+                if ($percentArray[$i]>=70) {
+                    $trophyArray["$imageNumber"]=true;
+                }else {
+                    $trophyArray["$imageNumber"]=false;
+                }
             }
         }
 
@@ -542,7 +537,7 @@ class AlticController extends AbstractController
                     'tableNumber'=>$tableNumber,
                     'levelNumber'=>$levelNumber,
                     'mapName'=>$mapName,
-                    'avatarImage'=>'1.png'
+                    'avatarImage'=>'constantin.png'
                 ])
             );
 
@@ -555,7 +550,7 @@ class AlticController extends AbstractController
     public function endgame(){
 
         //base variables
-            $charactersToWinFromLevel = array(10=>'21.png', 12=>'22.png', 22=>'51.png', 24=>'52.png', 34=>'101.png', 36=>'102.png', 46=>'11.png', 48=>'12.png', 58=>'41.png', 60=>'42.png', 70=>'31.png', 72=>'32.png', 82=>'01.png', 84=>'02.png', 94=>'61.png', 96=>'62.png', 106=>'81.png', 108=>'82.png', 118=>'91.png', 120=>'92.png', 130=>'71.png', 132=>'72.png');
+            $charactersToWinFromLevel = array(12=>'2.png', 24=>'5.png', 36=>'10.png', 48=>'1.png', 60=>'4.png', 72=>'3.png', 84=>'0.png', 96=>'6.png', 108=>'8.png', 130=>'7.png');
             $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
@@ -849,7 +844,7 @@ class AlticController extends AbstractController
 
         }
 
-        $profilePic = 'images/pupil/characters/1.png';
+        $profilePic = 'images/pupil/characters/constantin.png';
     	$pupilFullName = $user->getNom()." ".$user->getPrenom();
     	return $this->render('altic/pupilTable.html.twig',
     						 [
