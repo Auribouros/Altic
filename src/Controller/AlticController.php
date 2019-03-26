@@ -48,6 +48,7 @@ class AlticController extends AbstractController
                 }
                 
             }
+            array_push($pupilStats, $enf->getId());
             $i++;
         }
         return $this->render('altic/teacherWelcome.html.twig',
