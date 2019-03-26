@@ -35,6 +35,7 @@ class AlticController extends AbstractController
         $pupilStats = array();
         $i = 0;
         foreach ($pupils as $enf) {
+            $pupilStats[$i] = array();
             $levelArray = $enf->getNiveaux();
             $pupilStats[$i][0] = $enf->getNom() . " " . $enf->getPrenom();
             for($j=1;$j<12;$j++){
@@ -48,7 +49,7 @@ class AlticController extends AbstractController
                 }
                 
             }
-            array_push($pupilStats, $enf->getId());
+            array_push($pupilStats[$i], $enf->getId());
             $i++;
         }
         return $this->render('altic/teacherWelcome.html.twig',
@@ -69,10 +70,13 @@ class AlticController extends AbstractController
         $user = $this->getUser();
         $teacherFullName = $user->getNom()." ".$user->getPrenom();
         $pupils = $user->getElevesLie();
+        $pupilName = '';
+        $time = 0;
         foreach ($pupils as $enf) {
             if($id==$enf->getId()){
-                $trainArray = $user->getEntrainement();
+                $trainArray = $enf->getEntrainement();
                 $levelArray = $enf->getNiveaux();
+                $pupilName = $enf->getNom() . ' ' . $enf->getPrenom();
                 $pupilStats[0][0] = $enf->getNom() . " " . $enf->getPrenom();
                 //Number of plays
                 $pupilStats[0][1] = (int)(sizeof($enf->getEntrainement()));
@@ -111,7 +115,13 @@ class AlticController extends AbstractController
             }
         }
     	return $this->render('altic/teacherPupilData.html.twig',
-    						 ['userName'=>$teacherFullName, 'pupilId'=>$id, 'profilePic'=>'default', 'pupilStats'=>$pupilStats]);
+    						 [
+                             'userName'=>$teacherFullName,
+                             'pupilId'=>$id,
+                             'profilePic'=>'default',
+                             'pupilStats'=>$pupilStats,
+                             'pupilName'=>$pupilName
+                             ]);
     }
 
     /**

@@ -6,7 +6,7 @@
 
 {{ parent() }}
 
-{#{ dump(pupils) }#}
+{{ dump(pupils) }}
 
 <div id="container">
 
@@ -26,6 +26,8 @@
 				<th scope="col">Table de 8</th>
 				<th scope="col">Table de 9</th>
 				<th scope="col">Table de 7</th>
+				<th scope="col"></th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,11 +35,13 @@
 
 				<tr class="table-dark">
 					<th scope="row">{{pupil[0]}}</th>
-				{% for i in 1..pupil|length - 1 %}
+				{% for i in 1..pupil|length - 2 %}
 
       				<td>{{pupil[i]}} %</td>
 
 				{% endfor %}
+					<td><a href="{{ path('altic_teacherPupilData', {id: pupil[pupil|length - 1]}) }}"><button class="btn btn-info">Consulter</button></a></td>
+					<td><a href="#"><button class="btn btn-danger">Supprimer</button></a></td>
     			</tr>
 
 			{% endfor %}
