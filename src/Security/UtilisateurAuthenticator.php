@@ -18,6 +18,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+
 class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
@@ -67,7 +68,7 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException("le mail n'a pas pu etre trouvé");
         }
 
         return $user;
