@@ -17,14 +17,42 @@
 			<div class="row">
 				{% for i in 1..6 %}
 				<div class="col text-center">
+<<<<<<< HEAD
 					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1],island:labels[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
+=======
+					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;">
+					<img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">
+					{% if hallOfTrophy[numOrder[ i-1 ]] %}
+					<img style="max-height: 100px; max-width: 100px;padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
+					{% else %}
+					<img style="max-height: 100px; max-width: 100px;padding: 10px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
+					{% endif %}
+					{{ labels[i-1] }} ({{ numOrder[i-1] }})
+					 </a>
+					
+>>>>>>> revisionDeLinterfaceDaccueilEleve
 				</div>
 				{% endfor %}
 			</div>
 			<div class="row">
 				{% for i in 7..11 %}
 				<div class="col text-center">
+<<<<<<< HEAD
 					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1],island:labels[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
+=======
+					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;">
+					<img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">
+					{% if hallOfTrophy[numOrder[ i-1 ]] %}
+					<img style="max-height: 100px; max-width: 100px;padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
+					{% else %}
+					<img style="max-height: 100px; max-width: 100px;padding: 10px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
+					{% endif %}
+				<div scope="row">
+					{{ labels[i-1] }} ({{ numOrder[i-1] }})
+				</div>
+
+					</a>
+>>>>>>> revisionDeLinterfaceDaccueilEleve
 				</div>
 				{% endfor %}
 			</div>
@@ -33,7 +61,7 @@
 		<!--Constantin-->
 		<div class="col-3">
 			<h4 style="color: white; font-weight: bold;">Bonjour, je suis Constantin ! {{ advice1 }}. {{ advice2 }}</h4 style="font-weight: bold;">
-			<img class="img-fluid" src="{{ asset('images/pupil/characters/2.png') }}">
+			<img class="img-fluid" src="{{ asset('images/pupil/characters/constantin.png') }}">
 		</div>
 	</div>
 
@@ -45,21 +73,19 @@
 			<p class="h5">Rois</p>
 			{% for trophy,isDone in hallOfTrophy %}
 			<div class="row">
-				{% set obtention = trophy| split("d") %}
-				{% set imgTrophy = obtention[0] ~ obtention[1] %}
 				{% if isDone%}
 				<div class="col">
-					<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/'~imgTrophy~'.png') }}">
+					<img style="max-height: 100px; max-width: 100px;" src="{{ asset('images/pupil/characters/'~trophy~'.png') }}">
 				</div>
 				<div class="col">
-					Débloqué à la table de {{obtention[0]}} au niveau {% if obtention[1]=="1" %}9{% else %}12{% endif %}<br/><br/>
+					Liberé<br/><br/>
 				</div>
 				{% else %}
 				<div class="col">
-					<img style="max-height: 100px; max-width: 100px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" src="{{ asset('images/pupil/characters/'~imgTrophy~'.png') }}">
+					<img style="max-height: 100px; max-width: 100px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" src="{{ asset('images/pupil/characters/'~trophy~'.png') }}">
 				</div>
 				<div class="col">
-					Se débloque à la table de {{obtention[0]}} au niveau {% if obtention[1]=="1" %}9{% else %}12{% endif %}<br/><br/>
+					Emprisonné<br/><br/>
 				</div>
 				{% endif %}
 			</div>

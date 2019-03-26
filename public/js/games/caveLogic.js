@@ -311,7 +311,7 @@ $(function(){
 		 *
 		 * @type       {string}
 		 */
-		let wizardImage = 'images/character/2.png';
+		let wizardImage = 'images/character/constantin.png';
 
 		/**
 		 * The room celestin is currently in.

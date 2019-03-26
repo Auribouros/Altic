@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
 
             $baseImage = new PersonnageJouable();
-            $baseImage->setImage('1.png');
+            $baseImage->setImage('celestin.png');
             $baseImage->setPersonnageDebloque(true);
             $entityManager->persist($baseImage);
 

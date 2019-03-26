@@ -25,7 +25,7 @@ class RegistrationFormType extends AbstractType
         ->add('prenom')
         ->add('nom')
         ->add('email',EmailType::class)
-        ->add('avatar',UrlType::class,['data'=>'images/pupil/characters/1.png', 'disabled'=>true])
+        ->add('avatar',UrlType::class,['data'=>'images/pupil/characters/celestin.png', 'disabled'=>true])
         ->add('password', RepeatedType::class, [
             'constraints'=>[ new NotBlank()],
             'type'=> PasswordType::class,
