@@ -17,14 +17,14 @@
 			<div class="row">
 				{% for i in 1..6 %}
 				<div class="col text-center">
-					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
+					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1],island:labels[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
 				</div>
 				{% endfor %}
 			</div>
 			<div class="row">
 				{% for i in 7..11 %}
 				<div class="col text-center">
-					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
+					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1],island:labels[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
 				</div>
 				{% endfor %}
 			</div>

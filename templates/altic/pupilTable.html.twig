@@ -13,7 +13,10 @@
 		
 		<div class="col-sm-4 align-self-end"><a href="/pupil">Retour à la carte <br/> <img style="max-height: 100px; width: auto;" src="{{ asset('images/pupil/map/worldMap.png') }}"> </a></div>
 
-		<div class="col-sm-4 align-self-center"><p style="text-align: center;" class="h3">Table de {{tableNumber}}</p></div>
+		<div class="col-sm-4 align-self-center">
+			<p style="text-align: center;" class="h3">{{ island }}, table de {{tableNumber}}</p>
+			<h4>Clique sur la carte dans laquelle tu veux t'entraîner !</h4>
+		</div>
 
 	</div>
 
@@ -21,32 +24,34 @@
 
 	<div class="row">
 		{% for i in 0..(images|length - 1) / 2 %}
+		{% if bCanPlay[i] == true %}
 		<a href="{{ path('altic_choiceAvatar', {
 			tableNumber: tableNumber,
 			levelNumber: levelsNumbers[i],
 			mapName: images[i]|split('.')[0]
 		}) }}">
-			<img style="max-width: 150px;" class="img-thumbnail" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
+			<img id="playable{{ i }}" style="width: 150px;  height: 150px;" class="img-thumbnail" src="{{ asset('images/pupil/games/maps/' ~ images[i]) }}">
 		</a>
+		{% else %}
+		<img title="Tu n'as pas encore débloqué cette carte !" style="width: 150px;  height: 150px; filter: grayscale(100%);" class="img-thumbnail" src="{{ asset('images/pupil/games/maps/' ~ images[i]) }}">
+		{% endif %}
 		{% endfor %}
 	</div>
 	<div class="row">
 		{% for i in images|length / 2..images|length - 1 %}
+		{% if bCanPlay[i] == true %}
 		<a href="{{ path('altic_choiceAvatar', {
 			tableNumber: tableNumber,
 			levelNumber: levelsNumbers[i],
 			mapName: images[i]|split('.')[0]
 		}) }}">
-			<img style="max-width: 150px;" class="img-thumbnail" src="{{ asset('images/pupil/map/' ~ images[i]) }}">
+			<img id="playable{{ i }}" style="width: 150px; height: 150px;" class="img-thumbnail" src="{{ asset('images/pupil/games/maps/' ~ images[i]) }}">
 		</a>
+		{% else %}
+		<img title="Tu n'as pas encore débloqué cette carte !" style="width: 150px;  height: 150px; filter: grayscale(100%);" class="img-thumbnail" src="{{ asset('images/pupil/games/maps/' ~ images[i]) }}">
+		{% endif %}
 		{% endfor %}
 	</div>
-
-	<script type="text/javascript">
-		$(function () {
-			$('#map').css('background-size', $('#map').width() + 'px ' + (Number($('#map').height()) + 500) + 'px');
-		});
-	</script>
 
 
 </div>

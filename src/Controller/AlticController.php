@@ -295,7 +295,7 @@ class AlticController extends AbstractController
 
     private function getLevelMaps()
     {
-        $map0 = array('caveMAP.png', 'castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png', 'mountainMAP.png');
+        $map0 = array('crack.png', 'rockland.png', 'fantasy.png', 'desertMountain.png', 'fantasy.png', 'crack.png', 'fantasy2.png', 'crack.png', 'fantasy.png', 'fantasy.png', 'fantasy2.png', 'highMountain.png');
         $map1 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
         $map2 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
         $map3 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
@@ -309,6 +309,13 @@ class AlticController extends AbstractController
         $maps = array($map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0);
 
         return $maps;
+    }
+
+    private function getRegionFromTable($number)
+    {
+        $regions = [0 => 'Nesa', 1 => 'Elemia', 2 => 'Imoc', 3 => 'Pona', 4 => 'Rania', 5 => 'Isia', 6 => 'Sovia', 7 => 'Will', 8 => 'Caguma', 9 => 'Belam', 10 => 'Vorod'];
+
+        return $regions[$number];
     }
 
     /**
@@ -780,14 +787,15 @@ class AlticController extends AbstractController
             'maps'=>$this->getLevelMaps()[$table],
             'timeElapsed'=>$timeElapsedSeconds,
             'questions'=>$templateQuestionsAnswers,
-            'givenAnswers'=>$givenAnswers
+            'givenAnswers'=>$givenAnswers,
+            'regionName'=>$this->getRegionFromTable($table)
             ]);
     }
 
     /**
-     * @Route("/pupil/{number}", name="altic_pupilTable")
+     * @Route("/pupil/{number}/{island}", name="altic_pupilTable")
      */
-    public function pupilTable($number)
+    public function pupilTable($number, $island)
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -846,7 +854,8 @@ class AlticController extends AbstractController
                                 'profilePic'=>$user->getAvatar(),
                                 'images'=>$images,
                                 'bCanPlay'=>$bCanPlay,
-                                'levelsNumbers'=>$levelsNumbers
+                                'levelsNumbers'=>$levelsNumbers,
+                                'island'=>$island
                             ]);
     }
 

@@ -11,65 +11,63 @@
 <div class="container">
 	<!--go back-->
 	<div class="row">
-		<a href="{{ path('altic_pupilTable', {number:tableNumber}) }}">
+		<a href="{{ path('altic_pupilTable', {number:tableNumber,island:regionName}) }}">
 			<p>Revenir à la table</p>
 			<img style="max-width: 20%;" src="{{ asset('images/pupil/map/tableMap.png') }}">
 		</a>
 	</div>
-	<!--results-->
 	<div class="row">
+		<!--results-->
 		<div class="col-9">
-			{% if nbRightAnswers >= 8 %}
-			<h2>Bravo, tu as {{ nbRightAnswers }} bonnes réponses !</h2>
-			{% else %}
-			<h2>Il faut encore faire des efforts, courage !</h2>
-			{% endif %}
-			<div class="row">
+			<div class="col-9">
 				<div class="row">
-					<h4>Tu as mis {{ timeElapsed }} secondes pour finir cet entraînement.</h4>
+					<div class="row">
+						<h4>Tu as mis {{ timeElapsed }} secondes pour finir cet entraînement.</h4>
+					</div>
 				</div>
-			</div>
-			{#{ dump(givenAnswers) }#}
-			<div class="jumbotron">
-			{% for question in questions %}
-				{% set currentGivenAnswer = givenAnswers[loop.index0] %}
-				<div class="row">
-					<h4>{{ question[0] }} x {{ question[1] }} = 
-					{% if currentGivenAnswer != question[0] * question[1] %}
-						<h4 style="color: red;"> {{ currentGivenAnswer }} La bonne réponse était {{ question[0] * question[1] }}</h4>
-					{% else %}
-						<h4 style="color: green;">{{ currentGivenAnswer }}</h4>
-					{% endif %}
-					</h4>
+				{#{ dump(givenAnswers) }#}
+				<div class="jumbotron">
+				{% for question in questions %}
+					{% set currentGivenAnswer = givenAnswers[loop.index0] %}
+					<div class="row">
+						<h4>{{ question[0] }} x {{ question[1] }} = 
+						{% if currentGivenAnswer != question[0] * question[1] %}
+							<h4 style="color: red;"> {{ currentGivenAnswer }} La bonne réponse était {{ question[0] * question[1] }}</h4>
+						{% else %}
+							<h4 style="color: green;">{{ currentGivenAnswer }}</h4>
+						{% endif %}
+						</h4>
+					</div>
+				{% endfor %}
 				</div>
-			{% endfor %}
 			</div>
 		</div>
+		<br>
+		<!--play paths-->
 		<div class="col-3">
-			<img class="img-fluid" src="{{ asset('images/pupil/characters/mago.png') }}">
-		</div>
-	</div>
-	<br>
-	<!--play paths-->
-	<div class="row text-center">
-		<div class="col">
-		{% if localLevel > 1 %}
-			<button type="button" class="btn btn-outline-info">
-				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel - 1, mapName:maps[localLevel - 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">Niveau précédent</a>
-			</button>
-		{% endif %}
-		</div>
-		<div class="col">
-			<button type="button" class="btn btn-outline-info">
-				<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">Rejouer</a>
-			</button>
-		</div>
-		<div class="col">
-			{% if nbRightAnswers >= 8 and localLevel < 12 %}
-				<button type="button" class="btn btn-outline-success">
-					<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">Niveau suivant</a>
-				</button>
-			{% endif %}
+			<div class="row">
+				{% if nbRightAnswers >= 8 %}
+				<h2>Bravo, tu as {{ nbRightAnswers }} bonnes réponses !</h2>
+				{% else %}
+				<h2>Il faut encore faire des efforts, courage !</h2>
+				{% endif %}
+				<img class="img-fluid" src="{{ asset('images/pupil/characters/2.png') }}">
+			</div>
+			<br>
+			<div class="row">
+				<div class="col">
+					<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
+						<button type="button" class="btn btn-outline-info">Rejouer</button>
+					</a>
+				</div>
+				<div class="col">
+					{% if nbRightAnswers >= 8 and localLevel < 12 %}
+						<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
+							<button type="button" class="btn btn-outline-success">Niveau suivant</button>
+						</a>
+					{% endif %}
+				</div>
+			</div>
 		</div>
 	</div>
 	<br>
