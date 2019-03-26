@@ -93,6 +93,19 @@ class AlticController extends AbstractController
                     $pupilStats[$j][0]=0;
                     $pupilStats[$j][1]=0;
                 }
+                foreach ($levelArray as $level){
+                    //SI le niveau à son numéro modulo 12 étant égal à 0 ET que sa division par 12 n'est pas 0
+                    if($level->getNumero()%12==0){
+                        //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
+                        $percentArray[$level->getNumero()/12][0] = 100;
+                    }else{
+                    //Sinon on calcule petit à petit le pourcentage de completion de la table
+                        $percentArray[(int)($level->getNumero()/12)+1][0] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                }
+                foreach ($levelArray as $level){
+                    
+                }
+
 
                 
             }
