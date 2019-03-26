@@ -97,17 +97,16 @@ class AlticController extends AbstractController
                     //SI le niveau à son numéro modulo 12 étant égal à 0 ET que sa division par 12 n'est pas 0
                     if($level->getNumero()%12==0){
                         //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
-                        $percentArray[$level->getNumero()/12][0] = 100;
+                        $pupilStats[$level->getNumero()/12][0] = 100;
                     }else{
                     //Sinon on calcule petit à petit le pourcentage de completion de la table
-                        $percentArray[(int)($level->getNumero()/12)+1][0] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                        $pupilStats[(int)($level->getNumero()/12)+1][0] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                    }
                 }
                 foreach ($levelArray as $level){
-                    
-                }
-
-
-                
+                    $trainLev= $level->getEntrainement();
+                    $pupilStats[(int)($level->getNumero()/12)+1][1] += (int)(sizeof($trainLev));
+                } 
             }
         }
     	return $this->render('altic/teacherPupilData.html.twig',
