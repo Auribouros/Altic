@@ -70,37 +70,32 @@ class AlticController extends AbstractController
         $pupils = $user->getElevesLie();
         foreach ($pupils as $enf) {
             if($id==$enf->getId()){
-            $trainArray = $user->getEntrainement();
-            $levelArray = $enf->getNiveaux();
-            $pupilStats[0][0] = $enf->getNom() . " " . $enf->getPrenom();
-            //Number of plays
-            $pupilStats[0][1] = (int)(sizeof($enf->getEntrainement()));
-            //Total progression
-            $pupilStats[0][2] = (int)((sizeof($levelArray)*100)/132);
-            foreach ($trainArray as $training){
-                $time += $training->getDuree();
-            }
-            $hours = (int)($time/3600);
-            $time = $time - ($hours*3600);
-            $mints = (int)($time/60);
-            $time = $time - ($mints*60);
-            $secs = $time;
-            $time = $time - $secs;
-            $pupilStats[0][3]=$hours;
-            $pupilStats[0][4]=$mints;
-            $pupilStats[0][5]=$secs;
-            for($j=2;$j>12;$j++){
-                $pupilStats[$j]=0;
-            }
-            foreach ($levelArray as $level) {
-                if ($level->getNumero() % 12 == 0) {
-                    $pupilStats[$level->getNumero() / 12] = 100;
-                } else {
-                    $pupilStats[(int) ($level->getNumero() / 12) + 1] = (int) (100 * ($level->getNumero() - 12 * (int) ($level->getNumero() / 12)) / 12);
+                $trainArray = $user->getEntrainement();
+                $levelArray = $enf->getNiveaux();
+                $pupilStats[0][0] = $enf->getNom() . " " . $enf->getPrenom();
+                //Number of plays
+                $pupilStats[0][1] = (int)(sizeof($enf->getEntrainement()));
+                //Total progression
+                $pupilStats[0][2] = (int)((sizeof($levelArray)*100)/132);
+                foreach ($trainArray as $training){
+                    $time += $training->getDuree();
                 }
+                $hours = (int)($time/3600);
+                $time = $time - ($hours*3600);
+                $mints = (int)($time/60);
+                $time = $time - ($mints*60);
+                $secs = $time;
+                $time = $time - $secs;
+                $pupilStats[0][3]=$hours;
+                $pupilStats[0][4]=$mints;
+                $pupilStats[0][5]=$secs;
+                for($j=1;$j<12;$j++){
+                    $pupilStats[$j][0]=0;
+                    $pupilStats[$j][1]=0;
+                }
+
                 
             }
-        }
         }
     	return $this->render('altic/teacherPupilData.html.twig',
     						 ['userName'=>$teacherFullName, 'pupilId'=>$id, 'profilePic'=>'default']);
