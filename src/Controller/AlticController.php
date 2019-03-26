@@ -124,13 +124,35 @@ class AlticController extends AbstractController
     	$pupilsList = ' ';
         $teacherFullName = $user->getNom()." ".$user->getPrenom();
         $pupils = $user->getElevesLie();
+        $pupilData[0]=0;
+        $progress =0;
         foreach ($pupils as $enf) {
             if($id==$enf->getId()){
                 $levelArray = $enf->getNiveaux();
                 foreach($levelArray as $level){
-                    $tableNbr = $level->getTableDeMultiplication();
+                    $table = $level->getTableDeMultiplication();
                     if($number==$tableNbr[0]->getNumero()){
-                        
+                        $progress+=1;
+                        $trainLev = $level->getEntrainement();
+                        $pupilData[0][0]+= (int)(sizeof($trainLev));
+                        $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0]=$level->getEntrainement();
+                        for ($i=0; $i<(sizeof($pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0])) ; $i++) {
+                            array_push($trainArrayOnTable, $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0][$i]);
+                        }
+                        foreach($trainArrayOnTable as $trainin){
+                            array_push($arrayQuestions, $trainin->getQuestion());
+                            array_push($arrayDates, $trainin->getDate());
+                        }
+                        foreach($arrayQuestions as $quo){
+                            array_push($arrayQuLib, $quo->getLibelle());
+                            array_push($arrayQuRep, $quo->getReponseEnfant());
+                            array_push($arrayQuProp, $quo->getReponsepropose());
+                        }
+                        foreach($arrayQuProp as $RepProp){
+                            array_push($arrayAnswers, $repProp->getReponse());
+                        }
+                        $percentProgress = (int)(($progress/12)*100);
+
                     }
                 }
                 
