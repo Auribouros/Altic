@@ -55,7 +55,8 @@ class AlticController extends AbstractController
             [
             'pupils' => $pupilStats,
             'userName' => $teacherFullName,
-            'profilePic' => 'default'
+            'profilePic' => 'default',
+            'pupilStats' => $pupilStats
             ]);
     }
 
@@ -110,20 +111,35 @@ class AlticController extends AbstractController
             }
         }
     	return $this->render('altic/teacherPupilData.html.twig',
-    						 ['userName'=>$teacherFullName, 'pupilId'=>$id, 'profilePic'=>'default']);
+    						 ['userName'=>$teacherFullName, 'pupilId'=>$id, 'profilePic'=>'default', 'pupilStats'=>$pupilStats]);
     }
 
     /**
-     * @Route("/teacher/{name}/{number}", name="altic_teacherPupilDataTable")
+     * @Route("/teacher/{id}/{number}", name="altic_teacherPupilDataTable")
      */
-    public function teacherPupilDataTable($name, $number)
+    public function teacherPupilDataTable($id, $number)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
     	$pupilsList = ' ';
-    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $pupils = $user->getElevesLie();
+        foreach ($pupils as $enf) {
+            if($id==$enf->getId()){
+                $levelArray = $enf->getNiveaux();
+                foreach($levelArray as $level){
+                    $tableNbr = $level->getTableDeMultiplication();
+                    if($number==$tableNbr[0]->getNumero()){
+                        
+                    }
+                }
+                
+                
+             
+            }
+        }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+    						 ['pupilId'=>$id, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     #########################################################
