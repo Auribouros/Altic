@@ -70,13 +70,11 @@ class AlticController extends AbstractController
         $user = $this->getUser();
         $teacherFullName = $user->getNom()." ".$user->getPrenom();
         $pupils = $user->getElevesLie();
-        $pupilName = '';
         $time = 0;
         foreach ($pupils as $enf) {
             if($id==$enf->getId()){
                 $trainArray = $enf->getEntrainement();
                 $levelArray = $enf->getNiveaux();
-                $pupilName = $enf->getNom() . ' ' . $enf->getPrenom();
                 $pupilStats[0][0] = $enf->getNom() . " " . $enf->getPrenom();
                 //Number of plays
                 $pupilStats[0][1] = (int)(sizeof($enf->getEntrainement()));
@@ -119,8 +117,7 @@ class AlticController extends AbstractController
                              'userName'=>$teacherFullName,
                              'pupilId'=>$id,
                              'profilePic'=>'default',
-                             'pupilStats'=>$pupilStats,
-                             'pupilName'=>$pupilName
+                             'pupilStats'=>$pupilStats
                              ]);
     }
 
