@@ -23,7 +23,7 @@
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
 					{% else %}
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
-					{% endif %}<br>
+					{% endif %}
 					{{ labels[i-1] }} ({{ numOrder[i-1] }})
 					 </a>
 					
@@ -39,8 +39,12 @@
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
 					{% else %}
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
-					{% endif %}<br>
-					{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
+					{% endif %}
+				<div scope="row">
+					{{ labels[i-1] }} ({{ numOrder[i-1] }})
+				</div>
+
+					</a>
 				</div>
 				{% endfor %}
 			</div>

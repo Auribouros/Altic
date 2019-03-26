@@ -436,7 +436,7 @@ class AlticController extends AbstractController
                             $imageNumber = 7;
                         break;
                     }
-                if ($percentArray[$i]>=70) {
+                if ($percentArray[$i]==100) {
                     $trophyArray["$imageNumber"]=true;
                 }else {
                     $trophyArray["$imageNumber"]=false;
@@ -863,7 +863,7 @@ class AlticController extends AbstractController
     public function pupilTraining($tableNumber, $levelNumber, $mapName, $avatarImage)
     {
         $mapName .= '.png';
-        $avatarImage .= '.png';
+        //$avatarImage .= '.png';
         //array representing a game for a given map
         $gameFromMap = array(
             'castleMAP.png'=>'mountainGame',
