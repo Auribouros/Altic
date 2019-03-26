@@ -51,18 +51,18 @@
 				{% else %}
 				<h2>Il faut encore faire des efforts, courage !</h2>
 				{% endif %}
-				<img class="img-fluid" src="{{ asset('images/pupil/characters/2.png') }}">
+				<img class="img-fluid" src="{{ asset('images/pupil/characters/constantin.png') }}">
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
+					<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel, mapName:maps[localLevel - 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
 						<button type="button" class="btn btn-outline-info">Rejouer</button>
 					</a>
 				</div>
 				<div class="col">
 					{% if nbRightAnswers >= 8 and localLevel < 12 %}
-						<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel + 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
+						<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel - 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
 							<button type="button" class="btn btn-outline-success">Niveau suivant</button>
 						</a>
 					{% endif %}

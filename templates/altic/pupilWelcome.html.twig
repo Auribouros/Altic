@@ -7,6 +7,13 @@
 {{ parent() }}
 
 <div class="container">
+	<div class="row">
+		<div class="col"></div>
+		<div class="col-9">
+			<h3>Suis le conseil de Constantin pour délivrer les prisonniers sur chaque île !</h3>
+		</div>
+		<div class="col"></div>
+	</div>
 	<!--map and Constantin-->
 	{% set labels = ['Imoc', 'Isia', 'Vorod', 'Elemia', 'Rania', 'Pona', 'Nesa', 'Sovia', 'Caguma', 'Belam', 'Will'] %}
 	{% set numOrder = [2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7] %}
@@ -18,14 +25,13 @@
 				{% for i in 1..6 %}
 				<div class="col text-center">
 					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1],island:labels[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
-					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;">
-					<img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">
+					{#<img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">#}
 					{% if hallOfTrophy[numOrder[ i-1 ]] %}
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
 					{% else %}
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
 					{% endif %}
-					{{ labels[i-1] }} ({{ numOrder[i-1] }})
+					{#{ labels[i-1] }} ({{ numOrder[i-1] }})#}
 					 </a>
 				</div>
 				{% endfor %}
@@ -34,15 +40,14 @@
 				{% for i in 7..11 %}
 				<div class="col text-center">
 					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1],island:labels[i-1]}) }}" style="color: white; font-size: 1.5em;"><img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">{{ labels[i-1] }} ({{ numOrder[i-1] }})</a>
-					<a href="{{ path('altic_pupilTable', {number:numOrder[i-1]}) }}" style="color: white; font-size: 1.5em;">
-					<img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">
+					{#<img style="padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/map/' ~ i ~ '_.png') }}">#}
 					{% if hallOfTrophy[numOrder[ i-1 ]] %}
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
 					{% else %}
 					<img style="max-height: 100px; max-width: 100px;padding: 10px;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-o-filter: grayscale(100%);-ms-filter: grayscale(100%);filter: grayscale(100%);" class="img-fluid" src="{{ asset('images/pupil/characters/' ~ numOrder[i-1] ~ '.png') }}">
 					{% endif %}
 				<div scope="row">
-					{{ labels[i-1] }} ({{ numOrder[i-1] }})
+					{#{ labels[i-1] }} ({{ numOrder[i-1] }})#}
 				</div>
 
 					</a>
@@ -53,7 +58,7 @@
 		</div>
 		<!--Constantin-->
 		<div class="col-3">
-			<h4 style="color: white; font-weight: bold;">Bonjour, je suis Constantin ! {{ advice1 }}. {{ advice2 }}</h4 style="font-weight: bold;">
+			<h4 style="color: white; font-weight: bold;">{{ advice1 }}. {{ advice2 }}</h4 style="font-weight: bold;">
 			<img class="img-fluid" src="{{ asset('images/pupil/characters/constantin.png') }}">
 		</div>
 	</div>

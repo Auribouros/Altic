@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($baseImage);
 
             $user->addPersonnagejouable($baseImage);
-            $user->setAvatar('1.png');
+            $user->setAvatar('celestin.png');
             $entityManager->persist($user);
             
             $entityManager->flush();

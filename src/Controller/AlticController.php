@@ -370,8 +370,8 @@ class AlticController extends AbstractController
                 }
             }
             $advice = $this->generateAdvice($minimalMastery, $totalMastery);
-            $advice1 = 'Je te conseille d\'aider ' . $advice['advice1'];
-            $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\'aider ' . $advice['advice2'] : '';
+            $advice1 = 'Je te conseille d\'aller délivrer le prisonnier sur ' . $advice['advice1'];
+            $advice2 = ($advice['advice2'] != '')? 'Tu peux continuer d\'essayer de délivrer les prisonniers de ' . $advice['advice2'] : '';
             //Récupération des données en base
             $levelArray = $user-> getNiveaux();
             $trainArray = $user->getEntrainement();
@@ -862,13 +862,6 @@ class AlticController extends AbstractController
         $mapName .= '.png';
         //$avatarImage .= '.png';
         //array representing a game for a given map
-        $gameFromMap = array(
-            'castleMAP.png'=>'mountainGame',
-            'riverMAP.png'=>'mountainGame',
-            'caveMAP.png'=>'mountainGame',
-            'mountainMAP.png'=>'mountainGame'
-        );
-        $gameName = $gameFromMap[$mapName];
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
