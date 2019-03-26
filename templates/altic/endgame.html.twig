@@ -48,6 +48,9 @@
 			<div class="row">
 				{% if nbRightAnswers >= 8 %}
 				<h2>Bravo, tu as {{ nbRightAnswers }} bonnes réponses !</h2>
+					{% if localLevel == 12 %}
+					<h2> Tu as réussi à libérer le prisonnier !</h2>
+					{% endif %}
 				{% else %}
 				<h2>Il faut encore faire des efforts, courage !</h2>
 				{% endif %}
@@ -61,7 +64,7 @@
 					</a>
 				</div>
 				<div class="col">
-					{% if nbRightAnswers >= 8 and localLevel < 12 %}
+					{% if (nbRightAnswers >= 8 or bCanPlay[globalLevel + 1] == true) and localLevel < 12 %}
 						<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel - 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
 							<button type="button" class="btn btn-outline-success">Niveau suivant</button>
 						</a>

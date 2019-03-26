@@ -687,6 +687,12 @@ class AlticController extends AbstractController
         $user = $this->getUser();
         $user->setAvatar(explode('.', $avatarImage)[0] . '.png');
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
+        $bCanPlayLevel = array_fill(0, 133, false);
+        $masteredLevels = $user->getNiveaux();
+
+        foreach ($masteredLevels as $playableLevel) {
+            $bCanPlayLevel[$playableLevel->getNumero() - 1] = true;
+        }
 
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
         $entityManager = $this->getDoctrine()->getManager();
@@ -783,7 +789,8 @@ class AlticController extends AbstractController
             'timeElapsed'=>$timeElapsedSeconds,
             'questions'=>$templateQuestionsAnswers,
             'givenAnswers'=>$givenAnswers,
-            'regionName'=>$this->getRegionFromTable($table)
+            'regionName'=>$this->getRegionFromTable($table),
+            'bCanPlay'=>$bCanPlayLevel
             ]);
     }
 
