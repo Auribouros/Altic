@@ -62,6 +62,21 @@ class AlticController extends AbstractController
     }
 
     /**
+     * @Route("/teacher/remove/{id}", name="altic_teacherRemovePupil")
+     */
+    public function removePupil($id)
+    {
+        $user = $this->getUser();
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $pupil = $repositoryUtilisateur->find($id);
+        $user->removeElevesLie($pupil);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute("altic_teacherWelcome");
+    }
+
+    /**
      * @Route("/teacher/{id}", name="altic_teacherPupilData")
      */
     public function teacherPupilData($id)
