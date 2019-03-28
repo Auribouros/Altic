@@ -121,10 +121,10 @@ class AlticController extends AbstractController
                         $pupilStats[(int)($level->getNumero()/12)+1][0] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                     }
                 }
-                foreach ($levelArray as $level){
-                    $trainLev= $level->getEntrainement();
-                    $pupilStats[(int)($level->getNumero()/12)+1][1] += (int)(sizeof($trainLev));
-                } 
+                foreach ($trainArray as $train){
+                    $levTrain=$train->getNiveaux();
+                    $pupilStats[(int)($levTrain[0]->getNumero()/12)+1][1]+=1;
+                }
             }
         }
     	return $this->render('altic/teacherPupilData.html.twig',
