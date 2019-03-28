@@ -439,7 +439,7 @@ class AlticController extends AbstractController
         } else {
             $pupilFullName = $user->getNom()." ".$user->getPrenom();
 
-            $trophyArray=array();
+            $trophyArray=array_fill(0, 11, false);
             //initialise mastery levels to non mastered
             $minimalMastery = array();
             $totalMastery = array();
@@ -600,13 +600,12 @@ class AlticController extends AbstractController
                                  [
                                 'teacherLynx'=>$lynxTeacher,
                                  'addTeacher'=>$addTeacher->createView(),
-                                  'hallOfTrophy'=>$trophyArray,
+                                 'hallOfTrophy'=>$trophyArray,
                                  'userName'=>$pupilFullName,
                                  'profilePic'=>$user->getAvatar(),
                                  'advice1'=>$advice1,
                                  'advice2'=>$advice2,
-                                 'percentArray'=>$percentArray,
-                                 'debug'=>$masteredLevels
+                                 'percentArray'=>$percentArray
                                 ]);
         }
     }
