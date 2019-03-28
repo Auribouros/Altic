@@ -24,6 +24,7 @@
 
 	<div class="row">
 		{% for i in 0..(images|length - 1) / 2 %}
+		<div class="col-2">
 		{% if bCanPlay[i] == true %}
 		<a href="{{ path('altic_choiceAvatar', {
 			tableNumber: tableNumber,
@@ -35,10 +36,12 @@
 		{% else %}
 		<img title="Tu n'as pas encore débloqué cette carte !" style="width: 150px;  height: 150px; filter: grayscale(100%);" class="img-thumbnail" src="{{ asset('images/pupil/games/maps/' ~ images[i]) }}">
 		{% endif %}
+		</div>
 		{% endfor %}
 	</div>
 	<div class="row">
 		{% for i in images|length / 2..images|length - 1 %}
+		<div class="col-2">
 		{% if bCanPlay[i] == true %}
 		<a href="{{ path('altic_choiceAvatar', {
 			tableNumber: tableNumber,
@@ -50,6 +53,7 @@
 		{% else %}
 		<img title="Tu n'as pas encore débloqué cette carte !" style="width: 150px;  height: 150px; filter: grayscale(100%);" class="img-thumbnail" src="{{ asset('images/pupil/games/maps/' ~ images[i]) }}">
 		{% endif %}
+		</div>
 		{% endfor %}
 	</div>
 

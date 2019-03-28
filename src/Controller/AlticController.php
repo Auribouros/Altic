@@ -665,7 +665,7 @@ class AlticController extends AbstractController
                     'tableNumber'=>$tableNumber,
                     'levelNumber'=>$levelNumber,
                     'mapName'=>$mapName,
-                    'avatarImage'=>'constantin.png'
+                    'avatarImage'=>'celestin.png'
                 ])
             );
 
@@ -987,7 +987,7 @@ class AlticController extends AbstractController
     public function pupilTraining($tableNumber, $levelNumber, $mapName, $avatarImage)
     {
         $mapName .= '.png';
-        //$avatarImage .= '.png';
+        $avatarImage .= (strpos($avatarImage, '.png') !== false)? '' : '.png';
         //array representing a game for a given map
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

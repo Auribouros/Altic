@@ -179,8 +179,8 @@ $(function() {
 			$('#'+(ligneActuelle+i-10)).fadeOut(1000);
 		}
 			
-		let left = $(this).css('left');
-		let top = $(this).css('top');
+		let left = $(this).parent().css('left');
+		let top = $(this).parent().css('top');
 		tux.setImgCSS({'top': top, 'left': left});
 		tux.setPropImgCSS({'top': parseFloat(top)-htdoc*0.1, 'left': left});
 		$('#tuxImage').hide().fadeIn(1000);
