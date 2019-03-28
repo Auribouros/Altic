@@ -35,9 +35,10 @@ class AlticController extends AbstractController
         $pupilStats = array();
         $i = 0;
         foreach ($pupils as $enf) {
+            $pupilStats[$i] = array();
             $levelArray = $enf->getNiveaux();
             $pupilStats[$i][0] = $enf->getNom() . " " . $enf->getPrenom();
-            for($j=1;$j>11;$j++){
+            for($j=1;$j<12;$j++){
                 $pupilStats[$i][$j]=0;
             }
             foreach ($levelArray as $level) {
@@ -48,35 +49,141 @@ class AlticController extends AbstractController
                 }
                 
             }
+            array_push($pupilStats[$i], $enf->getId());
             $i++;
         }
         return $this->render('altic/teacherWelcome.html.twig',
-            ['pupils' => $pupilStats, 'userName' => $teacherFullName, 'profilePic' => 'default']);
+            [
+            'pupils' => $pupilStats,
+            'userName' => $teacherFullName,
+            'profilePic' => 'default',
+            'pupilStats' => $pupilStats
+            ]);
     }
 
     /**
-     * @Route("/teacher/{name}", name="altic_teacherPupilData")
+     * @Route("/teacher/remove/{id}", name="altic_teacherRemovePupil")
      */
-    public function teacherPupilData($name)
+    public function removePupil($id)
+    {
+        $user = $this->getUser();
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $pupil = $repositoryUtilisateur->find($id);
+        $user->removeElevesLie($pupil);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute("altic_teacherWelcome");
+    }
+
+    /**
+     * @Route("/teacher/{id}", name="altic_teacherPupilData")
+     */
+    public function teacherPupilData($id)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $pupils = $user->getElevesLie();
+        $time = 0;
+        foreach ($pupils as $enf) {
+            if($id==$enf->getId()){
+                $trainArray = $enf->getEntrainement();
+                $levelArray = $enf->getNiveaux();
+                $pupilStats[0][0] = $enf->getNom() . " " . $enf->getPrenom();
+                //Number of plays
+                $pupilStats[0][1] = (int)(sizeof($enf->getEntrainement()));
+                //Total progression
+                $pupilStats[0][2] = (int)((sizeof($levelArray)*100)/132);
+                foreach ($trainArray as $training){
+                    $time += $training->getDuree();
+                }
+                $hours = (int)($time/3600);
+                $time = $time - ($hours*3600);
+                $mints = (int)($time/60);
+                $time = $time - ($mints*60);
+                $secs = $time;
+                $time = $time - $secs;
+                $pupilStats[0][3]=$hours;
+                $pupilStats[0][4]=$mints;
+                $pupilStats[0][5]=$secs;
+                for($j=1;$j<12;$j++){
+                    $pupilStats[$j][0]=0;
+                    $pupilStats[$j][1]=0;
+                }
+                foreach ($levelArray as $level){
+                    //SI le niveau à son numéro modulo 12 étant égal à 0 ET que sa division par 12 n'est pas 0
+                    if($level->getNumero()%12==0){
+                        //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
+                        $pupilStats[$level->getNumero()/12][0] = 100;
+                    }else{
+                    //Sinon on calcule petit à petit le pourcentage de completion de la table
+                        $pupilStats[(int)($level->getNumero()/12)+1][0] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                    }
+                }
+                foreach ($levelArray as $level){
+                    $trainLev= $level->getEntrainement();
+                    $pupilStats[(int)($level->getNumero()/12)+1][1] += (int)(sizeof($trainLev));
+                } 
+            }
+        }
     	return $this->render('altic/teacherPupilData.html.twig',
-    						 ['userName'=>$teacherFullName, 'pupilName'=>$name, 'profilePic'=>'default']);
+    						 [
+                             'userName'=>$teacherFullName,
+                             'pupilId'=>$id,
+                             'profilePic'=>'default',
+                             'pupilStats'=>$pupilStats
+                             ]);
     }
 
     /**
-     * @Route("/teacher/{name}/{number}", name="altic_teacherPupilDataTable")
+     * @Route("/teacher/{id}/{number}", name="altic_teacherPupilDataTable")
      */
-    public function teacherPupilDataTable($name, $number)
+    public function teacherPupilDataTable($id, $number)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
     	$pupilsList = ' ';
-    	$teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $teacherFullName = $user->getNom()." ".$user->getPrenom();
+        $pupils = $user->getElevesLie();
+        $pupilData[0]=0;
+        $progress =0;
+        foreach ($pupils as $enf) {
+            if($id==$enf->getId()){
+                $levelArray = $enf->getNiveaux();
+                foreach($levelArray as $level){
+                    $table = $level->getTableDeMultiplication();
+                    if($number==$tableNbr[0]->getNumero()){
+                        $progress+=1;
+                        $trainLev = $level->getEntrainement();
+                        $pupilData[0][0]+= (int)(sizeof($trainLev));
+                        $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0]=$level->getEntrainement();
+                        for ($i=0; $i<(sizeof($pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0])) ; $i++) {
+                            array_push($trainArrayOnTable, $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0][$i]);
+                        }
+                        foreach($trainArrayOnTable as $trainin){
+                            array_push($arrayQuestions, $trainin->getQuestion());
+                            array_push($arrayDates, $trainin->getDate());
+                        }
+                        foreach($arrayQuestions as $quo){
+                            array_push($arrayQuLib, $quo->getLibelle());
+                            array_push($arrayQuRep, $quo->getReponseEnfant());
+                            array_push($arrayQuProp, $quo->getReponsepropose());
+                        }
+                        foreach($arrayQuProp as $RepProp){
+                            array_push($arrayAnswers, $repProp->getReponse());
+                        }
+                        $percentProgress = (int)(($progress/12)*100);
+
+                    }
+                }
+                
+                
+             
+            }
+        }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilName'=>$name, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+    						 ['pupilId'=>$id, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
     #########################################################

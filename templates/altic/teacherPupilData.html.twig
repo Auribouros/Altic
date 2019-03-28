@@ -6,6 +6,51 @@
 
 {{ parent() }}
 
-Données de l'élève {{pupilName}}
+{#{ dump(pupilStats) }#}
+
+{% set tablesOrder = {1:2, 2:5, 3:10, 4:1, 5:4, 6:3, 7:0, 8:6, 9:8, 10:9, 11:7} %}
+
+<div class="container">
+
+	<div class="row">
+		<h2>Données de l'élève {{ pupilStats[0][0] }}</h2>
+	</div>
+	<div class="jumbotron">
+		<div class="row">
+			<h4>Temps d'entraînement : {{ pupilStats[0][3] }} heures, {{ pupilStats[0][4] }} minutes et {{ pupilStats[0][5] }} secondes.</h4>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-3">
+				<h4>Progression totale - {{ pupilStats[0][2] }}%</h4>
+				<div class="progress">
+					<div class="progress-bar bg-info" role="progressbar" style="width: {{ pupilStats[0][2] }}%" aria-valuenow="{{ pupilStats[0][2] }}" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+			</div>
+			<div class="col-6 text-center">
+				<h4>{{ pupilStats[0][1] }} entraînements au total.</h4>
+			</div>
+		</div>
+	</div>
+	{% for i in 1..pupilStats|length - 1 %}
+	<div class="jumbotron">
+		<div class="row">
+			<div class="col">
+			<h4>Progression dans la table de {{ tablesOrder[i] }} - {{ pupilStats[i][0] }}%</h4>
+				<div class="progress">
+					<div class="progress-bar bg-info" role="progressbar" style="width: {{ pupilStats[i][0] }}%" aria-valuenow="{{ pupilStats[i][0] }}" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+			</div>
+			<div class="col-6 text-center">
+				<h4>{{ pupilStats[i][1] }} entraînements sur cette table.</h4>
+			</div>
+			<div class="col text-center">
+				<a href="#"><button class="btn btn-info">Consulter</button></a>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+</div>
 
 {% endblock %}

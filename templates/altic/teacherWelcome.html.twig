@@ -6,4 +6,51 @@
 
 {{ parent() }}
 
+{#{ dump(pupils) }#}
+
+<div id="container">
+
+	{% if pupils|length > 0 %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Table de 2</th>
+				<th scope="col">Table de 5</th>
+				<th scope="col">Table de 10</th>
+				<th scope="col">Table de 1</th>
+				<th scope="col">Table de 4</th>
+				<th scope="col">Table de 3</th>
+				<th scope="col">Table de 0</th>
+				<th scope="col">Table de 6</th>
+				<th scope="col">Table de 8</th>
+				<th scope="col">Table de 9</th>
+				<th scope="col">Table de 7</th>
+				<th scope="col"></th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for pupil in pupils %}
+
+				<tr class="table-dark">
+					<th scope="row">{{pupil[0]}}</th>
+				{% for i in 1..pupil|length - 2 %}
+
+      				<td>{{pupil[i]}} %</td>
+
+				{% endfor %}
+					<td><a href="{{ path('altic_teacherPupilData', {id: pupil[pupil|length - 1]}) }}"><button class="btn btn-info">Consulter</button></a></td>
+					<td><a href="{{ path('altic_teacherRemovePupil', {id: pupil[pupil|length - 1]}) }}"><button class="btn btn-danger">Supprimer</button></a></td>
+    			</tr>
+
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<h2>Vous ne suivez pas encore d'élèves !</h2>
+	{% endif %}
+
+</div>
+
 {% endblock %}
