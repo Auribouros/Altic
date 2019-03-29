@@ -147,6 +147,7 @@ class AlticController extends AbstractController
         $teacherFullName = $user->getNom()." ".$user->getPrenom();
         $pupils = $user->getElevesLie();
         $pupilData[0][0]=0;
+        $progress=0;
         //Prendre tous les tuples élève
         foreach ($pupils as $enf) {
             //Si l'enfant est l'enfant correspondant à l'id reçue
@@ -157,17 +158,23 @@ class AlticController extends AbstractController
                         if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
                             $pupilData[0][0]=(int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                         }
-
                     }
                 }
-                //Récupérer les niveaux liés à l'élève
+                //Récupérer les entrainements liés à l'élève
                 $trainArray = $enf->getEntrainement();
                 foreach ($trainArray as $training){
                     if($training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero()==$number){
-                        
-
+                        $progress++;
+                        $pupilData[$progress][0]=$training->getDate();
+                        for($i=0;$i<11;$i++){
+                            $pupilData[$progress][1][$i]=$training->getQuestions()[$i]->getLibelle();
+                            $pupilData[$progress][2][$i]=$training->getQuestions()[$i]->getReponseEnfant();
+                            $pupilData[$progress][3][$i]=$training->getQuestions()[$i]->getReponseProposee();
+                            for($j=0;$j<sizeof($pupilData[$progress][3][$i]);$j++){
+                                $pupilData[$progress][3][$i][$j]=$pupilData[$progress][3][$i][$j]->getReponse();
+                            }
+                        }
                     }
-
                 }
             }
         }
