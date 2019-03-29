@@ -147,53 +147,28 @@ class AlticController extends AbstractController
         $teacherFullName = $user->getNom()." ".$user->getPrenom();
         $pupils = $user->getElevesLie();
         $pupilData[0][0]=0;
-        $progress =0;
         //Prendre tous les tuples élève
         foreach ($pupils as $enf) {
             //Si l'enfant est l'enfant correspondant à l'id reçue
             if($id==$enf->getId()){
-                //Récupérer les niveaux liés à l'élève
-                $levelArray = $enf->getNiveaux();
-                //Pour chaque niveau, je dois récupérer les entraînements faits dessus
+                $enf->getNiveaux();
                 foreach($levelArray as $level){
-                    //Récupérer la table de multiplication liée au niveau
-                    $table = $level->getTableDeMultiplication();
-                    //Si le numéro de la table est le même que celui récupéré
-                    if($number==$tableNbr[0]->getNumero()){
-                        //J'incrémente progress ????
-                        $progress+=1;
-                        //Je récupére les entraînements liés au niveau
-                        $trainLev = $level->getEntrainement();
-                        //Je mets le nombre d'entraînements faits sur ce niveau et je l'additionne avec les autres
-                        $pupilData[0][0]+= (int)(sizeof($trainLev));
-                        //A l'indice de premiere dimension n en fonction de la table, au second indice 0 on met le tableau d'entraînement lié au niveau
-                        $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0]=$level->getEntrainement();
-                        //Condition est i<Taille du tableau d'entraînements
-                        for ($i=0; $i<(sizeof($pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0])) ; $i++) {
-                            //Dans $trainArrayOnTable, on met chaque entraînement fait sur ce niveau
-                            array_push($trainArrayOnTable, $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0][$i]);
+                    if($level->getTableDeMultiplications()[0]==$number){
+                        if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
+                            $pupilData[0][0]=(int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                         }
-                        //Pour chaque entraînement
-                        foreach($trainArrayOnTable as $trainin){
-                            //On récupère les questions de l'entraînement
-                            array_push($arrayQuestions, $trainin->getQuestion());
-                            array_push($arrayDates, $trainin->getDate());
-                        }
-                        foreach($arrayQuestions as $quo){
-                            array_push($arrayQuLib, $quo->getLibelle());
-                            array_push($arrayQuRep, $quo->getReponseEnfant());
-                            array_push($arrayQuProp, $quo->getReponsepropose());
-                        }
-                        foreach($arrayQuProp as $RepProp){
-                            array_push($arrayAnswers, $repProp->getReponse());
-                        }
-                        $percentProgress = (int)(($progress/12)*100);
 
                     }
                 }
-                
-                
-             
+                //Récupérer les niveaux liés à l'élève
+                $trainArray = $enf->getEntrainement();
+                foreach ($trainArray as $training){
+                    if($training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero()==$number){
+                        
+
+                    }
+
+                }
             }
         }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
