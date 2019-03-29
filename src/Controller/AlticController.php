@@ -107,6 +107,7 @@ class AlticController extends AbstractController
                 $pupilStats[0][3]=$hours;
                 $pupilStats[0][4]=$mints;
                 $pupilStats[0][5]=$secs;
+                $pupilStats[0][6]=$id;
                 for($j=1;$j<12;$j++){
                     $pupilStats[$j][0]=0;
                     $pupilStats[$j][1]=0;
@@ -152,7 +153,8 @@ class AlticController extends AbstractController
         foreach ($pupils as $enf) {
             //Si l'enfant est l'enfant correspondant à l'id reçue
             if($id==$enf->getId()){
-                $enf->getNiveaux();
+                $pupilName=$enf->getNom() . " " . $enf->getPrenom();
+                $levelArray = $enf->getNiveaux();
                 foreach($levelArray as $level){
                     if($level->getTableDeMultiplications()[0]==$number){
                         if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
@@ -180,7 +182,7 @@ class AlticController extends AbstractController
             }
         }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilId'=>$id, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+    						 ['pupilId'=>$id,'pupilName'=>$pupilName, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
     }
 
 
