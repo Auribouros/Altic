@@ -487,6 +487,7 @@ class AlticController extends AbstractController
             $percentArray[13]=$hours;
             $percentArray[14]=$mints;
             $percentArray[15]=$secs;
+            $trophyArray = array_fill(0, 11, '');
             /*La première case (% complet) regarde la taille du tableau récupéré et la divise par 132 afin d'obtenir le nombre
             de niveaux completés sur le nombre total
             Les deux dernières cases du tableau correspondent au nombre d'entraînements et au temps total passé*/
