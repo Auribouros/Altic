@@ -176,6 +176,7 @@ class AlticController extends AbstractController
                         }
                     }
                 }
+                $pupilData[0][1]=$progress;
             }
         }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
