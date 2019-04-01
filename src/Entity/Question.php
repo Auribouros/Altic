@@ -29,12 +29,12 @@ class Question
     private $reponseEnfant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Entrainement", inversedBy="question")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Entrainement", inversedBy="question", cascade={"persist", "remove"})
      */
     private $entrainement;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ReponsePropose", inversedBy="questions")
+     * @ORM\ManyToMany(targetEntity="App\Entity\ReponsePropose", inversedBy="questions", cascade={"persist", "remove"})
      */
     private $reponsepropose;
 
