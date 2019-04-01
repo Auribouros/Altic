@@ -114,8 +114,10 @@ class AlticController extends AbstractController
     {
         if($level->getReponsesSimilaires()){
             $nbRepSupp =2;
+            $AReponseSim=false;
         }else{
             $nbRepSupp=1;
+            $AReponseSim=true;
         }
         foreach ($questions as $key=> $value) {
             /*
@@ -125,7 +127,6 @@ class AlticController extends AbstractController
             $ARightAnswer=false;
             $i=0;
             $nbOfSameAnswers=0;
-            $AReponseSim=false;
             $nbOfCurrentRandomAnswer=0;
             //calculate the number of random answers
             $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+$nbRepSupp);
