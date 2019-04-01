@@ -69,6 +69,7 @@ class AlticController extends AbstractController
         */
         //generate questions
         $value=0;
+        $nbQuestion = 0;
         //calculate begining and end
         switch ($level->getOrdreDesQuestions()) {
             case 'croissant':
@@ -95,9 +96,9 @@ class AlticController extends AbstractController
                 if (! isset($questions[$value])) {
                     $questions[$value] = new Question();
                     $questions[$value]->setLibelle("$table x $value");
-                    $begining += 1;
+                    $nbQuestion += 1;
                 }
-            } while ($begining<10);
+            } while ($nbQuestion<10);
         }else {
             //ordered question
             for ($i=$begining; $i!=$ending ; $i+=$inc) {
@@ -148,7 +149,7 @@ class AlticController extends AbstractController
                         //generate an answer from the same table
                         if ($nbOfSameAnswers != $level->getNbReponsesProposeesDeLaMemeTable()) {
                             $aMultiplier=rand(0,10);
-                            if( ! isset($answers[$table*$aMultiplier])){
+                            if( ! isset($answers[$table*$aMultiplier]) && $aMultiplier != $key){
                            $answers[$table*$aMultiplier]=new ReponsePropose();
                            $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
                             $nbOfSameAnswers+=1;
@@ -163,10 +164,15 @@ class AlticController extends AbstractController
                                 if(count($arrayNumber)>=2){
                                 $inverse=$arrayNumber[1].$arrayNumber[0];
                                 if(abs(($table*$key)-$inverse)<=20){
+                                    if( ! isset($inverse) && ($inverse!= $aInverser)){
                                 $answers[$inverse]=new ReponsePropose();
                                 $answers[$inverse]->setReponse($inverse);
                                 $i+=1;
                                 $AReponseSim =true;
+                            }else{
+                                $nbOfRandomAnswers+=1;
+                                $AReponseSim =true;
+                            }
                             }else{
                                 $nbOfRandomAnswers+=1;
                                 $AReponseSim =true;
@@ -180,7 +186,7 @@ class AlticController extends AbstractController
                     case 3:
                         //generate everything else
                         if ($nbOfCurrentRandomAnswer != $nbOfRandomAnswers) {
-                            $valeur=rand(0,$level->getEcartEntreLesReponses());
+                            $valeur=rand(1,$level->getEcartEntreLesReponses());
                             $estAddition =rand(0,1);
                                 if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
                                     if ($estAddition==1) {
