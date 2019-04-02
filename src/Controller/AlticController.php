@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\AddTeacherType;
 use \Datetime as DateTime;
 use App\Form\ForgetPasswordType;
+use App\Form\ChangePasswordType;
 
 
 class AlticController extends AbstractController
@@ -908,31 +909,56 @@ class AlticController extends AbstractController
     $form = $this->createForm(ForgetPasswordType::class);
     $form->handleRequest($request);
     if($form->isSubmitted() && $form->isValid()){
-        $email = $form->getData();
-    $message = (new \Swift_Message('Hello Email'))
+        $email = $form->get('email')->getData();
+        $em = $this->getDoctrine()->getManager();
+        $usrRepo = $em->getRepository(Utilisateur::class);
+        $user = $usrRepo->findOneBy(['email'=>$email]);
+        if(!empty($user)){
+    $message = (new \Swift_Message('Mot de passe oublie'))
     ->setFrom('altic.noreply@gmail.com')
-    ->setTo($email['email'])
+    ->setTo($email)
     ->setBody(
         $this->renderView(
             'mail/forgotPassword.html.twig',
-            ['name' => 'bidule']
+            ['id' => $user->getId()]
         ),
         'text/html'
     );
     $mailer->send($message);
         
-    }/*else{
+    }else{
             $this->addFlash(
                 'notice',
                 "ce mail n'existe pas"
             );
-        }*/
+        }
+    }
         return $this->render('altic/pwdLost.html.twig', [
             'userName'=>'', 
             'profilePic'=>'default',
             'pwdLost'=>$form->createView()]);
     }
 
+    /**
+     * @Route("/pwdLost/{id}", name="altic_changePassword")
+     */
+    public function changePassword($id,Request $request,UserPasswordEncoderInterface $encoder){
+        $form = $this->createForm(ChangePasswordType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()){
+        $newPassword= $form->get("newPassword")->getData();
+        $em = $this->getDoctrine()->getManager();
+        $usrRepo = $em->getRepository(Utilisateur::class);
+        $user = $usrRepo->find($id);    
+        $user->setPassword( 
+            $encoder->encodePassword(
+                $user,
+                $newPassword
+            )
+         );
+        }
+        return $this->render('security/changePassword.html.twig', ['changePassword'=>$form->createView()]);
+    }
     /**
      * @Route("/modifyAccount", name="altic_modifyAccount")
      */
