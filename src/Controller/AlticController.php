@@ -925,11 +925,16 @@ class AlticController extends AbstractController
         'text/html'
     );
     $mailer->send($message);
+    $this->addFlash(
+        'notice',
+        "un mail de reinitialisation de mot de passe viens d'etre envoyer a cette adresse"
+    );
         
     }else{
             $this->addFlash(
                 'notice',
-                "ce mail n'existe pas"
+                "ce mail n'existe pas
+		        Êtes-vous sur d'avoir crée un compte ?"
             );
         }
     }
