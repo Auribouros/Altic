@@ -8,9 +8,19 @@
 
 <div class="container">
 
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
 
 	<div class="row">
-		<div class="col"><p style="font-family: 'roboto'; text-align: center;" class="h3">Récupération de mot de passe</p></div>
+		<div class="col"><p style="font-family: 'roboto'; text-align: center;" class="h3">Récupération de mot de passe</p>
+		{{ form_start(pwdLost) }}
+		{{ form_row(pwdLost.email)}}
+        <button class="btn btn-lg btn-primary" type="submit">Changer mon mot de passe</button>
+		{{ form_end(pwdLost)}}
+		</div>
 	</div>
 
 

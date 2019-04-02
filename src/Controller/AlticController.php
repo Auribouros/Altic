@@ -18,6 +18,7 @@ use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\AddTeacherType;
 use \Datetime as DateTime;
+use App\Form\ForgetPasswordType;
 
 
 class AlticController extends AbstractController
@@ -901,11 +902,35 @@ class AlticController extends AbstractController
     /**
      * @Route("/pwdLost", name="altic_pwdLost")
      */
-    public function pwdLost()
+    public function pwdLost( \Swift_Mailer $mailer,Request $request)
     {
+        
+    $form = $this->createForm(ForgetPasswordType::class);
+    $form->handleRequest($request);
+    if($form->isSubmitted() && $form->isValid()){
+        $email = $form->getData();
+    $message = (new \Swift_Message('Hello Email'))
+    ->setFrom('altic.noreply@gmail.com')
+    ->setTo($email['email'])
+    ->setBody(
+        $this->renderView(
+            'mail/forgotPassword.html.twig',
+            ['name' => 'bidule']
+        ),
+        'text/html'
+    );
+    $mailer->send($message);
+        
+    }/*else{
+            $this->addFlash(
+                'notice',
+                "ce mail n'existe pas"
+            );
+        }*/
         return $this->render('altic/pwdLost.html.twig', [
             'userName'=>'', 
-            'profilePic'=>'default']);
+            'profilePic'=>'default',
+            'pwdLost'=>$form->createView()]);
     }
 
     /**
