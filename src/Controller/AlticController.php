@@ -182,7 +182,7 @@ class AlticController extends AbstractController
             }
         }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilId'=>$id,'pupilName'=>$pupilName, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+    						 ['pupilId'=>$id,'pupilName'=>$pupilName, 'tableNumber'=>$number, 'userName'=>$teacherFullName,'pupilData'=>$pupilData, 'profilePic'=>'default']);
     }
 
 
