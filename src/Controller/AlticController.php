@@ -416,7 +416,7 @@ class AlticController extends AbstractController
 
     private function getLevelMaps()
     {
-        $map0 = array('crack.png', 'rockland.png', 'fantasy.png', 'desertMountain.png', 'fantasy.png', 'crack.png', 'fantasy2.png', 'crack.png', 'fantasy.png', 'fantasy.png', 'fantasy2.png', 'highMountain.png');
+        $map0 = array('crack00.png', 'rockland00.png', 'fantasy00.png', 'desertMountain00.png', 'fantasy00.png', 'crack00.png', 'fantasy200.png', 'crack00.png', 'fantasy00.png', 'fantasy00.png', 'fantasy200.png', 'highMountain00.png');
         $map1 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
         $map2 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
         $map3 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
@@ -809,9 +809,13 @@ class AlticController extends AbstractController
         $pupilFullName = $user->getNom()." ".$user->getPrenom();
         $bCanPlayLevel = array_fill(0, 133, false);
         $masteredLevels = $user->getNiveaux();
+        $bAlreadyMasteredLevel = false;
 
         foreach ($masteredLevels as $playableLevel) {
             $bCanPlayLevel[$playableLevel->getNumero() - 1] = true;
+            if ($playableLevel->getNumero() == $globalLevelNumber) {
+                $bAlreadyMasteredLevel = true;
+            }
         }
 
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
@@ -821,6 +825,7 @@ class AlticController extends AbstractController
         $questions = array();
         $suggestedAnswers = array();
         $level = $repositoryNiveau->findOneByNumero($globalLevelNumber);
+        $mainCharacter = 'constantin.png';
        
         $trainingSession = new Entrainement();
         $trainingSession->setDuree($timeElapsedSeconds);
@@ -877,7 +882,8 @@ class AlticController extends AbstractController
         }
 
 
-        if ($nbRightAnswers >= 8) {
+
+        if ($nbRightAnswers >= 9 && $bAlreadyMasteredLevel == false) {
             $user->addNiveau($level);
             foreach ($charactersToWinFromLevel as $index => $character) {
                 if ($globalLevelNumber == $index) {
@@ -886,6 +892,7 @@ class AlticController extends AbstractController
                     $wonCharacter->setImage($character);
                     $entityManager->persist($wonCharacter);
                     $user->addPersonnageJouable($wonCharacter);
+                    $mainCharacter = $character;
                 }
             }
         }
@@ -910,7 +917,8 @@ class AlticController extends AbstractController
             'questions'=>$templateQuestionsAnswers,
             'givenAnswers'=>$givenAnswers,
             'regionName'=>$this->getRegionFromTable($table),
-            'bCanPlay'=>$bCanPlayLevel
+            'bCanPlay'=>$bCanPlayLevel,
+            'mainCharacter'=>$mainCharacter
             ]);
     }
 

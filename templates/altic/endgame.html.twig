@@ -46,15 +46,15 @@
 		<!--play paths-->
 		<div class="col-3">
 			<div class="row">
-				{% if nbRightAnswers >= 8 %}
+				{% if nbRightAnswers >= 9 %}
 				<h2>Bravo, tu as {{ nbRightAnswers }} bonnes réponses !</h2>
 					{% if localLevel == 12 %}
-					<h2> Tu as réussi à libérer le prisonnier !</h2>
+					<h2> Tu as réussi à libérer le prisonnier ! Bien joué !</h2>
 					{% endif %}
 				{% else %}
-				<h2>Il faut encore faire des efforts, courage !</h2>
+				<h2>Tu as {{ nbRightAnswers }} bonnes réponses. Il faut encore faire des efforts, courage !</h2>
 				{% endif %}
-				<img class="img-fluid" src="{{ asset('images/pupil/characters/constantin.png') }}">
+				<img class="img-fluid" src="{{ asset('images/pupil/characters/' ~ mainCharacter) }}">
 			</div>
 			<br>
 			<div class="row">
@@ -64,7 +64,7 @@
 					</a>
 				</div>
 				<div class="col">
-					{% if (nbRightAnswers >= 8 or bCanPlay[globalLevel + 1] == true) and localLevel < 12 %}
+					{% if (nbRightAnswers >= 9 or bCanPlay[globalLevel + 1] == true) and localLevel < 12 %}
 						<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel - 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
 							<button type="button" class="btn btn-outline-success">Niveau suivant</button>
 						</a>

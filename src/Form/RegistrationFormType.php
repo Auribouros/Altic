@@ -34,7 +34,7 @@ class RegistrationFormType extends AbstractType
             'second_options' => ['label' => 'comfirmer le mot de passe'],
         ])
         ->add('estEnseignant', ChoiceType::class,
-        [   'label' => 'vous etes un',
+        [   'label' => 'vous êtes un',
             'choices'=>[
             'enfant'=>false,
             'enseignant'=>true
