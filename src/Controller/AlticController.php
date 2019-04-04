@@ -268,7 +268,7 @@ class AlticController extends AbstractController
             $nbOfSameAnswers=0; 
             $nbOfCurrentRandomAnswer=0;
             //calculate the number of random answers
-            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+1);
+            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+$nbSupp);
 
             /*
                 generate answers
@@ -304,8 +304,9 @@ class AlticController extends AbstractController
                         if(count($arrayNumber)>=2){
                         $inverse=$arrayNumber[1].$arrayNumber[0];
                         if(abs(($table*$key)-$inverse)<=20){
-                            if( ! isset($inverse) && ($inverse!= $aInverser)){
-                            $reponses[$inverse]=new Reponse($inverse);
+                            if( ! isset($answers[$inverse]) && ($inverse!= $aInverser)){
+                                $answers[$inverse]=new ReponsePropose();
+                                $answers[$inverse]->setReponse($inverse);
                             $i+=1;
                             $AReponseSim =true;
                     }else{
@@ -325,7 +326,7 @@ class AlticController extends AbstractController
                     case 3:
                         //generate everything else
                         if ($nbOfCurrentRandomAnswer != $nbOfRandomAnswers) {
-                            $valeur=rand(0,$level->getEcartEntreLesReponses());
+                            $valeur=rand(1,$level->getEcartEntreLesReponses());
                             $estAddition =rand(0,1);
                                 if(( ! isset($answers[$table*$key+$valeur]))||( ! isset($answers[$table*$key-$valeur]))){
                                     if ($estAddition==1) {
