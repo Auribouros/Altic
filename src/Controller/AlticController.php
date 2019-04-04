@@ -258,6 +258,13 @@ class AlticController extends AbstractController
             $answers = array();
             $ARightAnswer=false;
             $i=0;
+            if( $level->getReponsesSimilaires()){
+            $AReponseSim = false;
+            $nbSupp = 2;
+        }else {
+            $nbSupp =1;
+            $AReponseSim = true;
+        }
             $nbOfSameAnswers=0; 
             $nbOfCurrentRandomAnswer=0;
             //calculate the number of random answers
@@ -282,7 +289,7 @@ class AlticController extends AbstractController
                         //generate an answer from the same table
                         if ($nbOfSameAnswers != $level->getNbReponsesProposeesDeLaMemeTable()) {
                             $aMultiplier=rand(0,10);
-                            if( ! isset($answers[$table*$aMultiplier])){
+                            if( ! isset($answers[$table*$aMultiplier]) && ($aMultiplier != $key)){
                            $answers[$table*$aMultiplier]=new ReponsePropose();
                            $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
                             $nbOfSameAnswers+=1;
@@ -290,7 +297,30 @@ class AlticController extends AbstractController
                             }
                         }
                         break;
-                    case 2:
+                    case 2: 
+                    if(! $AReponseSim){
+                        $aInverser = $key*$table;
+                        $arrayNumber=str_split($aInverser);
+                        if(count($arrayNumber)>=2){
+                        $inverse=$arrayNumber[1].$arrayNumber[0];
+                        if(abs(($table*$key)-$inverse)<=20){
+                            if( ! isset($inverse) && ($inverse!= $aInverser)){
+                            $reponses[$inverse]=new Reponse($inverse);
+                            $i+=1;
+                            $AReponseSim =true;
+                    }else{
+                        $nbOfRandomAnswers+=1;
+                        $AReponseSim =true;
+                    }
+                    }else{
+                        $nbOfRandomAnswers+=1;
+                        $AReponseSim =true;
+                    }
+                        }else{
+                        $nbOfRandomAnswers+=1;
+                        $AReponseSim =true;
+                        }
+                }
                         break;
                     case 3:
                         //generate everything else
