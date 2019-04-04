@@ -150,7 +150,7 @@ class AlticController extends AbstractController
                         //generate an answer from the same table
                         if ($nbOfSameAnswers != $level->getNbReponsesProposeesDeLaMemeTable()) {
                             $aMultiplier=rand(0,10);
-                            if( ! isset($answers[$table*$aMultiplier]) && $aMultiplier != $key){
+                            if( ! isset($answers[$table*$aMultiplier]) && ($aMultiplier != $key)){
                            $answers[$table*$aMultiplier]=new ReponsePropose();
                            $answers[$table*$aMultiplier]->setReponse($table*$aMultiplier);
                             $nbOfSameAnswers+=1;
