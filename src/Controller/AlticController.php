@@ -156,7 +156,7 @@ class AlticController extends AbstractController
                 $pupilName=$enf->getNom() . " " . $enf->getPrenom();
                 $levelArray = $enf->getNiveaux();
                 foreach($levelArray as $level){
-                    if($level->getTableDeMultiplications()[0]==$number){
+                    if($level->getTableDeMultiplications()[0]->getNumero()==$number){
                         if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
                             $pupilData[0][0]=(int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                         }
