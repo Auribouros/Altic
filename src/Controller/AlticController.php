@@ -156,7 +156,8 @@ class AlticController extends AbstractController
                 $pupilName=$enf->getNom() . " " . $enf->getPrenom();
                 $levelArray = $enf->getNiveaux();
                 foreach($levelArray as $level){
-                    if($level->getTableDeMultiplications()[0]->getNumero()==$number){
+                    $tableLev=$level->getTableDeMultiplications();
+                    if($tableLev[0]->getNumero()==$number){
                         if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
                             $pupilData[0][0]=(int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                         }
@@ -165,6 +166,8 @@ class AlticController extends AbstractController
                 //Récupérer les entrainements liés à l'élève
                 $trainArray = $enf->getEntrainement();
                 foreach ($trainArray as $training){
+                    $numb=$training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero();
+                    var_dump($numb);
                     if($training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero()==$number){
                         $progress++;
                         $pupilData[$progress][0]=$training->getDate();
