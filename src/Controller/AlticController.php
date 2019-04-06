@@ -268,7 +268,7 @@ class AlticController extends AbstractController
             $nbOfSameAnswers=0; 
             $nbOfCurrentRandomAnswer=0;
             //calculate the number of random answers
-            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+1);
+            $nbOfRandomAnswers=($level->getNombreDeReponses())-($level->getNbReponsesProposeesDeLaMemeTable()+$nbSupp);
 
             /*
                 generate answers
