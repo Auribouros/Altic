@@ -171,7 +171,7 @@ class AlticController extends AbstractController
                     $numb=$training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero();
                     if($numb==$number){
                         $progress++;
-                        $pupilData[$progress][0]=$training->getDate();
+                        $pupilData[$progress][0]=$training->getDate()->format('d/m/Y');
                         for($i=0;$i<10;$i++){
                             $pupilData[$progress][1][$i]=$training->getQuestion()[$i]->getLibelle();
                             $pupilData[$progress][2][$i]=$training->getQuestion()[$i]->getReponseEnfant();
