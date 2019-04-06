@@ -29,7 +29,7 @@ class Entrainement
     private $date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Niveau", mappedBy="entrainement")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Niveau", mappedBy="entrainement", cascade={"remove"})
      */
     private $niveaux;
 
@@ -39,7 +39,7 @@ class Entrainement
     private $utilisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="entrainement")
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="entrainement", cascade={"remove"})
      */
     private $question;
 
