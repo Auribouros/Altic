@@ -39,10 +39,10 @@
 				</thead>
 
 				<tbody>
-					{% for j in 1..pupiData[i][1]|length - 1 %}
+					{% for j in 1..pupilData[i][1]|length - 1 %}
 					<tr class="table-light">
-						<td>{{ pupiData[i][1][j] }}</td>
-						<td>{{ pupiData[i][2][j] }}</td>
+						<td>{{ pupilData[i][1][j] }}</td>
+						<td>{{ pupilData[i][2][j] }}</td>
 						<td>
 							{% for k in pupilData[i][3][j] %}
 							{{ k ~ " " }}
