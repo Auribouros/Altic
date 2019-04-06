@@ -304,8 +304,8 @@ class AlticController extends AbstractController
                         if(count($arrayNumber)>=2){
                         $inverse=$arrayNumber[1].$arrayNumber[0];
                         if(abs(($table*$key)-$inverse)<=20){
-                            if( ! isset($inverse) && ($inverse!= $aInverser)){
-                            $reponses[$inverse]=new Reponse($inverse);
+                            if( ! isset($answers[$inverse]) && ($inverse!= $aInverser)){
+                            $answers[$inverse]=new Reponse($inverse);
                             $i+=1;
                             $AReponseSim =true;
                     }else{
