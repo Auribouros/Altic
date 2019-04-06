@@ -885,7 +885,7 @@ class AlticController extends AbstractController
             $entityManager->persist($tableDb);
         }
 
-        if ($nbRightAnswers >= 8) {
+        if ($nbRightAnswers >= 9) {
             $user->addNiveau($level);
             foreach ($charactersToWinFromLevel as $index => $character) {
                 if ($globalLevelNumber == $index) {

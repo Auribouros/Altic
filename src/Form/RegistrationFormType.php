@@ -29,12 +29,12 @@ class RegistrationFormType extends AbstractType
         ->add('password', RepeatedType::class, [
             'constraints'=>[ new NotBlank()],
             'type'=> PasswordType::class,
-            'invalid_message'=>'les mots de passe sont differents',
-            'first_options'  => ['label' => 'mot de passe'],
-            'second_options' => ['label' => 'comfirmer le mot de passe'],
+            'invalid_message'=>'Les mots de passe sont différents',
+            'first_options'  => ['label' => 'Mot de passe'],
+            'second_options' => ['label' => 'Confirmer le mot de passe'],
         ])
         ->add('estEnseignant', ChoiceType::class,
-        [   'label' => 'vous etes un',
+        [   'label' => 'vous êtes un',
             'choices'=>[
             'enfant'=>false,
             'enseignant'=>true
