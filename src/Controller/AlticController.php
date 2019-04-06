@@ -1024,7 +1024,7 @@ class AlticController extends AbstractController
         }
         else {
             $entityManager->persist($games[0]);
-            $templateLevel = $templateLevels[$localLevel-1];
+            $templateLevel = $templateLevels[$localLevelNumber-1];
             $level = new Niveau();
             $level->setNumero($globalLevelNumber);
             $level->setEcartEntreLesReponses($templateLevel->getEcartEntreLesReponses());

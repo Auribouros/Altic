@@ -39,7 +39,7 @@ class Utilisateur implements UserInterface
      * @Assert\NotBlank
      * @Assert\Regex(
      *      pattern="/[^0-9A-Za-z]+/",
-     *      match=true,
+     *      match=false,
      *      message="Votre mot de passe doit contenir des majuscules, des minuscules et des chiffres."
      * )
      * @Assert\Length(
