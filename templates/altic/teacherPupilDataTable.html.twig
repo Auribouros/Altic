@@ -39,20 +39,20 @@
 			</thead>
 
 			<tbody>
-				{% for j in 1..pupilData[i][1]|length - 1 %}
+				{% for j in 0..pupilData[i][1]|length - 1 %}
 				{% set multString = pupilData[i][1][j]|split('x') %}
 				{% set part1 = multString[0]|number_format %}
 				{% set part2 = multString[1]|number_format %}
 				{% set result = part1 * part2 %}
 				<tr class="table-light">
+					<td>{{ pupilData[i][1][j] }}</td>
 					<td>
-						{% if pupilData[i][1][j] == result %}
-						<p style="color: green;">{{ pupilData[i][1][j] }}</p>
+						{% if pupilData[i][2][j] == result %}
+						<p style="color: green;">{{ pupilData[i][2][j] }}</p>
 						{% else %}
-						<p style="color: red;">{{ pupilData[i][1][j] }}</p>
+						<p style="color: red;">{{ pupilData[i][2][j] }}</p>
 						{% endif %}
 					</td>
-					<td>{{ pupilData[i][2][j] }}</td>
 					<td>
 						{% for k in pupilData[i][3][j] %}
 						{{ k ~ " " }}
