@@ -41,8 +41,8 @@
 			<tbody>
 				{% for j in 1..pupilData[i][1]|length - 1 %}
 				{% set multString = pupilData[i][1][j]|split('x') %}
-				{% set part1 = multString[0] %}
-				{% set part2 = multString[1] %}
+				{% set part1 = multString[0]|number_format %}
+				{% set part2 = multString[1]|number_format %}
 				{% set result = part1 * part2 %}
 				<tr class="table-light">
 					<td>{{ pupilData[i][1][j] }}</td>
