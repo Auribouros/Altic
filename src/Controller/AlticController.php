@@ -12,6 +12,7 @@ use App\Entity\ReponsePropose;
 use App\Entity\PersonnageJouable;
 use App\Entity\Entrainement;
 use App\Entity\Jeu;
+use App\Entity\Region;
 use App\Entity\TableDeMultiplication;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -871,10 +872,16 @@ class AlticController extends AbstractController
             $trainingSession->addNiveau($level);
         }
 
-        if (!$tableDb) {
+        if ($tableDb) {
+            
+        }
+        else {
+            $tmpRegion = new Region();
+            $tmpRegion->setNom($this->getRegionFromTable($table));
+            $tmpRegion->setImgMagicien('');
             $tableDb = new TableDeMultiplication();
             $tableDb->setNumero($table);
-            $tableDb->setRegion($this->getRegionFromTable($table));
+            $tableDb->setRegion($tmpRegion);
             $entityManager->persist($tableDb);
         }
 
@@ -994,7 +1001,7 @@ class AlticController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         $repositoryNiveau = $this->getDoctrine()->getRepository(Niveau::class);
-        $level = $repositoryNiveau->findBy(["numero" => $levelNumber])[0];
+        $level = $repositoryNiveau->findOneByNumero($levelNumber);
         $localLevel = ($levelNumber % 12 == 0)? 12 : $levelNumber % 12;
 
         $questionsAnswers = $this->generateAnswers($tableNumber, $this->generateQuestions($tableNumber, $level), $level);
