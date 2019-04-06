@@ -1019,6 +1019,19 @@ class AlticController extends AbstractController
 
         }
 
+        if ($tableDb) {
+            
+        }
+        else {
+            $tmpRegion = new Region();
+            $tmpRegion->setNom($this->getRegionFromTable($table));
+            $tmpRegion->setImgMagicien('');
+            $tableDb = new TableDeMultiplication();
+            $tableDb->setNumero($table);
+            $tableDb->setRegion($tmpRegion);
+            $entityManager->persist($tableDb);
+        }
+
         if ($level) {
             $trainingSession->addNiveau($level);
         }
@@ -1034,23 +1047,10 @@ class AlticController extends AbstractController
             $level->setTempsDisponible($templateLevel->getTempsDisponible());
             $level->setOrdreDesQuestions($templateLevel->getOrdreDesQuestions());
             $level->setQuestionsATrous($templateLevel->getQuestionsATrous());
-            //$level->addTableDeMultiplication($table);
+            $level->addTableDeMultiplication($tableDb);
             $level->setJeu($games[0]);
             $entityManager->persist($level);
             $trainingSession->addNiveau($level);
-        }
-
-        if ($tableDb) {
-            
-        }
-        else {
-            $tmpRegion = new Region();
-            $tmpRegion->setNom($this->getRegionFromTable($table));
-            $tmpRegion->setImgMagicien('');
-            $tableDb = new TableDeMultiplication();
-            $tableDb->setNumero($table);
-            $tableDb->setRegion($tmpRegion);
-            $entityManager->persist($tableDb);
         }
 
         if ($nbRightAnswers >= 9 && $bAlreadyMasteredLevel == false) {
