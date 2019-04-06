@@ -1034,7 +1034,7 @@ class AlticController extends AbstractController
             $level->setTempsDisponible($templateLevel->getTempsDisponible());
             $level->setOrdreDesQuestions($templateLevel->getOrdreDesQuestions());
             $level->setQuestionsATrous($templateLevel->getQuestionsATrous());
-            $level->addTableDeMultiplication($table);
+            //$level->addTableDeMultiplication($table);
             $level->setJeu($games[0]);
             $entityManager->persist($level);
             $trainingSession->addNiveau($level);
