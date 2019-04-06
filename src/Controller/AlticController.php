@@ -167,14 +167,13 @@ class AlticController extends AbstractController
                 $trainArray = $enf->getEntrainement();
                 foreach ($trainArray as $training){
                     $numb=$training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero();
-                    var_dump($numb);
-                    if($training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero()==$number){
+                    if($numb==$number){
                         $progress++;
                         $pupilData[$progress][0]=$training->getDate();
-                        for($i=0;$i<11;$i++){
-                            $pupilData[$progress][1][$i]=$training->getQuestions()[$i]->getLibelle();
-                            $pupilData[$progress][2][$i]=$training->getQuestions()[$i]->getReponseEnfant();
-                            $pupilData[$progress][3][$i]=$training->getQuestions()[$i]->getReponseProposee();
+                        for($i=0;$i<10;$i++){
+                            $pupilData[$progress][1][$i]=$training->getQuestion()[$i]->getLibelle();
+                            $pupilData[$progress][2][$i]=$training->getQuestion()[$i]->getReponseEnfant();
+                            $pupilData[$progress][3][$i]=$training->getQuestion()[$i]->getReponsepropose();
                             for($j=0;$j<sizeof($pupilData[$progress][3][$i]);$j++){
                                 $pupilData[$progress][3][$i][$j]=$pupilData[$progress][3][$i][$j]->getReponse();
                             }
@@ -185,7 +184,12 @@ class AlticController extends AbstractController
             }
         }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilId'=>$id,'pupilName'=>$pupilName, 'tableNumber'=>$number, 'userName'=>$teacherFullName,'pupilData'=>$pupilData, 'profilePic'=>'default']);
+                            ['pupilId'=>$id,
+                            'pupilName'=>$pupilName,
+                            'tableNumber'=>$number,
+                            'userName'=>$teacherFullName,
+                            'pupilData'=>$pupilData,
+                            'profilePic'=>'default']);
     }
 
 
