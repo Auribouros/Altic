@@ -1024,7 +1024,7 @@ class AlticController extends AbstractController
         }
         else {
             $entityManager->persist($games[0]);
-            $templateLevel = $templateLevels[$localLevel-1];
+            $templateLevel = $templateLevels[$localLevelNumber-1];
             $level = new Niveau();
             $level->setNumero($globalLevelNumber);
             $level->setEcartEntreLesReponses($templateLevel->getEcartEntreLesReponses());
@@ -1034,7 +1034,7 @@ class AlticController extends AbstractController
             $level->setTempsDisponible($templateLevel->getTempsDisponible());
             $level->setOrdreDesQuestions($templateLevel->getOrdreDesQuestions());
             $level->setQuestionsATrous($templateLevel->getQuestionsATrous());
-            $level->addTableDeMultiplication($table);
+            //$level->addTableDeMultiplication($table);
             $level->setJeu($games[0]);
             $entityManager->persist($level);
             $trainingSession->addNiveau($level);
