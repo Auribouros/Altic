@@ -12,13 +12,15 @@ use App\Entity\ReponsePropose;
 use App\Entity\PersonnageJouable;
 use App\Entity\Entrainement;
 use App\Entity\Jeu;
+use App\Entity\Region;
+use App\Entity\TableDeMultiplication;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\AddTeacherType;
 use \Datetime as DateTime;
-
+use App\Repository;
 
 class AlticController extends AbstractController
 {
@@ -107,6 +109,7 @@ class AlticController extends AbstractController
                 $pupilStats[0][3]=$hours;
                 $pupilStats[0][4]=$mints;
                 $pupilStats[0][5]=$secs;
+                $pupilStats[0][6]=$id;
                 for($j=1;$j<12;$j++){
                     $pupilStats[$j][0]=0;
                     $pupilStats[$j][1]=0;
@@ -147,58 +150,50 @@ class AlticController extends AbstractController
         $teacherFullName = $user->getNom()." ".$user->getPrenom();
         $pupils = $user->getElevesLie();
         $pupilData[0][0]=0;
-        $progress =0;
+        $progress=0;
         //Prendre tous les tuples élève
         foreach ($pupils as $enf) {
             //Si l'enfant est l'enfant correspondant à l'id reçue
             if($id==$enf->getId()){
-                //Récupérer les niveaux liés à l'élève
+                $pupilName=$enf->getNom() . " " . $enf->getPrenom();
                 $levelArray = $enf->getNiveaux();
-                //Pour chaque niveau, je dois récupérer les entraînements faits dessus
                 foreach($levelArray as $level){
-                    //Récupérer la table de multiplication liée au niveau
-                    $table = $level->getTableDeMultiplication();
-                    //Si le numéro de la table est le même que celui récupéré
-                    if($number==$tableNbr[0]->getNumero()){
-                        //J'incrémente progress ????
-                        $progress+=1;
-                        //Je récupére les entraînements liés au niveau
-                        $trainLev = $level->getEntrainement();
-                        //Je mets le nombre d'entraînements faits sur ce niveau et je l'additionne avec les autres
-                        $pupilData[0][0]+= (int)(sizeof($trainLev));
-                        //A l'indice de premiere dimension n en fonction de la table, au second indice 0 on met le tableau d'entraînement lié au niveau
-                        $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0]=$level->getEntrainement();
-                        //Condition est i<Taille du tableau d'entraînements
-                        for ($i=0; $i<(sizeof($pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0])) ; $i++) {
-                            //Dans $trainArrayOnTable, on met chaque entraînement fait sur ce niveau
-                            array_push($trainArrayOnTable, $pupilData[$level->getNumero()-12*(int)($level->getNumero()/12)][0][$i]);
+                    $tableLev=$level->getTableDeMultiplications();
+                    if($tableLev[0]->getNumero()==$number){
+                        if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
+                            $pupilData[0][0]=(int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                         }
-                        //Pour chaque entraînement
-                        foreach($trainArrayOnTable as $trainin){
-                            //On récupère les questions de l'entraînement
-                            array_push($arrayQuestions, $trainin->getQuestion());
-                            array_push($arrayDates, $trainin->getDate());
-                        }
-                        foreach($arrayQuestions as $quo){
-                            array_push($arrayQuLib, $quo->getLibelle());
-                            array_push($arrayQuRep, $quo->getReponseEnfant());
-                            array_push($arrayQuProp, $quo->getReponsepropose());
-                        }
-                        foreach($arrayQuProp as $RepProp){
-                            array_push($arrayAnswers, $repProp->getReponse());
-                        }
-                        $percentProgress = (int)(($progress/12)*100);
-
                     }
                 }
-                
-                
-             
+                //Récupérer les entrainements liés à l'élève
+                $trainArray = $enf->getEntrainement();
+                foreach ($trainArray as $training){
+                    $numb=$training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero();
+                    if($numb==$number){
+                        $progress++;
+                        $pupilData[$progress][0]=$training->getDate()->format('d/m/Y');
+                        for($i=0;$i<10;$i++){
+                            $pupilData[$progress][1][$i]=$training->getQuestion()[$i]->getLibelle();
+                            $pupilData[$progress][2][$i]=$training->getQuestion()[$i]->getReponseEnfant();
+                            $pupilData[$progress][3][$i]=$training->getQuestion()[$i]->getReponsepropose();
+                            for($j=0;$j<sizeof($pupilData[$progress][3][$i]);$j++){
+                                $pupilData[$progress][3][$i][$j]=$pupilData[$progress][3][$i][$j]->getReponse();
+                            }
+                        }
+                    }
+                }
+                $pupilData[0][1]=$progress;
             }
         }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 ['pupilId'=>$id, 'tableNumber'=>$number, 'userName'=>$teacherFullName, 'profilePic'=>'default']);
+                            ['pupilId'=>$id,
+                            'pupilName'=>$pupilName,
+                            'tableNumber'=>$number,
+                            'userName'=>$teacherFullName,
+                            'pupilData'=>$pupilData,
+                            'profilePic'=>'default']);
     }
+
 
     #########################################################
 
@@ -838,7 +833,7 @@ class AlticController extends AbstractController
     /**
      * @Route("/pupil/endgame", name="altic_endgame")
      */
-    public function endgame(){
+    public function endgame(Repository\TableDeMultiplicationRepository $repositoryTable){
 
         //base variables
             $charactersToWinFromLevel = array(12=>'2.png', 24=>'5.png', 36=>'10.png', 48=>'1.png', 60=>'4.png', 72=>'3.png', 84=>'0.png', 96=>'6.png', 108=>'8.png', 130=>'7.png');
@@ -989,6 +984,7 @@ class AlticController extends AbstractController
         $suggestedAnswers = array();
         $level = $repositoryNiveau->findOneByNumero($globalLevelNumber);
         $mainCharacter = 'constantin.png';
+        $tableDb = $repositoryTable->findOneByNumero($table);
        
         $trainingSession = new Entrainement();
         $trainingSession->setDuree($timeElapsedSeconds);
@@ -1044,7 +1040,18 @@ class AlticController extends AbstractController
             $trainingSession->addNiveau($level);
         }
 
-
+        if ($tableDb) {
+            
+        }
+        else {
+            $tmpRegion = new Region();
+            $tmpRegion->setNom($this->getRegionFromTable($table));
+            $tmpRegion->setImgMagicien('');
+            $tableDb = new TableDeMultiplication();
+            $tableDb->setNumero($table);
+            $tableDb->setRegion($tmpRegion);
+            $entityManager->persist($tableDb);
+        }
 
         if ($nbRightAnswers >= 9 && $bAlreadyMasteredLevel == false) {
             $user->addNiveau($level);

@@ -7,10 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Un compte avec cet email existe déjà.")
  */
 class Utilisateur implements UserInterface
 {
@@ -23,6 +24,7 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email
      */
     private $email;
 
@@ -34,6 +36,18 @@ class Utilisateur implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     * @Assert\Regex(
+     *      pattern="/[^0-9A-Za-z]+/",
+     *      match=true,
+     *      message="Votre mot de passe doit contenir des majuscules, des minuscules et des chiffres."
+     * )
+     * @Assert\Length(
+     *      min=5,
+     *      max=50,
+     *      minMessage="Votre mot de passe doit contenir au moins {{ limit }} caractères.",
+     *      maxMessage="Votre mot de passe ne peut excéder {{ limit }} caractères."
+     * )
      */
     private $password;
 
@@ -44,11 +58,13 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Vous devez renseigner ce champs.")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Vous devez renseigner ce champs.")
      */
     private $prenom;
 

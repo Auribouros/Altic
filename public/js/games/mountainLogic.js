@@ -152,7 +152,7 @@ $(function() {
 					$('body').html(data);
 				});
 			}
-			if (questionAnswers[currentQuestion][0] != undefined) {
+			if (questionAnswers[currentQuestion] != undefined) {
 				question1 = questionAnswers[currentQuestion][0].split('t')[0];
 				affichageEtChangementQuestion(question1 +' ?');
 			}
@@ -203,7 +203,7 @@ $(function() {
 				$('body').html(data);
 			});
 		}
-		if (questionAnswers[currentQuestion][0] != undefined) {
+		if (questionAnswers[currentQuestion] != undefined) {
 			question1 = questionAnswers[currentQuestion][0].split('t')[0];
 			affichageEtChangementQuestion(question1 +' ?');
 		}
