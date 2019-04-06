@@ -26,8 +26,8 @@ class AppFixtures extends Fixture
     {
         $user2 = new Utilisateur();
         $user2->setEmail("lucy@christ.crux");
-        $user2->setNom("christ");
-        $user2->setPrenom("lucy");
+        $user2->setNom("ts");
+        $user2->setPrenom("dfw");
         $user2->setPassword(
             $this->encoder->encodePassword($user2,"lucy")
         );
