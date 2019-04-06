@@ -24,7 +24,7 @@ class TableDeMultiplication
     private $numero;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Region", mappedBy="tabledemultiplication")
+     * @ORM\OneToOne(targetEntity="App\Entity\Region", mappedBy="tabledemultiplication", cascade={"persist", "remove"})
      */
     private $region;
 
