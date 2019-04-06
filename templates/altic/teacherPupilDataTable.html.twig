@@ -5,7 +5,6 @@
 {% block body %}
 
 {{ parent() }}
-{{ dump(pupilData) }}
 
 <div class="container">
 
@@ -23,7 +22,7 @@
 			<h3>{{ pupilData[0][1] }} entraînements</h3>
 		</div>
 	</div>
-
+	<br><br>
 	<!--training results-->
 	{% for i in 1..pupilData|length - 1 %}
 	<div class="row">
@@ -41,6 +40,10 @@
 
 			<tbody>
 				{% for j in 1..pupilData[i][1]|length - 1 %}
+				{% set multString = pupilData[i][1][j]|split('x') %}
+				{% set part1 = multString[0] %}
+				{% set part2 = multString[1] %}
+				{% set result = part1 * part2 %}
 				<tr class="table-light">
 					<td>{{ pupilData[i][1][j] }}</td>
 					<td>{{ pupilData[i][2][j] }}</td>
