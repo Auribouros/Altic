@@ -24,39 +24,38 @@
 		</div>
 	</div>
 
+	<!--training results-->
+	{% for i in 1..pupilData|length - 1 %}
 	<div class="row">
-		<!--training results-->
-		{% for i in 1..pupilData|length - 1 %}
-		<div class="row">
-			<h3>Entraînement fait le {{ pupilData[i][0] }}</h3>
-		</div>
-		<div class="row">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Multiplication</th>
-						<th scope="col">Réponse de l'élève</th>
-						<th scope="col">Réponses proposées</th>
-					</tr>
-				</thead>
+		<h3>Entraînement fait le {{ pupilData[i][0] }}</h3>
+	</div>
+	<div class="row">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Multiplication</th>
+					<th scope="col">Réponse de l'élève</th>
+					<th scope="col">Réponses proposées</th>
+				</tr>
+			</thead>
 
-				<tbody>
-					{% for j in 1..pupilData[i][1]|length - 1 %}
-					<tr class="table-light">
-						<td>{{ pupilData[i][1][j] }}</td>
-						<td>{{ pupilData[i][2][j] }}</td>
-						<td>
-							{% for k in pupilData[i][3][j] %}
-							{{ k ~ " " }}
-							{% endfor %}
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-		<br>
-		{% endfor %}
+			<tbody>
+				{% for j in 1..pupilData[i][1]|length - 1 %}
+				<tr class="table-light">
+					<td>{{ pupilData[i][1][j] }}</td>
+					<td>{{ pupilData[i][2][j] }}</td>
+					<td>
+						{% for k in pupilData[i][3][j] %}
+						{{ k ~ " " }}
+						{% endfor %}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<br>
+	{% endfor %}
 	</div>
 
 </div>
