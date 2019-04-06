@@ -12,13 +12,14 @@ use App\Entity\ReponsePropose;
 use App\Entity\PersonnageJouable;
 use App\Entity\Entrainement;
 use App\Entity\Jeu;
+use App\Entity\TableDeMultiplication;
 use App\Form\modifyFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ModifyAccountType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\AddTeacherType;
 use \Datetime as DateTime;
-
+use App\Repository;
 
 class AlticController extends AbstractController
 {
@@ -156,7 +157,8 @@ class AlticController extends AbstractController
                 $pupilName=$enf->getNom() . " " . $enf->getPrenom();
                 $levelArray = $enf->getNiveaux();
                 foreach($levelArray as $level){
-                    if($level->getTableDeMultiplications()[0]->getNumero()==$number){
+                    $tableLev=$level->getTableDeMultiplications();
+                    if($tableLev[0]->getNumero()==$number){
                         if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
                             $pupilData[0][0]=(int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                         }
@@ -165,13 +167,14 @@ class AlticController extends AbstractController
                 //Récupérer les entrainements liés à l'élève
                 $trainArray = $enf->getEntrainement();
                 foreach ($trainArray as $training){
-                    if($training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero()==$number){
+                    $numb=$training->getNiveaux()[0]->getTableDeMultiplications()[0]->getNumero();
+                    if($numb==$number){
                         $progress++;
                         $pupilData[$progress][0]=$training->getDate();
-                        for($i=0;$i<11;$i++){
-                            $pupilData[$progress][1][$i]=$training->getQuestions()[$i]->getLibelle();
-                            $pupilData[$progress][2][$i]=$training->getQuestions()[$i]->getReponseEnfant();
-                            $pupilData[$progress][3][$i]=$training->getQuestions()[$i]->getReponseProposee();
+                        for($i=0;$i<10;$i++){
+                            $pupilData[$progress][1][$i]=$training->getQuestion()[$i]->getLibelle();
+                            $pupilData[$progress][2][$i]=$training->getQuestion()[$i]->getReponseEnfant();
+                            $pupilData[$progress][3][$i]=$training->getQuestion()[$i]->getReponsepropose();
                             for($j=0;$j<sizeof($pupilData[$progress][3][$i]);$j++){
                                 $pupilData[$progress][3][$i][$j]=$pupilData[$progress][3][$i][$j]->getReponse();
                             }
@@ -182,14 +185,12 @@ class AlticController extends AbstractController
             }
         }
     	return $this->render('altic/teacherPupilDataTable.html.twig',
-    						 [
-                             'pupilId'=>$id,
-                             'pupilName'=>$pupilName,
-                             'tableNumber'=>$number,
-                             'userName'=>$teacherFullName,
-                             'pupilData'=>$trainArray,
-                             'profilePic'=>'default'
-                             ]);
+                            ['pupilId'=>$id,
+                            'pupilName'=>$pupilName,
+                            'tableNumber'=>$number,
+                            'userName'=>$teacherFullName,
+                            'pupilData'=>$pupilData,
+                            'profilePic'=>'default']);
     }
 
 
@@ -668,7 +669,7 @@ class AlticController extends AbstractController
     /**
      * @Route("/pupil/endgame", name="altic_endgame")
      */
-    public function endgame(){
+    public function endgame(Repository\TableDeMultiplicationRepository $repositoryTable){
 
         //base variables
             $charactersToWinFromLevel = array(12=>'2.png', 24=>'5.png', 36=>'10.png', 48=>'1.png', 60=>'4.png', 72=>'3.png', 84=>'0.png', 96=>'6.png', 108=>'8.png', 130=>'7.png');
@@ -814,6 +815,7 @@ class AlticController extends AbstractController
         $questions = array();
         $suggestedAnswers = array();
         $level = $repositoryNiveau->findOneByNumero($globalLevelNumber);
+        $tableDb = $repositoryTable->findOneByNumero($table);
        
         $trainingSession = new Entrainement();
         $trainingSession->setDuree($timeElapsedSeconds);
@@ -869,6 +871,12 @@ class AlticController extends AbstractController
             $trainingSession->addNiveau($level);
         }
 
+        if (!$tableDb) {
+            $tableDb = new TableDeMultiplication();
+            $tableDb->setNumero($table);
+            $tableDb->setRegion($this->getRegionFromTable($table));
+            $entityManager->persist($tableDb);
+        }
 
         if ($nbRightAnswers >= 8) {
             $user->addNiveau($level);
