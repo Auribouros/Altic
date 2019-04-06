@@ -7,4 +7,56 @@
 {{ parent() }}
 {{ dump(pupilData) }}
 
+<div class="container">
+
+	<div class="row text-center">
+		<h3>Données de la table de {{ tableNumber }} de l'élève {{ pupilName }}</h3>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="progress">
+				<h4>Maîtrise de la table</h4>
+				<div class="progress-bar bg-info" role="progressbar" style="width: {{ pupilStats[0][0] }}%" aria-valuenow="{{ pupilData[0][0] }}" aria-valuemin="0" aria-valuemax="100"></div>
+			</div>
+		</div>
+		<div class="col">
+			<h3>{{ pupilData[0][1] }} entraînements</h3>
+		</div>
+
+		<!--training results-->
+		{% for i in 1..pupilData|length - 1 %}
+		<div class="row">
+			<h3>Entraînement fait le {{ pupilData[i][0] }}</h3>
+		</div>
+		<div class="row">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Multiplication</th>
+						<th scope="col">Réponse de l'élève</th>
+						<th scope="col">Réponses proposées</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for j in 1..pupiData[i][1]|length - 1 %}
+					<tr class="table-light">
+						<td>{{ pupiData[i][1][j] }}</td>
+						<td>{{ pupiData[i][2][j] }}</td>
+						<td>
+							{% for k in pupilData[i][3][j] %}
+							{{ k ~ " " }}
+							{% endfor %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% endfor %}
+
+	</div>
+
+</div>
+
 {% endblock %}
