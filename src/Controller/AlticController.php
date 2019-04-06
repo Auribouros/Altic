@@ -187,7 +187,7 @@ class AlticController extends AbstractController
                              'pupilName'=>$pupilName,
                              'tableNumber'=>$number,
                              'userName'=>$teacherFullName,
-                             'pupilData'=>$pupilData,
+                             'pupilData'=>$trainArray,
                              'profilePic'=>'default'
                              ]);
     }
