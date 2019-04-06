@@ -1830,6 +1830,7 @@ class AppFixtures extends Fixture
             $region->setNom('');
             $region->setImgMagicien('');
             $manager->persist($region);
+
             $table1 = new TableDeMultiplication();
             $table1->setNumero(1);
             $table1->setRegion($region);
@@ -1851,6 +1852,7 @@ class AppFixtures extends Fixture
             $baseLevel4->addTableDeMultiplication($table1);
             $baseLevel5->addTableDeMultiplication($table1);*/
             $manager->persist($table1);
+
             $table2 = new TableDeMultiplication();
             $table2->setNumero(5);
             $table2->setRegion($region);
