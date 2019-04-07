@@ -128,7 +128,7 @@ class AlticController extends AbstractController
                 }
                 foreach ($trainArray as $train){
                     $levTrain=$train->getNiveaux();
-                    $pupilStats[(int)($levTrain[0]->getNumero()/12)+1][1]+=1;
+                    $pupilStats[(int)($levTrain[0]->getNumero()/12)][1]+=1;
                 }
             }
         }
