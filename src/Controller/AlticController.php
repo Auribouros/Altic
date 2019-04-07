@@ -599,6 +599,13 @@ class AlticController extends AbstractController
         return $templLevels[$localLevelNumber - 1];
     }
 
+    private function getWizardFromTable($tableNumber)
+    {
+        $wizards = ['mago1.png', 'mago2.png', 'mago3.png', 'mago4.png', 'mago5.png', 'mago6.png', 'mago7.png', 'mago8.png', 'mago9.png', 'mago10.png', 'mago11.png',];
+
+        return $wizards[$tableNumber];
+    }
+
     /**
      * @Route("/pupil", name="altic_pupil")
      */
@@ -839,119 +846,10 @@ class AlticController extends AbstractController
 
         //base variables
             $charactersToWinFromLevel = array(12=>'2.png', 24=>'5.png', 36=>'10.png', 48=>'1.png', 60=>'4.png', 72=>'3.png', 84=>'0.png', 96=>'6.png', 108=>'8.png', 130=>'7.png');
-            $templateLevels = array_fill(0, 12, new Niveau());
             $games = array_fill(0, 4, new Jeu());
             foreach ($games as $game) {
                 $game->setCheminAcces('test');
             }
-
-            $templateLevels[0]->setNumero(-1);
-            $templateLevels[0]->setEcartEntreLesReponses(10);
-            $templateLevels[0]->setNombreDeReponses(3);
-            $templateLevels[0]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[0]->setReponsesSimilaires(false);
-            $templateLevels[0]->setTempsDisponible(null);
-            $templateLevels[0]->setOrdreDesQuestions('croissant');
-            $templateLevels[0]->setQuestionsATrous(false);
-            //
-            $templateLevels[1]->setNumero(-1);
-            $templateLevels[1]->setEcartEntreLesReponses(10);
-            $templateLevels[1]->setNombreDeReponses(3);
-            $templateLevels[1]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[1]->setReponsesSimilaires(false);
-            $templateLevels[1]->setTempsDisponible(null);
-            $templateLevels[1]->setOrdreDesQuestions('decroissant');
-            $templateLevels[1]->setQuestionsATrous(false);
-            //
-            $templateLevels[2]->setNumero(-1);
-            $templateLevels[2]->setEcartEntreLesReponses(7);
-            $templateLevels[2]->setNombreDeReponses(3);
-            $templateLevels[2]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[2]->setReponsesSimilaires(true);
-            $templateLevels[2]->setTempsDisponible(null);
-            $templateLevels[2]->setOrdreDesQuestions('aleatoire');
-            $templateLevels[2]->setQuestionsATrous(false);
-            //
-            $templateLevels[3]->setNumero(-1);
-            $templateLevels[3]->setEcartEntreLesReponses(7);
-            $templateLevels[3]->setNombreDeReponses(4);
-            $templateLevels[3]->setNbReponsesProposeesDeLaMemeTable(1);
-            $templateLevels[3]->setReponsesSimilaires(false);
-            $templateLevels[3]->setTempsDisponible(30);
-            $templateLevels[3]->setOrdreDesQuestions('croissant');
-            $templateLevels[3]->setQuestionsATrous(false);
-            //
-            $templateLevels[4]->setNumero(-1);
-            $templateLevels[4]->setEcartEntreLesReponses(5);
-            $templateLevels[4]->setNombreDeReponses(4);
-            $templateLevels[4]->setNbReponsesProposeesDeLaMemeTable(1);
-            $templateLevels[4]->setReponsesSimilaires(false);
-            $templateLevels[4]->setTempsDisponible(20);
-            $templateLevels[4]->setOrdreDesQuestions('decroissant');
-            $templateLevels[4]->setQuestionsATrous(false);
-            //
-            $templateLevels[5]->setNumero(-1);
-            $templateLevels[5]->setEcartEntreLesReponses(5);
-            $templateLevels[5]->setNombreDeReponses(4);
-            $templateLevels[5]->setNbReponsesProposeesDeLaMemeTable(2);
-            $templateLevels[5]->setReponsesSimilaires(true);
-            $templateLevels[5]->setTempsDisponible(10);
-            $templateLevels[5]->setOrdreDesQuestions('aleatoire');
-            $templateLevels[5]->setQuestionsATrous(false);
-            //
-            $templateLevels[6]->setNumero(-1);
-            $templateLevels[6]->setEcartEntreLesReponses(5);
-            $templateLevels[6]->setNombreDeReponses(4);
-            $templateLevels[6]->setNbReponsesProposeesDeLaMemeTable(2);
-            $templateLevels[6]->setReponsesSimilaires(true);
-            $templateLevels[6]->setTempsDisponible(10);
-            $templateLevels[6]->setOrdreDesQuestions('croissant');
-            $templateLevels[6]->setQuestionsATrous(false);
-            //
-            $templateLevels[7]->setNumero(-1);
-            $templateLevels[7]->setEcartEntreLesReponses(10);
-            $templateLevels[7]->setNombreDeReponses(0);
-            $templateLevels[7]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[7]->setReponsesSimilaires(false);
-            $templateLevels[7]->setTempsDisponible(20);
-            $templateLevels[7]->setOrdreDesQuestions('croissant');
-            $templateLevels[7]->setQuestionsATrous(true);
-            //
-            $templateLevels[8]->setNumero(-1);
-            $templateLevels[8]->setEcartEntreLesReponses(10);
-            $templateLevels[8]->setNombreDeReponses(0);
-            $templateLevels[8]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[8]->setReponsesSimilaires(false);
-            $templateLevels[8]->setTempsDisponible(10);
-            $templateLevels[8]->setOrdreDesQuestions('croissant');
-            $templateLevels[8]->setQuestionsATrous(true);
-            //
-            $templateLevels[9]->setNumero(-1);
-            $templateLevels[9]->setEcartEntreLesReponses(10);
-            $templateLevels[9]->setNombreDeReponses(0);
-            $templateLevels[9]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[9]->setReponsesSimilaires(false);
-            $templateLevels[9]->setTempsDisponible(10);
-            $templateLevels[9]->setOrdreDesQuestions('croissant');
-            $templateLevels[9]->setQuestionsATrous(true);
-            //
-            $templateLevels[10]->setNumero(-1);
-            $templateLevels[10]->setEcartEntreLesReponses(10);
-            $templateLevels[10]->setNombreDeReponses(0);
-            $templateLevels[10]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[10]->setReponsesSimilaires(false);
-            $templateLevels[10]->setTempsDisponible(10);
-            $templateLevels[10]->setOrdreDesQuestions('croissant');
-            $templateLevels[10]->setQuestionsATrous(true);
-            //
-            $templateLevels[11]->setNumero(-1);
-            $templateLevels[11]->setEcartEntreLesReponses(10);
-            $templateLevels[11]->setNombreDeReponses(0);
-            $templateLevels[11]->setNbReponsesProposeesDeLaMemeTable(0);
-            $templateLevels[11]->setReponsesSimilaires(false);
-            $templateLevels[11]->setTempsDisponible(10);
-            $templateLevels[11]->setOrdreDesQuestions('croissant');
-            $templateLevels[11]->setQuestionsATrous(true);
 
         $questionsAnswers = $_POST['questionAnswers'];
         $givenAnswers = $_POST['givenAnswers'];
@@ -1039,7 +937,7 @@ class AlticController extends AbstractController
         }
         else {
             $entityManager->persist($games[0]);
-            $templateLevel = $templateLevels[$localLevelNumber-1];
+            $templateLevel = $this->getLocalLevelTemplateFor($localLevelNumber);
             $level = new Niveau();
             $level->setNumero($globalLevelNumber);
             $level->setEcartEntreLesReponses($templateLevel->getEcartEntreLesReponses());
@@ -1168,6 +1066,7 @@ class AlticController extends AbstractController
     {
         $mapName .= '.png';
         $avatarImage .= (strpos($avatarImage, '.png') !== false)? '' : '.png';
+        $wizardImg = $this->getWizardFromTable($tableNumber);
         //array representing a game for a given map
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -1184,7 +1083,7 @@ class AlticController extends AbstractController
                 'localLevel'=>$localLevel,
                 'globalLevel'=>$levelNumber,
                 'celestinImg'=>"images/pupil/characters/$avatarImage",
-                'wizardImg'=>"images/pupil/characters/mago.png",
+                'wizardImg'=>"images/pupil/characters/$wizardImg",
                 'map'=>$mapName
             ]);
     }
