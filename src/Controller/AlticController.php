@@ -1204,7 +1204,7 @@ class AlticController extends AbstractController
         $usrRepo = $em->getRepository(Utilisateur::class);
         $user = $usrRepo->findOneBy(['email'=>$email]);
         if(!empty($user)){
-    $message = (new \Swift_Message('Mot de passe oublie'))
+    $message = (new \Swift_Message('Mot de passe oublié'))
     ->setFrom('altic.noreply@gmail.com')
     ->setTo($email)
     ->setBody(
