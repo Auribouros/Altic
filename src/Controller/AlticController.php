@@ -444,18 +444,18 @@ class AlticController extends AbstractController
 
     private function getLevelMaps()
     {
-        $map0 = array('crack00.png', 'rockland00.png', 'fantasy00.png', 'desertMountain00.png', 'fantasy00.png', 'crack00.png', 'fantasy200.png', 'crack00.png', 'fantasy00.png', 'fantasy00.png', 'fantasy200.png', 'highMountain00.png');
-        $map1 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map2 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map3 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map4 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map5 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map6 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map7 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map8 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map9 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');
-        $map10 = array('castleMAP.png', 'riverMAP.png', 'caveMAP.png', 'castleMAP.png', 'mountainMAP.png', 'caveMAP.png', 'mountainMAP.png', 'riverMAP.png', 'riverMAP.png', 'caveMAP.png');     
-        $maps = array($map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0, $map0);
+        $map0 = ['0.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png'];
+        $map1 = ['11.png', '10.png', '9.png', '8.png', '7.png', '6.png', '5.png', '4.png', '3.png', '2.png', '1.png', '0.png'];
+        $map2 = ['5.png', '6.png', '4.png', '3.png', '0.png', '1.png', '10.png', '2.png', '8.png', '7.png', '11.png', '9.png'];
+        $map3 = ['5.png', '9.png', '0.png', '10.png', '4.png', '8.png', '7.png', '2.png', '3.png', '11.png', '6.png', '1.png'];
+        $map4 = ['3.png', '6.png', '4.png', '8.png', '5.png', '10.png', '0.png', '1.png', '2.png', '11.png', '9.png', '7.png'];
+        $map5 = ['2.png', '0.png', '10.png', '1.png', '4.png', '7.png', '3.png', '6.png', '8.png', '9.png', '5.png', '11.png'];
+        $map6 = ['2.png', '6.png', '11.png', '5.png', '7.png', '4.png', '3.png', '1.png', '8.png', '10.png', '9.png', '0.png'];
+        $map7 = ['3.png', '0.png', '11.png', '9.png', '4.png', '6.png', '2.png', '5.png', '1.png', '8.png', '7.png', '10.png'];
+        $map8 = ['4.png', '8.png', '6.png', '9.png', '10.png', '7.png', '5.png', '1.png', '2.png', '0.png', '11.png', '10.png'];
+        $map9 = ['11.png', '10.png', '0.png', '9.png', '8.png', '7.png', '2.png', '5.png', '4.png', '1.png', '3.png', '6.png'];
+        $map10 = ['8.png', '0.png', '1.png', '6.png', '7.png', '11.png', '9.png', '4.png', '3.png', '10.png', '5.png', '2.png'];
+        $maps = array($map0, $map1, $map2, $map3, $map4, $map5, $map6, $map7, $map8, $map9, $map10);
 
         return $maps;
     }
