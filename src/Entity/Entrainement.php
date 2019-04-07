@@ -34,12 +34,12 @@ class Entrainement
     private $niveaux;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="entrainement")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="entrainement", cascade={"persist", "remove"})
      */
     private $utilisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="entrainement", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="entrainement", cascade={"persist", "remove"})
      */
     private $question;
 

@@ -84,7 +84,7 @@ class Utilisateur implements UserInterface
     private $personnagejouable;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Entrainement", mappedBy="utilisateur", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Entrainement", mappedBy="utilisateur",cascade={"persist", "remove"})
      */
     private $entrainement;
 
