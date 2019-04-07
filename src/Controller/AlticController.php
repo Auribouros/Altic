@@ -927,7 +927,7 @@ class AlticController extends AbstractController
     $mailer->send($message);
     $this->addFlash(
         'notice',
-        "un mail de reinitialisation de mot de passe viens d'etre envoyer a cette adresse"
+        "Un mail de réinitialisation de mot de passe vient d'être envoyé à $email." 
     );
         
     }else{
