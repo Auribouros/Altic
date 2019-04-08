@@ -933,6 +933,7 @@ class AlticController extends AbstractController
         }
 
         if ($level) {
+            $level->addTableDeMultiplication($tableDb);
             $trainingSession->addNiveau($level);
         }
         else {
