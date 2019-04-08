@@ -5,9 +5,6 @@
 {% block body %}
     {{ parent() }}
 <form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
 <div class="container">
 <div class="jumbotron">
@@ -44,6 +41,9 @@
     <button class="btn btn-lg btn-primary" type="submit">
         Se Connecter
     </button>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 </form>
 <br>
 <br>
