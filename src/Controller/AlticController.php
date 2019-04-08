@@ -451,10 +451,10 @@ class AlticController extends AbstractController
 
     private function getLevelMaps()
     {
-        $map0 = ['6.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png'];
+        $map0 = ['6.png', '1.png', '2.png', '3.png', '4.png', '5.png', '0.png', '7.png', '8.png', '9.png', '10.png', '11.png'];
         $map1 = ['11.png', '10.png', '9.png', '8.png', '7.png', '6.png', '5.png', '4.png', '3.png', '2.png', '1.png', '0.png'];
-        $map2 = ['6.png', '6.png', '4.png', '3.png', '0.png', '1.png', '10.png', '2.png', '8.png', '7.png', '11.png', '9.png'];
-        $map3 = ['6.png', '9.png', '0.png', '10.png', '4.png', '8.png', '7.png', '2.png', '3.png', '11.png', '6.png', '1.png'];
+        $map2 = ['6.png', '5.png', '4.png', '3.png', '0.png', '1.png', '10.png', '2.png', '8.png', '7.png', '11.png', '9.png'];
+        $map3 = ['6.png', '9.png', '0.png', '10.png', '4.png', '8.png', '7.png', '2.png', '3.png', '11.png', '5.png', '1.png'];
         $map4 = ['3.png', '6.png', '4.png', '8.png', '5.png', '10.png', '0.png', '1.png', '2.png', '11.png', '9.png', '7.png'];
         $map5 = ['2.png', '0.png', '10.png', '1.png', '4.png', '7.png', '3.png', '6.png', '8.png', '9.png', '5.png', '11.png'];
         $map6 = ['2.png', '6.png', '11.png', '5.png', '7.png', '4.png', '3.png', '1.png', '8.png', '10.png', '9.png', '0.png'];
