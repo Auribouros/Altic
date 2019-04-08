@@ -65,7 +65,7 @@
 				</div>
 				<div class="col">
 					{% if (nbRightAnswers >= 9 or bCanPlay[globalLevel + 1] == true) and localLevel < 12 %}
-						<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel - 1]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
+						<a href="{{ path('altic_pupilTraining', {tableNumber:tableNumber, levelNumber:globalLevel + 1, mapName:maps[localLevel]|split('.')[0], avatarImage:avatarImg|split('.')[0]}) }}">
 							<button type="button" class="btn btn-outline-success">Niveau suivant</button>
 						</a>
 					{% endif %}
