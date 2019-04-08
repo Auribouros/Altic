@@ -49,7 +49,7 @@ class AlticController extends AbstractController
                 if ($level->getNumero() % 12 == 0) {
                     $pupilStats[$i][$level->getNumero() / 12] = 100;
                 } else{ 
-                    if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilStats[$i][(int)($level->getNumero()/12)+1][0]){
+                    if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilStats[$i][(int)($level->getNumero()/12)+1]){
                         $pupilStats[$i][(int) ($level->getNumero() / 12) + 1] = (int) (100 * ($level->getNumero() - 12 * (int) ($level->getNumero() / 12)) / 12);
                     }
                 }
