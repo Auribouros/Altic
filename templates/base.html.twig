@@ -30,7 +30,11 @@
                     {% endif %}
     				<div class="col-sm-2">
                         {% if userName != '' %}
+                           {% if profilePic != 'default' %}
     					   <a href="{{ path('altic_pupil') }}"><p>{{userName}}</p></a>
+                           {% else %}
+                           <a href="{{ path('altic_teacherWelcome') }}"><p>{{userName}}</p></a>
+                           {% endif %}
     					   <a href="/logout">Déconnexion</a>
                            <a href="/modifyAccount"><img style="height: 20px; width: auto;" src="{{ asset('images/utility/icons/cog.png') }}"></a>
                         {% endif %}
