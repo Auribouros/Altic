@@ -168,8 +168,12 @@ class AlticController extends AbstractController
                 foreach($levelArray as $level){
                     $tableLev=$level->getTableDeMultiplications();
                     if($tableLev[0]->getNumero()==$number){
-                        if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
-                            $pupilData[0][0]=(int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                        if($level->getNumero()%12==0){
+                            //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
+                            $pupilData[0][0] = 100;
+                        }else{
+                        //Sinon on calcule petit à petit le pourcentage de completion de la table
+                            $pupilData[0][0] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                         }
                     }
                 }
