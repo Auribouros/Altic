@@ -4,10 +4,6 @@
 
 {% block body %}
     {{ parent() }}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
 <div class="container">
 <div align="center" class="embed-responsive embed-responsive-16by9">
@@ -15,6 +11,10 @@
         <source src="{{ asset('video/final.mp4') }}" type="video/mp4">
     </video>
 </div>
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 <br>
 <div class="jumbotron">
     <h1 class="h3 mb-3 font-weight-normal">Connectez-vous ici pour continuer l'aventure !</h1>
