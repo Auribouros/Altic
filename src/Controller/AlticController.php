@@ -902,7 +902,7 @@ class AlticController extends AbstractController
             for ($i=0; $i < sizeof($row); $i++) {
                 if ($i == 0) {
                     $currentQuestion = new Question();
-                    $currentQuestion->setLibelle(str_replace('t', '', $row[$i]));
+                    $currentQuestion->setLibelle(preg_replace('/t[0-9]*/', '', $row[$i]));
                     $currentQuestion->setReponseEnfant($givenAnswers[$j]);
                     array_push($questions, $currentQuestion);
                 }
@@ -1095,42 +1095,42 @@ class AlticController extends AbstractController
     public function pwdLost( \Swift_Mailer $mailer,Request $request)
     {
         
-    $form = $this->createForm(ForgetPasswordType::class);
-    $form->handleRequest($request);
-    if($form->isSubmitted() && $form->isValid()){
-        $email = $form->get('email')->getData();
-        $em = $this->getDoctrine()->getManager();
-        $usrRepo = $em->getRepository(Utilisateur::class);
-        $user = $usrRepo->findOneBy(['email'=>$email]);
-        if(!empty($user)){
-    $message = (new \Swift_Message('Mot de passe oublié'))
-    ->setFrom('altic.noreply@gmail.com')
-    ->setTo($email)
-    ->setBody(
-        $this->renderView(
-            'mail/forgotPassword.html.twig',
-            ['id' => $user->getId()]
-        ),
-        'text/html'
-    );
-    $mailer->send($message);
-    $this->addFlash(
-        'notice',
-        "Un mail de réinitialisation de mot de passe vient d'être envoyé à $email." 
-    );
-        
-    }else{
-            $this->addFlash(
-                'notice',
-                "ce mail n'existe pas
-		        Êtes-vous sur d'avoir crée un compte ?"
-            );
+        $form = $this->createForm(ForgetPasswordType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $email = $form->get('email')->getData();
+            $em = $this->getDoctrine()->getManager();
+            $usrRepo = $em->getRepository(Utilisateur::class);
+            $user = $usrRepo->findOneBy(['email'=>$email]);
+            if(!empty($user)){
+        $message = (new \Swift_Message('Mot de passe oublié'))
+        ->setFrom('altic.noreply@gmail.com')
+        ->setTo($email)
+        ->setBody(
+            $this->renderView(
+                'mail/forgotPassword.html.twig',
+                ['id' => $user->getId()]
+            ),
+            'text/html'
+        );
+        $mailer->send($message);
+        $this->addFlash(
+            'notice',
+            "Un mail de réinitialisation de mot de passe vient d'être envoyé à $email." 
+        );
+            
+        }else{
+                $this->addFlash(
+                    'notice',
+                    "ce mail n'existe pas
+    		        Êtes-vous sur d'avoir crée un compte ?"
+                );
+            }
         }
-    }
-        return $this->render('altic/pwdLost.html.twig', [
-            'userName'=>'', 
-            'profilePic'=>'default',
-            'pwdLost'=>$form->createView()]);
+            return $this->render('altic/pwdLost.html.twig', [
+                'userName'=>'', 
+                'profilePic'=>'default',
+                'pwdLost'=>$form->createView()]);
     }
 
     /**

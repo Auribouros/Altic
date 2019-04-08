@@ -152,8 +152,10 @@ $(function() {
 					$('body').html(data);
 				});
 			}
-			question1 = questionAnswers[currentQuestion][0].split('t')[0];
-			affichageEtChangementQuestion(question1 +' ?');
+			if (questionAnswers[currentQuestion] != undefined) {
+				question1 = questionAnswers[currentQuestion][0].split('t')[0];
+				affichageEtChangementQuestion(question1 +' ?');
+			}
 
 			
 		}
@@ -201,8 +203,10 @@ $(function() {
 				$('body').html(data);
 			});
 		}
-		question1 = questionAnswers[currentQuestion][0].split('t')[0];
-		affichageEtChangementQuestion(question1 +' ?');
+		if (questionAnswers[currentQuestion] != undefined) {
+			question1 = questionAnswers[currentQuestion][0].split('t')[0];
+			affichageEtChangementQuestion(question1 +' ?');
+		}
 
 	});
 

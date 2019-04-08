@@ -24,6 +24,36 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager)
     {
+        $user2 = new Utilisateur();
+        $user2->setEmail("lucy@christ.crux");
+        $user2->setNom("ts");
+        $user2->setPrenom("dfw");
+        $user2->setPassword(
+            $this->encoder->encodePassword($user2,"lucy")
+        );
+
+        $user2->setEstEnseignant(false);
+        $manager->persist($user2);
+
+        $user3 = new Utilisateur();
+        $user3->setEmail("haha@yes.o");
+        $user3->setNom("zowie");
+        $user3->setPrenom("wowie");
+        $user3->setPassword(
+            $this->encoder->encodePassword($user3,"yes")
+        );
+
+        $user3->setEstEnseignant(false);
+        $manager->persist($user3);
+
+        for ($i = 0; $i < 10; $i++) {
+            $training = new Entrainement();
+            $training->setDate(new \DateTime('@'.\strtotime('now')));
+            $training->setDuree(mt_rand(10, 1000));
+            $training->setUtilisateur($user2);
+            $manager->persist($training);
+        }
+
         $tablesOrder = array(2, 5, 10, 1, 4, 3, 0, 6, 8, 9, 7);
         $baseLevels = array_fill(0, 12, new Niveau());
         $games = array_fill(0, 4, new Jeu());
