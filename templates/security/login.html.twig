@@ -7,8 +7,14 @@
 <form method="post">
 
 <div class="container">
+<div align="center" class="embed-responsive embed-responsive-16by9">
+    <video autoplay class="embed-responsive-item">
+        <source src="{{ asset('video/final.mp4') }}" type="video/mp4">
+    </video>
+</div>
+<br>
 <div class="jumbotron">
-    <h1 class="h3 mb-3 font-weight-normal">Connectez-vous ici</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Connectez-vous ici pour continuer l'aventure !</h1>
     <div class="row">
     <div class="col-4">
         <label for="inputEmail" class="sr-only">Email</label>
@@ -53,11 +59,6 @@
 <div class="row">
     <a href="{{ path('altic_pwdLost') }}">Mot de passe oublié</a><BR>
 </div>
-</div>
-<br>
-<div class="row">
-    <h1>Aidez Célestin dans ses fabuleuses aventures</h1><BR>
-    <img src="{{asset('images/index/jeu1.png')}}" style="">
 </div>
 </div>
 {% endblock %}
