@@ -558,7 +558,7 @@ class AlticController extends AbstractController
             $templLevels[7]->setNbReponsesProposeesDeLaMemeTable(0);
             $templLevels[7]->setReponsesSimilaires(false);
             $templLevels[7]->setTempsDisponible(20);
-            $templLevels[7]->setOrdreDesQuestions('croissant');
+            $templLevels[7]->setOrdreDesQuestions('decroissant');
             $templLevels[7]->setQuestionsATrous(true);
             //
             $templLevels[8] = new Niveau();
@@ -568,7 +568,7 @@ class AlticController extends AbstractController
             $templLevels[8]->setNbReponsesProposeesDeLaMemeTable(0);
             $templLevels[8]->setReponsesSimilaires(false);
             $templLevels[8]->setTempsDisponible(10);
-            $templLevels[8]->setOrdreDesQuestions('croissant');
+            $templLevels[8]->setOrdreDesQuestions('aleatoire');
             $templLevels[8]->setQuestionsATrous(true);
             //
             $templLevels[9] = new Niveau();
@@ -578,7 +578,7 @@ class AlticController extends AbstractController
             $templLevels[9]->setNbReponsesProposeesDeLaMemeTable(0);
             $templLevels[9]->setReponsesSimilaires(false);
             $templLevels[9]->setTempsDisponible(10);
-            $templLevels[9]->setOrdreDesQuestions('croissant');
+            $templLevels[9]->setOrdreDesQuestions('aleatoire');
             $templLevels[9]->setQuestionsATrous(true);
             //
             $templLevels[10] = new Niveau();
@@ -588,7 +588,7 @@ class AlticController extends AbstractController
             $templLevels[10]->setNbReponsesProposeesDeLaMemeTable(0);
             $templLevels[10]->setReponsesSimilaires(false);
             $templLevels[10]->setTempsDisponible(10);
-            $templLevels[10]->setOrdreDesQuestions('croissant');
+            $templLevels[10]->setOrdreDesQuestions('aleatoire');
             $templLevels[10]->setQuestionsATrous(true);
             //
             $templLevels[11] = new Niveau();
@@ -598,7 +598,7 @@ class AlticController extends AbstractController
             $templLevels[11]->setNbReponsesProposeesDeLaMemeTable(0);
             $templLevels[11]->setReponsesSimilaires(false);
             $templLevels[11]->setTempsDisponible(10);
-            $templLevels[11]->setOrdreDesQuestions('croissant');
+            $templLevels[11]->setOrdreDesQuestions('aleatoire');
             $templLevels[11]->setQuestionsATrous(true);
         
         return $templLevels[$localLevelNumber - 1];
