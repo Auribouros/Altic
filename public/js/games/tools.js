@@ -183,25 +183,74 @@
 
 	}
 
+	/**
+	 * Instanciates an Answer
+	 *
+	 * @class      Answer (name)
+	 * @param      {string}  id      The identifier
+	 * @param      {string}  value   The value
+	 * @param      {string}  image   The image
+	 */
 	function Answer(id, value, image) {
 		
+		/**
+		 * Id
+		 * @type       {string}
+		 */
 		this.id = id;
+		/**
+		 * Value HTML code
+		 * @type       {string}
+		 */
 		this.value = (value === '') ? '<input type="text"/><button id="answerBtn">Valider</button>' : value;
+		/**
+		 * Image element HTML code
+		 * @type       {string}
+		 */
 		this.image = (image === undefined) ? '' : '<img class="ansImg" id="ansImg'+ this.id +'" src="'+ image +'"/>';
+		/**
+		 * The HTML code
+		 * @type       {string}
+		 */
 		this.html = '<a href="#" class="answer" id="'+ this.id +'">'+ this.image + this.value +'</a>';
 
+		/**
+		 * Gets the identifier.
+		 *
+		 * @return     {string}  The identifier.
+		 */
 		this.getId = function () {
 			return '#' + this.id;
 		};
+		/**
+		 * Appends to an element.
+		 *
+		 * @param      {Object}  element  The element to append this to
+		 */
 		this.appendTo = function (element) {
 			$(element).append(this.html);
 		};
+		/**
+		 * Sets the image css.
+		 *
+		 * @param      {Object}  rules   The CSS rules to apply
+		 */
 		this.setImgCSS = function (rules) {
 			$('#ansImg'+this.id).css(rules);
 		};
+		/**
+		 * Sets the element css.
+		 *
+		 * @param      {Object}  rules   The CSS rules to apply
+		 */
 		this.setElementCSS = function (rules) {
 			$('#'+this.id).css(rules);
 		};
+		/**
+		 * Sets the input css.
+		 *
+		 * @param      {Object}  rules   The CSS rules to apply
+		 */
 		this.setInputCSS = function (rules) {
 			if (value === '') {
 				$('#'+this.id+' input').css(rules);
@@ -225,6 +274,13 @@
 
 	}
 
+	/**
+	 * Sends data to the Symfony controller.
+	 *
+	 * @param      {Object}    data      The data
+	 * @param      {string}    url       The controller url
+	 * @param      {Function}  callback  The callback function
+	 */
 	function sendDataToController(data, url, callback) {
 		
 		$.ajax({
