@@ -695,9 +695,12 @@ class AlticController extends AbstractController
                     //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
                     $percentArray[$level->getNumero()/12] = 100;
                 }else{
-                //Sinon on calcule petit à petit le pourcentage de completion de la table
-                    $percentArray[(int)($level->getNumero()/12)+1] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                    if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilData[0][0]){
+                        $percentArray[(int)($level->getNumero()/12)+1] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
+                    }
                 }
+                //Sinon on calcule petit à petit le pourcentage de completion de la table
+                   
                 /*(int)($level->getNumero()/12) est le numero de la table en fonction du niveau
                 */
                 
