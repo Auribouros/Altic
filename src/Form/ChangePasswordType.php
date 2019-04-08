@@ -17,9 +17,9 @@ class ChangePasswordType extends AbstractType
         ->add('newPassword',RepeatedType::class, [
             'constraints'=>[ new NotBlank()],
             'type'=> PasswordType::class,
-            'invalid_message'=>'les mots de passe sont differents',
-            'first_options'  => ['label' => 'nouveau mot de passe'],
-            'second_options' => ['label' => 'comfirmer le nouveau mot de passe'],
+            'invalid_message'=>'Les mots de passe sont différents',
+            'first_options'  => ['label' => 'Mot de passe'],
+            'second_options' => ['label' => 'Confirmer le mot de passe'],
         ])
         ;
     }
