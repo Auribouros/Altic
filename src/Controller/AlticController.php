@@ -1157,6 +1157,10 @@ class AlticController extends AbstractController
                 $newPassword
             )
          );
+         $entityManager= $this->getDoctrine()->getManager();
+         $entityManager->persist($user);
+         $entityManager->flush();
+         return $this->redirectToRoute("index");
         }
         return $this->render('security/changePassword.html.twig', ['changePassword'=>$form->createView()]);
     }
