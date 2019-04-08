@@ -12,7 +12,7 @@ $(function() {
 		let bul =  images.bubble;
 		let bulHtml = '<div id="bul"><img src="'+bul+'"id="bulimg"/></div>' ;
 		let parachute = images.parachute;
-		let tux = new Character('tux', tuxImage, parachute);
+		let tux = new Character('tux', tuxImage, '');
 		let mag = new Character('mag', magImage);
 		let questionAnswers = harvestDataFromElement('questionsanswers', '#data');
 		let currentQuestion = 0;
@@ -52,7 +52,7 @@ $(function() {
 	mag.appendTo('body');
 	$('#imgfond').css({'height': htdoc-0.11*htdoc, 'width': lgdoc-0.3*lgdoc, 'position': 'absolute', 'top': 50});
 	$('#bulimg').css({'height': htdoc-0.6*htdoc, 'position': 'absolute', 'width': 0.27*lgdoc, 'top': 80 , 'right': 50});
-	tux.setImgCSS({'height': htdoc*0.1, 'position': 'absolute', 'top': 1});
+	tux.setImgCSS({'height': htdoc*0.07, 'position': 'absolute', 'bottom': 1});
 	tux.setPropImgCSS({'height': htdoc*0.1, 'position': 'absolute', 'top': 1-htdoc*0.1});
 	mag.setImgCSS({'height': htdoc-0.6*htdoc, 'position': 'absolute', 'width': 0.2*lgdoc, 'top': 400, 'right': 50});
 
@@ -85,7 +85,7 @@ $(function() {
 			}
 			reponse.setElementCSS({
 				'position': 'absolute',
-				'top': ((0.15*htdoc)+(1/10*(htdoc-0.15*htdoc))*j),
+				'top': ((htdoc-0.15*htdoc)-(1/10*(htdoc-0.15*htdoc))*j),
 				'left': ((lgdoc-0.3*lgdoc)/questionAnswers[j].length)*(i+1),
 				'font-size': 0.05*htdoc,
 				'background-color': 'white',
