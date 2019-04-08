@@ -121,7 +121,8 @@ class AlticController extends AbstractController
                     if($level->getNumero()%12==0){
                         //ALORS ce niveau est le dernier niveau d'une table et ladite table est completée à 100%
                         $pupilStats[$level->getNumero()/12][0] = 100;
-                    }else{
+                    }else
+                    if((int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12)>$pupilStats[(int)($level->getNumero()/12)+1][0]){
                     //Sinon on calcule petit à petit le pourcentage de completion de la table
                         $pupilStats[(int)($level->getNumero()/12)+1][0] = (int)(100*($level->getNumero()-12*(int)($level->getNumero()/12))/12);
                     }
