@@ -1,33 +1,169 @@
 $(function() {
 
 	//vars
+		
+		/**
+		 * Images
+		 *
+		 * @type       {Object}
+		 */
 		let images = harvestDataFromElement('images', '#data');
+		/**
+		 * Background image
+		 *
+		 * @type       {string}
+		 */
 		let imgfond = images.background;//'Image/01.png' 
+		/**
+		 * HTML code for the background image
+		 *
+		 * @type       {string}
+		 */
 		let imgfondElement = '<div id="terrain"><img src="'+imgfond+'" id="imgfond"/></div>' ;
+		/**
+		 * Document height
+		 *
+		 * @type       {number}
+		 */
 		let htdoc = $(document).height();
+		/**
+		 * Document width
+		 *
+		 * @type       {number}
+		 */
 		let lgdoc = $(document).width();
+		/**
+		 * Current row
+		 *
+		 * @type       {number}
+		 */
 		let ligneActuelle = 0 ;
+		/**
+		 * Pupil image
+		 *
+		 * @type       {string}
+		 */
 		let tuxImage =  images.celestin;
+		/**
+		 * Wizard image
+		 *
+		 * @type       {string}
+		 */
 		let magImage =  images.wizard;
+		/**
+		 * Speech bubble image
+		 *
+		 * @type       {string}
+		 */
 		let bul =  images.bubble;
+		/**
+		 * HTML speech bubble
+		 *
+		 * @type       {string}
+		 */
 		let bulHtml = '<div id="bul"><img src="'+bul+'"id="bulimg"/></div>' ;
+		/**
+		 * Parachute image
+		 *
+		 * @type       {string}
+		 */
 		let parachute = images.parachute;
+		/**
+		 * Pupil character
+		 *
+		 * @type       {Character}
+		 */
 		let tux = new Character('tux', tuxImage, '');
+		/**
+		 * Wizard character
+		 *
+		 * @type       {Character}
+		 */
 		let mag = new Character('mag', magImage);
+		/**
+		 * Questions and answers
+		 *
+		 * @type       {Object}
+		 */
 		let questionAnswers = harvestDataFromElement('questionsanswers', '#data');
+		/**
+		 * Current question index
+		 *
+		 * @type       {number}
+		 */
 		let currentQuestion = 0;
+		/**
+		 * Number of right answers
+		 *
+		 * @type       {number}
+		 */
 		let nbRightAnswers = 0;
+		/**
+		 * Curent question
+		 *
+		 * @type       {string}
+		 */
 		let question1 = questionAnswers[currentQuestion][0];
+		/**
+		 * If using timer
+		 *
+		 * @type       {boolean}
+		 */
 		let bUsingTimer = false;
+		/**
+		 * Max time allowed
+		 *
+		 * @type       {number}
+		 */
 		let timeConstraintSeconds = 0;
+		/**
+		 * Given answers
+		 *
+		 * @type       {Array}
+		 */
 		let givenAnswers = [];
+		/**
+		 * Timer
+		 *
+		 * @type       {Object}
+		 */
 		let timer = undefined;
+		/**
+		 * Traning time
+		 *
+		 * @type       {number}
+		 */
 		let timeElapsedSeconds = 0;
+		/**
+		 * Elapsed training time timer
+		 *
+		 * @type       {Object}
+		 */
 		let elapsedTimer = undefined;
+		/**
+		 * Data to send in JSON format
+		 *
+		 * @type       {Object}
+		 */
 		let dataToSendJSON = null;
+		/**
+		 * Symfony controller URL
+		 *
+		 * @type       {string}
+		 */
 		let controllerURL = '/pupil/endgame';
+		/**
+		 * Number of answers in a row
+		 *
+		 * @type       {Array}
+		 */
 		let nbOfAnswersPerRow = [];
 
+		/**
+		 * Data to send
+		 *
+		 * @type       {Object}
+		 */
 		let dataToSend = {
 			questionAnswers: '',
 			givenAnswers: '',
@@ -212,30 +348,7 @@ $(function() {
 
 
 	// Afficher la question
-		//affichage de la première question
 		affichageEtChangementQuestion(question1 +' ?') ;
-
-	//if there is a time constraint
-	/*if (bUsingTimer) {
-
-		timer = setInterval(function () {
-			
-			givenAnswers[givenAnswers.length] = -1;
-			//alert(givenAnswers);
-			currentQuestion++;
-			question1 = (bUsingTimer)? questionAnswers[currentQuestion][0].split('t')[0] : questionAnswers[currentQuestion][0];
-			ligneActuelle += 10 ;
-
-			for (let i = 0; i < nbOfAnswersPerRow; i++) {
-				$('#'+(ligneActuelle+i)).fadeIn(1000);
-				$('#'+(ligneActuelle+i-10)).fadeOut(1000);
-			}
-			
-			affichageEtChangementQuestion(question1);
-
-		}, timeConstraintSeconds * 1000);
-
-	}*/
 
 	elapsedTimer = setInterval(function () {
 		timeElapsedSeconds++;
@@ -246,6 +359,11 @@ $(function() {
 		timer = setTimeout(timerHandler, timeConstraintSeconds * 1000);
 	}
 
+	/**
+	 * Shows and chenges questions
+	 *
+	 * @param      {string}  questionLabel  The question label
+	 */
 	function affichageEtChangementQuestion(questionLabel){
 		let question = '<p>'+ questionLabel +'</p>';
 		$('#quest').css({
@@ -261,6 +379,9 @@ $(function() {
 
 	}
 
+	/**
+	 * Handle timer events
+	 */
 	function timerHandler() {
 
 		givenAnswers[givenAnswers.length] = 0;
