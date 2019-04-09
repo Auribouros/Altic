@@ -29,7 +29,7 @@ class Entrainement
     private $date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Niveau", mappedBy="entrainement", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Niveau", mappedBy="entrainement")
      */
     private $niveaux;
 
