@@ -131,7 +131,8 @@ class AlticController extends AbstractController
                 }
                 foreach ($trainArray as $train){
                     $levTrain=$train->getNiveaux();
-                    if($levTrain[0]->getNumero()%12==0){
+                    var_dump($levTrain);
+                    /*if($levTrain[0]->getNumero()%12==0){
                         $pupilStats[(int)($levTrain[0]->getNumero()/12)][1]+=1;
                     }else{
                         $pupilStats[(int)($levTrain[0]->getNumero()/12)+1][1]+=1;
